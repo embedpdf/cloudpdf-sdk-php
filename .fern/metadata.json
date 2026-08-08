@@ -1,0 +1,19 @@
+{
+  "cliVersion": "5.91.0",
+  "generatorName": "fernapi/fern-php-sdk",
+  "generatorVersion": "2.18.1",
+  "generatorConfig": {
+    "namespace": "Cloudpdf",
+    "packageName": "cloudpdf/cloudpdf",
+    "composerJson": {
+      "license": "Apache-2.0",
+      "homepage": "https://www.cloudpdf.com"
+    }
+  },
+  "originGitCommit": "232d5e0240d5673a73c9ea7c7ae9e7b937fdd5b3",
+  "originGitCommitIsDirty": false,
+  "invokedBy": "ci",
+  "requestedVersion": "3.0.0-alpha.1",
+  "ciProvider": "github",
+  "sdkVersion": "3.0.0-alpha.1"
+}

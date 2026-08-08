@@ -1,0 +1,9 @@
+<?php
+
+namespace Cloudpdf\Doc\Forms\Types;
+
+enum ExportDataFormsRequestFormat: string
+{
+    case Fdf = "fdf";
+    case Xfdf = "xfdf";
+}
