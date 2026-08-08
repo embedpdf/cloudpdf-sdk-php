@@ -1,0 +1,10 @@
+<?php
+
+namespace Cloudpdf\Types;
+
+enum DocFormsGet200ResponseFieldsItemUnknownActionsCalculateWarningsItem: string
+{
+    case CycleDropped = "cycle-dropped";
+    case MalformedNext = "malformed-next";
+    case Incomplete = "incomplete";
+}

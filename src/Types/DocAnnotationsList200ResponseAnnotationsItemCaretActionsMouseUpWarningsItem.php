@@ -1,0 +1,10 @@
+<?php
+
+namespace Cloudpdf\Types;
+
+enum DocAnnotationsList200ResponseAnnotationsItemCaretActionsMouseUpWarningsItem: string
+{
+    case CycleDropped = "cycle-dropped";
+    case MalformedNext = "malformed-next";
+    case Incomplete = "incomplete";
+}
