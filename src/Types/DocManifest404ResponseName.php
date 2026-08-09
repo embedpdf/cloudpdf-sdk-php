@@ -1,6 +1,6 @@
 <?php
 
-namespace Cloudpdf\Types;
+namespace CloudPDF\Types;
 
 enum DocManifest404ResponseName: string
 {

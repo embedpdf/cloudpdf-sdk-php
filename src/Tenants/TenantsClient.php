@@ -1,20 +1,20 @@
 <?php
 
-namespace Cloudpdf\Tenants;
+namespace CloudPDF\Tenants;
 
 use Psr\Http\Client\ClientInterface;
-use Cloudpdf\Core\Client\RawClient;
-use Cloudpdf\Tenants\Requests\ListTenantsRequest;
-use Cloudpdf\Types\TenantsList200Response;
-use Cloudpdf\Exceptions\CloudpdfException;
-use Cloudpdf\Exceptions\CloudpdfApiException;
-use Cloudpdf\Core\Json\JsonApiRequest;
-use Cloudpdf\Core\Client\HttpMethod;
+use CloudPDF\Core\Client\RawClient;
+use CloudPDF\Tenants\Requests\ListTenantsRequest;
+use CloudPDF\Types\TenantsList200Response;
+use CloudPDF\Exceptions\CloudPDFException;
+use CloudPDF\Exceptions\CloudPDFApiException;
+use CloudPDF\Core\Json\JsonApiRequest;
+use CloudPDF\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
-use Cloudpdf\Tenants\Requests\TenantsCreateRequest;
-use Cloudpdf\Types\TenantsCreate200Response;
-use Cloudpdf\Types\TenantsGet200Response;
+use CloudPDF\Tenants\Requests\TenantsCreateRequest;
+use CloudPDF\Types\TenantsCreate200Response;
+use CloudPDF\Types\TenantsGet200Response;
 
 class TenantsClient
 {
@@ -70,8 +70,8 @@ class TenantsClient
      *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return ?TenantsList200Response
-     * @throws CloudpdfException
-     * @throws CloudpdfApiException
+     * @throws CloudPDFException
+     * @throws CloudPDFApiException
      */
     public function list(ListTenantsRequest $request = new ListTenantsRequest(), ?array $options = null): ?TenantsList200Response
     {
@@ -102,11 +102,11 @@ class TenantsClient
                 return TenantsList200Response::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new CloudpdfException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new CloudpdfException(message: $e->getMessage(), previous: $e);
+            throw new CloudPDFException(message: $e->getMessage(), previous: $e);
         }
-        throw new CloudpdfApiException(
+        throw new CloudPDFApiException(
             message: 'API request failed',
             statusCode: $statusCode,
             body: $response->getBody()->getContents(),
@@ -133,8 +133,8 @@ class TenantsClient
      *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return ?TenantsCreate200Response
-     * @throws CloudpdfException
-     * @throws CloudpdfApiException
+     * @throws CloudPDFException
+     * @throws CloudPDFApiException
      */
     public function create(TenantsCreateRequest $request, ?array $options = null): ?TenantsCreate200Response
     {
@@ -158,11 +158,11 @@ class TenantsClient
                 return TenantsCreate200Response::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new CloudpdfException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new CloudpdfException(message: $e->getMessage(), previous: $e);
+            throw new CloudPDFException(message: $e->getMessage(), previous: $e);
         }
-        throw new CloudpdfApiException(
+        throw new CloudPDFApiException(
             message: 'API request failed',
             statusCode: $statusCode,
             body: $response->getBody()->getContents(),
@@ -187,8 +187,8 @@ class TenantsClient
      *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return ?TenantsGet200Response
-     * @throws CloudpdfException
-     * @throws CloudpdfApiException
+     * @throws CloudPDFException
+     * @throws CloudPDFApiException
      */
     public function get(string $tenantId, ?array $options = null): ?TenantsGet200Response
     {
@@ -211,11 +211,11 @@ class TenantsClient
                 return TenantsGet200Response::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new CloudpdfException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new CloudpdfException(message: $e->getMessage(), previous: $e);
+            throw new CloudPDFException(message: $e->getMessage(), previous: $e);
         }
-        throw new CloudpdfApiException(
+        throw new CloudPDFApiException(
             message: 'API request failed',
             statusCode: $statusCode,
             body: $response->getBody()->getContents(),
@@ -241,8 +241,8 @@ class TenantsClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @throws CloudpdfException
-     * @throws CloudpdfApiException
+     * @throws CloudPDFException
+     * @throws CloudPDFApiException
      */
     public function delete(string $tenantId, ?array $options = null): void
     {
@@ -261,9 +261,9 @@ class TenantsClient
                 return;
             }
         } catch (ClientExceptionInterface $e) {
-            throw new CloudpdfException(message: $e->getMessage(), previous: $e);
+            throw new CloudPDFException(message: $e->getMessage(), previous: $e);
         }
-        throw new CloudpdfApiException(
+        throw new CloudPDFApiException(
             message: 'API request failed',
             statusCode: $statusCode,
             body: $response->getBody()->getContents(),

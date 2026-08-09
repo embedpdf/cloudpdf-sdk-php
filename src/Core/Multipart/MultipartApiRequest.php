@@ -1,9 +1,9 @@
 <?php
 
-namespace Cloudpdf\Core\Multipart;
+namespace CloudPDF\Core\Multipart;
 
-use Cloudpdf\Core\Client\BaseApiRequest;
-use Cloudpdf\Core\Client\HttpMethod;
+use CloudPDF\Core\Client\BaseApiRequest;
+use CloudPDF\Core\Client\HttpMethod;
 
 class MultipartApiRequest extends BaseApiRequest
 {

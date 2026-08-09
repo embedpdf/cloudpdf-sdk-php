@@ -1,6 +1,6 @@
 <?php
 
-namespace Cloudpdf\Types;
+namespace CloudPDF\Types;
 
 enum DocPagesRotate400ResponseName: string
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace Cloudpdf\Core\Json;
+namespace CloudPDF\Core\Json;
 
-use Cloudpdf\Core\Client\BaseApiRequest;
-use Cloudpdf\Core\Client\HttpMethod;
+use CloudPDF\Core\Client\BaseApiRequest;
+use CloudPDF\Core\Client\HttpMethod;
 
 class JsonApiRequest extends BaseApiRequest
 {

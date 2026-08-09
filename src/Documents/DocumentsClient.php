@@ -1,23 +1,23 @@
 <?php
 
-namespace Cloudpdf\Documents;
+namespace CloudPDF\Documents;
 
 use Psr\Http\Client\ClientInterface;
-use Cloudpdf\Core\Client\RawClient;
-use Cloudpdf\Documents\Requests\ListDocumentsRequest;
-use Cloudpdf\Types\DocumentsList200Response;
-use Cloudpdf\Exceptions\CloudpdfException;
-use Cloudpdf\Exceptions\CloudpdfApiException;
-use Cloudpdf\Core\Json\JsonApiRequest;
-use Cloudpdf\Core\Client\HttpMethod;
+use CloudPDF\Core\Client\RawClient;
+use CloudPDF\Documents\Requests\ListDocumentsRequest;
+use CloudPDF\Types\DocumentsList200Response;
+use CloudPDF\Exceptions\CloudPDFException;
+use CloudPDF\Exceptions\CloudPDFApiException;
+use CloudPDF\Core\Json\JsonApiRequest;
+use CloudPDF\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
-use Cloudpdf\Types\DocumentsGet200Response;
-use Cloudpdf\Documents\Requests\DocumentsCommitRequest;
-use Cloudpdf\Types\DocumentsCommit200Response;
-use Cloudpdf\Types\DocumentsUploadDirect200Response;
-use Cloudpdf\Documents\Requests\DocumentsInitRequest;
-use Cloudpdf\Types\DocumentsInit200Response;
+use CloudPDF\Types\DocumentsGet200Response;
+use CloudPDF\Documents\Requests\DocumentsCommitRequest;
+use CloudPDF\Types\DocumentsCommit200Response;
+use CloudPDF\Types\DocumentsUploadDirect200Response;
+use CloudPDF\Documents\Requests\DocumentsInitRequest;
+use CloudPDF\Types\DocumentsInit200Response;
 
 class DocumentsClient
 {
@@ -75,8 +75,8 @@ class DocumentsClient
      *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return ?DocumentsList200Response
-     * @throws CloudpdfException
-     * @throws CloudpdfApiException
+     * @throws CloudPDFException
+     * @throws CloudPDFApiException
      */
     public function list(string $tenantId, ListDocumentsRequest $request = new ListDocumentsRequest(), ?array $options = null): ?DocumentsList200Response
     {
@@ -110,11 +110,11 @@ class DocumentsClient
                 return DocumentsList200Response::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new CloudpdfException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new CloudpdfException(message: $e->getMessage(), previous: $e);
+            throw new CloudPDFException(message: $e->getMessage(), previous: $e);
         }
-        throw new CloudpdfApiException(
+        throw new CloudPDFApiException(
             message: 'API request failed',
             statusCode: $statusCode,
             body: $response->getBody()->getContents(),
@@ -141,8 +141,8 @@ class DocumentsClient
      *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return ?DocumentsGet200Response
-     * @throws CloudpdfException
-     * @throws CloudpdfApiException
+     * @throws CloudPDFException
+     * @throws CloudPDFApiException
      */
     public function get(string $tenantId, string $id, ?array $options = null): ?DocumentsGet200Response
     {
@@ -165,11 +165,11 @@ class DocumentsClient
                 return DocumentsGet200Response::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new CloudpdfException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new CloudpdfException(message: $e->getMessage(), previous: $e);
+            throw new CloudPDFException(message: $e->getMessage(), previous: $e);
         }
-        throw new CloudpdfApiException(
+        throw new CloudPDFApiException(
             message: 'API request failed',
             statusCode: $statusCode,
             body: $response->getBody()->getContents(),
@@ -195,8 +195,8 @@ class DocumentsClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @throws CloudpdfException
-     * @throws CloudpdfApiException
+     * @throws CloudPDFException
+     * @throws CloudPDFApiException
      */
     public function delete(string $tenantId, string $id, ?array $options = null): void
     {
@@ -215,9 +215,9 @@ class DocumentsClient
                 return;
             }
         } catch (ClientExceptionInterface $e) {
-            throw new CloudpdfException(message: $e->getMessage(), previous: $e);
+            throw new CloudPDFException(message: $e->getMessage(), previous: $e);
         }
-        throw new CloudpdfApiException(
+        throw new CloudPDFApiException(
             message: 'API request failed',
             statusCode: $statusCode,
             body: $response->getBody()->getContents(),
@@ -248,8 +248,8 @@ class DocumentsClient
      *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return ?DocumentsCommit200Response
-     * @throws CloudpdfException
-     * @throws CloudpdfApiException
+     * @throws CloudPDFException
+     * @throws CloudPDFApiException
      */
     public function commit(string $tenantId, string $id, DocumentsCommitRequest $request, ?array $options = null): ?DocumentsCommit200Response
     {
@@ -273,11 +273,11 @@ class DocumentsClient
                 return DocumentsCommit200Response::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new CloudpdfException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new CloudpdfException(message: $e->getMessage(), previous: $e);
+            throw new CloudPDFException(message: $e->getMessage(), previous: $e);
         }
-        throw new CloudpdfApiException(
+        throw new CloudPDFApiException(
             message: 'API request failed',
             statusCode: $statusCode,
             body: $response->getBody()->getContents(),
@@ -304,8 +304,8 @@ class DocumentsClient
      *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return string
-     * @throws CloudpdfException
-     * @throws CloudpdfApiException
+     * @throws CloudPDFException
+     * @throws CloudPDFApiException
      */
     public function download(string $tenantId, string $id, ?array $options = null): string
     {
@@ -324,9 +324,9 @@ class DocumentsClient
                 return $response->getBody()->getContents();
             }
         } catch (ClientExceptionInterface $e) {
-            throw new CloudpdfException(message: $e->getMessage(), previous: $e);
+            throw new CloudPDFException(message: $e->getMessage(), previous: $e);
         }
-        throw new CloudpdfApiException(
+        throw new CloudPDFApiException(
             message: 'API request failed',
             statusCode: $statusCode,
             body: $response->getBody()->getContents(),
@@ -353,8 +353,8 @@ class DocumentsClient
      *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return string
-     * @throws CloudpdfException
-     * @throws CloudpdfApiException
+     * @throws CloudPDFException
+     * @throws CloudPDFApiException
      */
     public function thumbnail(string $tenantId, string $id, ?array $options = null): string
     {
@@ -373,9 +373,9 @@ class DocumentsClient
                 return $response->getBody()->getContents();
             }
         } catch (ClientExceptionInterface $e) {
-            throw new CloudpdfException(message: $e->getMessage(), previous: $e);
+            throw new CloudPDFException(message: $e->getMessage(), previous: $e);
         }
-        throw new CloudpdfApiException(
+        throw new CloudPDFApiException(
             message: 'API request failed',
             statusCode: $statusCode,
             body: $response->getBody()->getContents(),
@@ -394,8 +394,8 @@ class DocumentsClient
      *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return ?DocumentsUploadDirect200Response
-     * @throws CloudpdfException
-     * @throws CloudpdfApiException
+     * @throws CloudPDFException
+     * @throws CloudPDFApiException
      */
     public function uploadDirect(string $tenantId, string $id, ?array $options = null): ?DocumentsUploadDirect200Response
     {
@@ -418,11 +418,11 @@ class DocumentsClient
                 return DocumentsUploadDirect200Response::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new CloudpdfException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new CloudpdfException(message: $e->getMessage(), previous: $e);
+            throw new CloudPDFException(message: $e->getMessage(), previous: $e);
         }
-        throw new CloudpdfApiException(
+        throw new CloudPDFApiException(
             message: 'API request failed',
             statusCode: $statusCode,
             body: $response->getBody()->getContents(),
@@ -452,8 +452,8 @@ class DocumentsClient
      *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return ?DocumentsInit200Response
-     * @throws CloudpdfException
-     * @throws CloudpdfApiException
+     * @throws CloudPDFException
+     * @throws CloudPDFApiException
      */
     public function init(string $tenantId, DocumentsInitRequest $request, ?array $options = null): ?DocumentsInit200Response
     {
@@ -477,11 +477,11 @@ class DocumentsClient
                 return DocumentsInit200Response::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new CloudpdfException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new CloudpdfException(message: $e->getMessage(), previous: $e);
+            throw new CloudPDFException(message: $e->getMessage(), previous: $e);
         }
-        throw new CloudpdfApiException(
+        throw new CloudPDFApiException(
             message: 'API request failed',
             statusCode: $statusCode,
             body: $response->getBody()->getContents(),

@@ -1,6 +1,6 @@
 <?php
 
-namespace Cloudpdf\Core\Multipart;
+namespace CloudPDF\Core\Multipart;
 
 use Http\Message\MultipartStream\MultipartStreamBuilder;
 use Psr\Http\Message\StreamInterface;

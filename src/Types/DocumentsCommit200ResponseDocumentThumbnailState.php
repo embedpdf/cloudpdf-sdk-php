@@ -1,6 +1,6 @@
 <?php
 
-namespace Cloudpdf\Types;
+namespace CloudPDF\Types;
 
 enum DocumentsCommit200ResponseDocumentThumbnailState: string
 {

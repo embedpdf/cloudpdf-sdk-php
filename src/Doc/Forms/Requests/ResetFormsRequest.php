@@ -1,8 +1,8 @@
 <?php
 
-namespace Cloudpdf\Doc\Forms\Requests;
+namespace CloudPDF\Doc\Forms\Requests;
 
-use Cloudpdf\Core\Json\JsonSerializableType;
+use CloudPDF\Core\Json\JsonSerializableType;
 
 class ResetFormsRequest extends JsonSerializableType
 {

@@ -1,23 +1,23 @@
 <?php
 
-namespace Cloudpdf\Doc\Annotations;
+namespace CloudPDF\Doc\Annotations;
 
 use Psr\Http\Client\ClientInterface;
-use Cloudpdf\Core\Client\RawClient;
-use Cloudpdf\Doc\Annotations\Requests\ListAnnotationsRequest;
-use Cloudpdf\Types\DocAnnotationsList200Response;
-use Cloudpdf\Exceptions\CloudpdfException;
-use Cloudpdf\Exceptions\CloudpdfApiException;
-use Cloudpdf\Core\Json\JsonApiRequest;
-use Cloudpdf\Core\Client\HttpMethod;
+use CloudPDF\Core\Client\RawClient;
+use CloudPDF\Doc\Annotations\Requests\ListAnnotationsRequest;
+use CloudPDF\Types\DocAnnotationsList200Response;
+use CloudPDF\Exceptions\CloudPDFException;
+use CloudPDF\Exceptions\CloudPDFApiException;
+use CloudPDF\Core\Json\JsonApiRequest;
+use CloudPDF\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
-use Cloudpdf\Doc\Annotations\Requests\CreateAnnotationsRequest;
-use Cloudpdf\Types\DocAnnotationsCreate200Response;
-use Cloudpdf\Doc\Annotations\Requests\DeleteAnnotationsRequest;
-use Cloudpdf\Types\DocAnnotationsDelete200Response;
-use Cloudpdf\Doc\Annotations\Requests\UpdateAnnotationsRequest;
-use Cloudpdf\Types\DocAnnotationsUpdate200Response;
+use CloudPDF\Doc\Annotations\Requests\CreateAnnotationsRequest;
+use CloudPDF\Types\DocAnnotationsCreate200Response;
+use CloudPDF\Doc\Annotations\Requests\DeleteAnnotationsRequest;
+use CloudPDF\Types\DocAnnotationsDelete200Response;
+use CloudPDF\Doc\Annotations\Requests\UpdateAnnotationsRequest;
+use CloudPDF\Types\DocAnnotationsUpdate200Response;
 
 class AnnotationsClient
 {
@@ -79,8 +79,8 @@ class AnnotationsClient
      *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return ?DocAnnotationsList200Response
-     * @throws CloudpdfException
-     * @throws CloudpdfApiException
+     * @throws CloudPDFException
+     * @throws CloudPDFApiException
      */
     public function list(string $docId, string $layerName, int $pon, ListAnnotationsRequest $request = new ListAnnotationsRequest(), ?array $options = null): ?DocAnnotationsList200Response
     {
@@ -108,11 +108,11 @@ class AnnotationsClient
                 return DocAnnotationsList200Response::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new CloudpdfException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new CloudpdfException(message: $e->getMessage(), previous: $e);
+            throw new CloudPDFException(message: $e->getMessage(), previous: $e);
         }
-        throw new CloudpdfApiException(
+        throw new CloudPDFApiException(
             message: 'API request failed',
             statusCode: $statusCode,
             body: $response->getBody()->getContents(),
@@ -149,8 +149,8 @@ class AnnotationsClient
      *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return ?DocAnnotationsCreate200Response
-     * @throws CloudpdfException
-     * @throws CloudpdfApiException
+     * @throws CloudPDFException
+     * @throws CloudPDFApiException
      */
     public function create(string $docId, string $layerName, int $pon, CreateAnnotationsRequest $request, ?array $options = null): ?DocAnnotationsCreate200Response
     {
@@ -179,11 +179,11 @@ class AnnotationsClient
                 return DocAnnotationsCreate200Response::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new CloudpdfException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new CloudpdfException(message: $e->getMessage(), previous: $e);
+            throw new CloudPDFException(message: $e->getMessage(), previous: $e);
         }
-        throw new CloudpdfApiException(
+        throw new CloudPDFApiException(
             message: 'API request failed',
             statusCode: $statusCode,
             body: $response->getBody()->getContents(),
@@ -216,8 +216,8 @@ class AnnotationsClient
      *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return ?DocAnnotationsDelete200Response
-     * @throws CloudpdfException
-     * @throws CloudpdfApiException
+     * @throws CloudPDFException
+     * @throws CloudPDFApiException
      */
     public function delete(string $docId, string $layerName, int $pon, string $annotKey, DeleteAnnotationsRequest $request = new DeleteAnnotationsRequest(), ?array $options = null): ?DocAnnotationsDelete200Response
     {
@@ -245,11 +245,11 @@ class AnnotationsClient
                 return DocAnnotationsDelete200Response::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new CloudpdfException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new CloudpdfException(message: $e->getMessage(), previous: $e);
+            throw new CloudPDFException(message: $e->getMessage(), previous: $e);
         }
-        throw new CloudpdfApiException(
+        throw new CloudPDFApiException(
             message: 'API request failed',
             statusCode: $statusCode,
             body: $response->getBody()->getContents(),
@@ -286,8 +286,8 @@ class AnnotationsClient
      *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return ?DocAnnotationsUpdate200Response
-     * @throws CloudpdfException
-     * @throws CloudpdfApiException
+     * @throws CloudPDFException
+     * @throws CloudPDFApiException
      */
     public function update(string $docId, string $layerName, int $pon, string $annotKey, UpdateAnnotationsRequest $request, ?array $options = null): ?DocAnnotationsUpdate200Response
     {
@@ -316,11 +316,11 @@ class AnnotationsClient
                 return DocAnnotationsUpdate200Response::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new CloudpdfException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new CloudpdfException(message: $e->getMessage(), previous: $e);
+            throw new CloudPDFException(message: $e->getMessage(), previous: $e);
         }
-        throw new CloudpdfApiException(
+        throw new CloudPDFApiException(
             message: 'API request failed',
             statusCode: $statusCode,
             body: $response->getBody()->getContents(),

@@ -1,9 +1,9 @@
 <?php
 
-namespace Cloudpdf\Doc\Forms\Requests;
+namespace CloudPDF\Doc\Forms\Requests;
 
-use Cloudpdf\Core\Json\JsonSerializableType;
-use Cloudpdf\Doc\Forms\Types\ExportDataFormsRequestFormat;
+use CloudPDF\Core\Json\JsonSerializableType;
+use CloudPDF\Doc\Forms\Types\ExportDataFormsRequestFormat;
 
 class ExportDataFormsRequest extends JsonSerializableType
 {

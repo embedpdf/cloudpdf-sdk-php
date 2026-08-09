@@ -1,8 +1,8 @@
 <?php
 
-namespace Cloudpdf\Doc\Annotations\Requests;
+namespace CloudPDF\Doc\Annotations\Requests;
 
-use Cloudpdf\Core\Json\JsonSerializableType;
+use CloudPDF\Core\Json\JsonSerializableType;
 
 class CreateAnnotationsRequest extends JsonSerializableType
 {

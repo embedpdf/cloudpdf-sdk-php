@@ -1,6 +1,6 @@
 <?php
 
-namespace Cloudpdf\Documents\Types;
+namespace CloudPDF\Documents\Types;
 
 enum ListDocumentsRequestState: string
 {

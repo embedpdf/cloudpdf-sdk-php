@@ -1,8 +1,8 @@
 <?php
 
-namespace Cloudpdf\Doc\Pages\Requests;
+namespace CloudPDF\Doc\Pages\Requests;
 
-use Cloudpdf\Core\Json\JsonSerializableType;
+use CloudPDF\Core\Json\JsonSerializableType;
 
 class DeletePagesRequest extends JsonSerializableType
 {

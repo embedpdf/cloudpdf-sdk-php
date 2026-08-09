@@ -1,24 +1,24 @@
 <?php
 
-namespace Cloudpdf\Doc\Forms;
+namespace CloudPDF\Doc\Forms;
 
 use Psr\Http\Client\ClientInterface;
-use Cloudpdf\Core\Client\RawClient;
-use Cloudpdf\Doc\Forms\Requests\GetFormsRequest;
-use Cloudpdf\Types\DocFormsGet200Response;
-use Cloudpdf\Exceptions\CloudpdfException;
-use Cloudpdf\Exceptions\CloudpdfApiException;
-use Cloudpdf\Core\Json\JsonApiRequest;
-use Cloudpdf\Core\Client\HttpMethod;
+use CloudPDF\Core\Client\RawClient;
+use CloudPDF\Doc\Forms\Requests\GetFormsRequest;
+use CloudPDF\Types\DocFormsGet200Response;
+use CloudPDF\Exceptions\CloudPDFException;
+use CloudPDF\Exceptions\CloudPDFApiException;
+use CloudPDF\Core\Json\JsonApiRequest;
+use CloudPDF\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
-use Cloudpdf\Doc\Forms\Requests\ExportDataFormsRequest;
-use Cloudpdf\Doc\Forms\Requests\ImportDataFormsRequest;
-use Cloudpdf\Types\DocFormsImportData200Response;
-use Cloudpdf\Doc\Forms\Requests\ResetFormsRequest;
-use Cloudpdf\Types\DocFormsReset200Response;
-use Cloudpdf\Doc\Forms\Requests\SetValueFormsRequest;
-use Cloudpdf\Types\DocFormsSetValue200Response;
+use CloudPDF\Doc\Forms\Requests\ExportDataFormsRequest;
+use CloudPDF\Doc\Forms\Requests\ImportDataFormsRequest;
+use CloudPDF\Types\DocFormsImportData200Response;
+use CloudPDF\Doc\Forms\Requests\ResetFormsRequest;
+use CloudPDF\Types\DocFormsReset200Response;
+use CloudPDF\Doc\Forms\Requests\SetValueFormsRequest;
+use CloudPDF\Types\DocFormsSetValue200Response;
 
 class FormsClient
 {
@@ -78,8 +78,8 @@ class FormsClient
      *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return ?DocFormsGet200Response
-     * @throws CloudpdfException
-     * @throws CloudpdfApiException
+     * @throws CloudPDFException
+     * @throws CloudPDFApiException
      */
     public function get(string $docId, string $layerName, GetFormsRequest $request = new GetFormsRequest(), ?array $options = null): ?DocFormsGet200Response
     {
@@ -107,11 +107,11 @@ class FormsClient
                 return DocFormsGet200Response::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new CloudpdfException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new CloudpdfException(message: $e->getMessage(), previous: $e);
+            throw new CloudPDFException(message: $e->getMessage(), previous: $e);
         }
-        throw new CloudpdfApiException(
+        throw new CloudPDFApiException(
             message: 'API request failed',
             statusCode: $statusCode,
             body: $response->getBody()->getContents(),
@@ -140,8 +140,8 @@ class FormsClient
      *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return string
-     * @throws CloudpdfException
-     * @throws CloudpdfApiException
+     * @throws CloudPDFException
+     * @throws CloudPDFApiException
      */
     public function exportData(string $docId, string $layerName, ExportDataFormsRequest $request = new ExportDataFormsRequest(), ?array $options = null): string
     {
@@ -170,9 +170,9 @@ class FormsClient
                 return $response->getBody()->getContents();
             }
         } catch (ClientExceptionInterface $e) {
-            throw new CloudpdfException(message: $e->getMessage(), previous: $e);
+            throw new CloudPDFException(message: $e->getMessage(), previous: $e);
         }
-        throw new CloudpdfApiException(
+        throw new CloudPDFApiException(
             message: 'API request failed',
             statusCode: $statusCode,
             body: $response->getBody()->getContents(),
@@ -205,8 +205,8 @@ class FormsClient
      *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return ?DocFormsImportData200Response
-     * @throws CloudpdfException
-     * @throws CloudpdfApiException
+     * @throws CloudPDFException
+     * @throws CloudPDFApiException
      */
     public function importData(string $docId, string $layerName, ImportDataFormsRequest $request, ?array $options = null): ?DocFormsImportData200Response
     {
@@ -235,11 +235,11 @@ class FormsClient
                 return DocFormsImportData200Response::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new CloudpdfException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new CloudpdfException(message: $e->getMessage(), previous: $e);
+            throw new CloudPDFException(message: $e->getMessage(), previous: $e);
         }
-        throw new CloudpdfApiException(
+        throw new CloudPDFApiException(
             message: 'API request failed',
             statusCode: $statusCode,
             body: $response->getBody()->getContents(),
@@ -270,8 +270,8 @@ class FormsClient
      *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return ?DocFormsReset200Response
-     * @throws CloudpdfException
-     * @throws CloudpdfApiException
+     * @throws CloudPDFException
+     * @throws CloudPDFApiException
      */
     public function reset(string $docId, string $layerName, string $fieldKey, ResetFormsRequest $request = new ResetFormsRequest(), ?array $options = null): ?DocFormsReset200Response
     {
@@ -299,11 +299,11 @@ class FormsClient
                 return DocFormsReset200Response::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new CloudpdfException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new CloudpdfException(message: $e->getMessage(), previous: $e);
+            throw new CloudPDFException(message: $e->getMessage(), previous: $e);
         }
-        throw new CloudpdfApiException(
+        throw new CloudPDFApiException(
             message: 'API request failed',
             statusCode: $statusCode,
             body: $response->getBody()->getContents(),
@@ -338,8 +338,8 @@ class FormsClient
      *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return ?DocFormsSetValue200Response
-     * @throws CloudpdfException
-     * @throws CloudpdfApiException
+     * @throws CloudPDFException
+     * @throws CloudPDFApiException
      */
     public function setValue(string $docId, string $layerName, string $fieldKey, SetValueFormsRequest $request, ?array $options = null): ?DocFormsSetValue200Response
     {
@@ -368,11 +368,11 @@ class FormsClient
                 return DocFormsSetValue200Response::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new CloudpdfException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new CloudpdfException(message: $e->getMessage(), previous: $e);
+            throw new CloudPDFException(message: $e->getMessage(), previous: $e);
         }
-        throw new CloudpdfApiException(
+        throw new CloudPDFApiException(
             message: 'API request failed',
             statusCode: $statusCode,
             body: $response->getBody()->getContents(),

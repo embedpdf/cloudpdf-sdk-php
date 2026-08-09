@@ -1,6 +1,6 @@
 <?php
 
-namespace Cloudpdf\Core\Json;
+namespace CloudPDF\Core\Json;
 
 use DateTime;
 use Exception;

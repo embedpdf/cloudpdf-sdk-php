@@ -1,13 +1,13 @@
 <?php
 
-namespace Cloudpdf\Tests\Core\Json;
+namespace CloudPDF\Tests\Core\Json;
 
 use DateTime;
 use PHPUnit\Framework\TestCase;
-use Cloudpdf\Core\Json\JsonEncoder;
-use Cloudpdf\Core\Json\JsonProperty;
-use Cloudpdf\Core\Json\JsonSerializableType;
-use Cloudpdf\Core\Types\ArrayType;
+use CloudPDF\Core\Json\JsonEncoder;
+use CloudPDF\Core\Json\JsonProperty;
+use CloudPDF\Core\Json\JsonSerializableType;
+use CloudPDF\Core\Types\ArrayType;
 
 class DateArray extends JsonSerializableType
 {

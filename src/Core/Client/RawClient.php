@@ -1,6 +1,6 @@
 <?php
 
-namespace Cloudpdf\Core\Client;
+namespace CloudPDF\Core\Client;
 
 use JsonSerializable;
 use InvalidArgumentException;
@@ -12,9 +12,9 @@ use Psr\Http\Message\ResponseInterface;
 use Http\Message\MultipartStream\MultipartStreamBuilder;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\StreamInterface;
-use Cloudpdf\Core\Json\JsonApiRequest;
-use Cloudpdf\Core\Json\JsonEncoder;
-use Cloudpdf\Core\Multipart\MultipartApiRequest;
+use CloudPDF\Core\Json\JsonApiRequest;
+use CloudPDF\Core\Json\JsonEncoder;
+use CloudPDF\Core\Multipart\MultipartApiRequest;
 
 class RawClient
 {

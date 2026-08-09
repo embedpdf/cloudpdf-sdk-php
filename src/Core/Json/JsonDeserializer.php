@@ -1,12 +1,12 @@
 <?php
 
-namespace Cloudpdf\Core\Json;
+namespace CloudPDF\Core\Json;
 
 use DateTime;
 use Exception;
 use JsonException;
-use Cloudpdf\Core\Types\Constant;
-use Cloudpdf\Core\Types\Union;
+use CloudPDF\Core\Types\Constant;
+use CloudPDF\Core\Types\Union;
 
 class JsonDeserializer
 {

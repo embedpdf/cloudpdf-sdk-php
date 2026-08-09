@@ -1,8 +1,8 @@
 <?php
 
-namespace Cloudpdf\Types;
+namespace CloudPDF\Types;
 
-use Cloudpdf\Core\Json\JsonSerializableType;
+use CloudPDF\Core\Json\JsonSerializableType;
 use Exception;
 
 class DocFormsGet200ResponseFieldsItemTextDefaultValueEntry extends JsonSerializableType

@@ -1,8 +1,8 @@
 <?php
 
-namespace Cloudpdf\Doc\Metadata\Requests;
+namespace CloudPDF\Doc\Metadata\Requests;
 
-use Cloudpdf\Core\Json\JsonSerializableType;
+use CloudPDF\Core\Json\JsonSerializableType;
 
 class GetMetadataRequest extends JsonSerializableType
 {

@@ -1,9 +1,9 @@
-# Cloudpdf PHP Library
+# CloudPDF PHP SDK
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Cloudpdf%2FPHP)
-[![php shield](https://img.shields.io/badge/php-packagist-pink)](https://packagist.org/packages/cloudpdf/cloudpdf)
+[![php shield](https://img.shields.io/badge/php-packagist-pink)](https://packagist.org/packages/cloudpdf/sdk)
 
-The Cloudpdf PHP library provides convenient access to the Cloudpdf APIs from PHP.
+The official PHP SDK for the CloudPDF API.
 
 ## Table of Contents
 
@@ -24,7 +24,7 @@ This SDK requires PHP ^8.1.
 ## Installation
 
 ```sh
-composer require cloudpdf/cloudpdf
+composer require cloudpdf/sdk
 ```
 
 ## Usage
@@ -36,10 +36,10 @@ Instantiate and use the client with the following:
 
 namespace Example;
 
-use Cloudpdf\CloudpdfClient;
-use Cloudpdf\Tenants\Requests\TenantsCreateRequest;
+use CloudPDF\CloudPDFClient;
+use CloudPDF\Tenants\Requests\TenantsCreateRequest;
 
-$client = new CloudpdfClient(
+$client = new CloudPDFClient(
     token: '<token>',
 );
 $client->tenants->create(
@@ -55,12 +55,12 @@ $client->tenants->create(
 When the API returns a non-success status code (4xx or 5xx response), an exception will be thrown.
 
 ```php
-use Cloudpdf\Exceptions\CloudpdfApiException;
-use Cloudpdf\Exceptions\CloudpdfException;
+use CloudPDF\Exceptions\CloudPDFApiException;
+use CloudPDF\Exceptions\CloudPDFException;
 
 try {
     $response = $client->tenants->create(...);
-} catch (CloudpdfApiException $e) {
+} catch (CloudPDFApiException $e) {
     echo 'API Exception occurred: ' . $e->getMessage() . "\n";
     echo 'Status Code: ' . $e->getCode() . "\n";
     echo 'Response Body: ' . $e->getBody() . "\n";
@@ -77,7 +77,7 @@ By default, if no client is provided, the SDK will use `php-http/discovery` to f
 However, you can pass your own client that adheres to `ClientInterface`:
 
 ```php
-use Cloudpdf\CloudpdfClient;
+use CloudPDF\CloudPDFClient;
 
 // Pass any PSR-18 compatible HTTP client implementation.
 // For example, using Guzzle:
@@ -85,7 +85,7 @@ $customClient = new \GuzzleHttp\Client([
     'timeout' => 5.0,
 ]);
 
-$client = new CloudpdfClient(options: [
+$client = new CloudPDFClient(options: [
     'client' => $customClient
 ]);
 
@@ -93,7 +93,7 @@ $client = new CloudpdfClient(options: [
 // $customClient = (new \Symfony\Component\HttpClient\Psr18Client())
 //     ->withOptions(['timeout' => 5.0]);
 //
-// $client = new CloudpdfClient(options: [
+// $client = new CloudPDFClient(options: [
 //     'client' => $customClient
 // ]);
 ```

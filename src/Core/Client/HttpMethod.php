@@ -1,6 +1,6 @@
 <?php
 
-namespace Cloudpdf\Core\Client;
+namespace CloudPDF\Core\Client;
 
 enum HttpMethod
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace Cloudpdf\Tokens\Requests;
+namespace CloudPDF\Tokens\Requests;
 
-use Cloudpdf\Core\Json\JsonSerializableType;
-use Cloudpdf\Types\TokensIssueRequest;
+use CloudPDF\Core\Json\JsonSerializableType;
+use CloudPDF\Types\TokensIssueRequest;
 
 class IssueTokensRequest extends JsonSerializableType
 {
