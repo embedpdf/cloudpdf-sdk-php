@@ -1,15 +1,15 @@
 <?php
 
-namespace Cloudpdf\Doc\Metadata;
+namespace CloudPDF\Doc\Metadata;
 
 use Psr\Http\Client\ClientInterface;
-use Cloudpdf\Core\Client\RawClient;
-use Cloudpdf\Doc\Metadata\Requests\GetMetadataRequest;
-use Cloudpdf\Types\DocMetadataGet200Response;
-use Cloudpdf\Exceptions\CloudpdfException;
-use Cloudpdf\Exceptions\CloudpdfApiException;
-use Cloudpdf\Core\Json\JsonApiRequest;
-use Cloudpdf\Core\Client\HttpMethod;
+use CloudPDF\Core\Client\RawClient;
+use CloudPDF\Doc\Metadata\Requests\GetMetadataRequest;
+use CloudPDF\Types\DocMetadataGet200Response;
+use CloudPDF\Exceptions\CloudPDFException;
+use CloudPDF\Exceptions\CloudPDFApiException;
+use CloudPDF\Core\Json\JsonApiRequest;
+use CloudPDF\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
 
@@ -71,8 +71,8 @@ class MetadataClient
      *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return ?DocMetadataGet200Response
-     * @throws CloudpdfException
-     * @throws CloudpdfApiException
+     * @throws CloudPDFException
+     * @throws CloudPDFApiException
      */
     public function get(string $docId, string $layerName, GetMetadataRequest $request = new GetMetadataRequest(), ?array $options = null): ?DocMetadataGet200Response
     {
@@ -100,11 +100,11 @@ class MetadataClient
                 return DocMetadataGet200Response::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new CloudpdfException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new CloudpdfException(message: $e->getMessage(), previous: $e);
+            throw new CloudPDFException(message: $e->getMessage(), previous: $e);
         }
-        throw new CloudpdfApiException(
+        throw new CloudPDFApiException(
             message: 'API request failed',
             statusCode: $statusCode,
             body: $response->getBody()->getContents(),

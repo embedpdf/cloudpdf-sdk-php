@@ -1,8 +1,8 @@
 <?php
 
-namespace Cloudpdf\Tenants\Requests;
+namespace CloudPDF\Tenants\Requests;
 
-use Cloudpdf\Core\Json\JsonSerializableType;
+use CloudPDF\Core\Json\JsonSerializableType;
 
 class ListTenantsRequest extends JsonSerializableType
 {

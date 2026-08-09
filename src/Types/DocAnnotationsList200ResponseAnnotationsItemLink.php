@@ -1,11 +1,11 @@
 <?php
 
-namespace Cloudpdf\Types;
+namespace CloudPDF\Types;
 
-use Cloudpdf\Core\Json\JsonSerializableType;
-use Cloudpdf\Core\Json\JsonProperty;
+use CloudPDF\Core\Json\JsonSerializableType;
+use CloudPDF\Core\Json\JsonProperty;
 use DateTime;
-use Cloudpdf\Core\Types\Date;
+use CloudPDF\Core\Types\Date;
 
 class DocAnnotationsList200ResponseAnnotationsItemLink extends JsonSerializableType
 {

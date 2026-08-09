@@ -1,18 +1,18 @@
 <?php
 
-namespace Cloudpdf\Tokens;
+namespace CloudPDF\Tokens;
 
 use Psr\Http\Client\ClientInterface;
-use Cloudpdf\Core\Client\RawClient;
-use Cloudpdf\Tokens\Requests\IssueTokensRequest;
-use Cloudpdf\Types\TokensIssue200Response;
-use Cloudpdf\Exceptions\CloudpdfException;
-use Cloudpdf\Exceptions\CloudpdfApiException;
-use Cloudpdf\Core\Json\JsonApiRequest;
-use Cloudpdf\Core\Client\HttpMethod;
+use CloudPDF\Core\Client\RawClient;
+use CloudPDF\Tokens\Requests\IssueTokensRequest;
+use CloudPDF\Types\TokensIssue200Response;
+use CloudPDF\Exceptions\CloudPDFException;
+use CloudPDF\Exceptions\CloudPDFApiException;
+use CloudPDF\Core\Json\JsonApiRequest;
+use CloudPDF\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
-use Cloudpdf\Tokens\Requests\TokensRevokeRequest;
+use CloudPDF\Tokens\Requests\TokensRevokeRequest;
 
 class TokensClient
 {
@@ -81,8 +81,8 @@ class TokensClient
      *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return ?TokensIssue200Response
-     * @throws CloudpdfException
-     * @throws CloudpdfApiException
+     * @throws CloudPDFException
+     * @throws CloudPDFApiException
      */
     public function issue(string $tenantId, IssueTokensRequest $request, ?array $options = null): ?TokensIssue200Response
     {
@@ -106,11 +106,11 @@ class TokensClient
                 return TokensIssue200Response::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new CloudpdfException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new CloudpdfException(message: $e->getMessage(), previous: $e);
+            throw new CloudPDFException(message: $e->getMessage(), previous: $e);
         }
-        throw new CloudpdfApiException(
+        throw new CloudPDFApiException(
             message: 'API request failed',
             statusCode: $statusCode,
             body: $response->getBody()->getContents(),
@@ -140,8 +140,8 @@ class TokensClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @throws CloudpdfException
-     * @throws CloudpdfApiException
+     * @throws CloudPDFException
+     * @throws CloudPDFApiException
      */
     public function revoke(string $tenantId, string $jti, TokensRevokeRequest $request = new TokensRevokeRequest(), ?array $options = null): void
     {
@@ -161,9 +161,9 @@ class TokensClient
                 return;
             }
         } catch (ClientExceptionInterface $e) {
-            throw new CloudpdfException(message: $e->getMessage(), previous: $e);
+            throw new CloudPDFException(message: $e->getMessage(), previous: $e);
         }
-        throw new CloudpdfApiException(
+        throw new CloudPDFApiException(
             message: 'API request failed',
             statusCode: $statusCode,
             body: $response->getBody()->getContents(),

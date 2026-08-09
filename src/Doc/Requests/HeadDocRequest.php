@@ -1,8 +1,8 @@
 <?php
 
-namespace Cloudpdf\Doc\Requests;
+namespace CloudPDF\Doc\Requests;
 
-use Cloudpdf\Core\Json\JsonSerializableType;
+use CloudPDF\Core\Json\JsonSerializableType;
 
 class HeadDocRequest extends JsonSerializableType
 {

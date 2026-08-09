@@ -1,11 +1,11 @@
 <?php
 
-namespace Cloudpdf\Documents\Requests;
+namespace CloudPDF\Documents\Requests;
 
-use Cloudpdf\Core\Json\JsonSerializableType;
-use Cloudpdf\Core\Json\JsonProperty;
-use Cloudpdf\Core\Types\ArrayType;
-use Cloudpdf\Documents\Types\DocumentsInitRequestDedupMode;
+use CloudPDF\Core\Json\JsonSerializableType;
+use CloudPDF\Core\Json\JsonProperty;
+use CloudPDF\Core\Types\ArrayType;
+use CloudPDF\Documents\Types\DocumentsInitRequestDedupMode;
 
 class DocumentsInitRequest extends JsonSerializableType
 {

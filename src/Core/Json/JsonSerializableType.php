@@ -1,15 +1,15 @@
 <?php
 
-namespace Cloudpdf\Core\Json;
+namespace CloudPDF\Core\Json;
 
 use DateTime;
 use Exception;
 use JsonException;
 use ReflectionNamedType;
 use ReflectionProperty;
-use Cloudpdf\Core\Types\ArrayType;
-use Cloudpdf\Core\Types\Date;
-use Cloudpdf\Core\Types\Union;
+use CloudPDF\Core\Types\ArrayType;
+use CloudPDF\Core\Types\Date;
+use CloudPDF\Core\Types\Union;
 
 /**
  * Provides generic serialization and deserialization methods.

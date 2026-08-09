@@ -1,6 +1,6 @@
 <?php
 
-namespace Cloudpdf\Types;
+namespace CloudPDF\Types;
 
 enum DocAnnotationsList200ResponseAnnotationsItemTextActionsPageVisibleRootType: string
 {

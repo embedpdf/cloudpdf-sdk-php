@@ -1,6 +1,6 @@
 <?php
 
-namespace Cloudpdf\Core\Types;
+namespace CloudPDF\Core\Types;
 
 use Attribute;
 

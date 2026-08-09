@@ -1,8 +1,8 @@
 <?php
 
-namespace Cloudpdf\Doc\Redactions\Requests;
+namespace CloudPDF\Doc\Redactions\Requests;
 
-use Cloudpdf\Core\Json\JsonSerializableType;
+use CloudPDF\Core\Json\JsonSerializableType;
 
 class ApplyRedactionsRequest extends JsonSerializableType
 {

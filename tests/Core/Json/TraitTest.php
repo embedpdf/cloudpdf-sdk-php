@@ -1,11 +1,11 @@
 <?php
 
-namespace Cloudpdf\Tests\Core\Json;
+namespace CloudPDF\Tests\Core\Json;
 
 use PHPUnit\Framework\TestCase;
-use Cloudpdf\Core\Json\JsonEncoder;
-use Cloudpdf\Core\Json\JsonProperty;
-use Cloudpdf\Core\Json\JsonSerializableType;
+use CloudPDF\Core\Json\JsonEncoder;
+use CloudPDF\Core\Json\JsonProperty;
+use CloudPDF\Core\Json\JsonSerializableType;
 
 trait IntegerPropertyTrait
 {

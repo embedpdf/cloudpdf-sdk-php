@@ -1,14 +1,14 @@
 <?php
 
-namespace Cloudpdf\Deployment;
+namespace CloudPDF\Deployment;
 
 use Psr\Http\Client\ClientInterface;
-use Cloudpdf\Core\Client\RawClient;
-use Cloudpdf\Types\DeploymentLicenseStatusResponse;
-use Cloudpdf\Exceptions\CloudpdfException;
-use Cloudpdf\Exceptions\CloudpdfApiException;
-use Cloudpdf\Core\Json\JsonApiRequest;
-use Cloudpdf\Core\Client\HttpMethod;
+use CloudPDF\Core\Client\RawClient;
+use CloudPDF\Types\DeploymentLicenseStatusResponse;
+use CloudPDF\Exceptions\CloudPDFException;
+use CloudPDF\Exceptions\CloudPDFApiException;
+use CloudPDF\Core\Json\JsonApiRequest;
+use CloudPDF\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
 
@@ -63,8 +63,8 @@ class DeploymentClient
      *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return ?DeploymentLicenseStatusResponse
-     * @throws CloudpdfException
-     * @throws CloudpdfApiException
+     * @throws CloudPDFException
+     * @throws CloudPDFApiException
      */
     public function licenseStatus(?array $options = null): ?DeploymentLicenseStatusResponse
     {
@@ -87,11 +87,11 @@ class DeploymentClient
                 return DeploymentLicenseStatusResponse::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new CloudpdfException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new CloudpdfException(message: $e->getMessage(), previous: $e);
+            throw new CloudPDFException(message: $e->getMessage(), previous: $e);
         }
-        throw new CloudpdfApiException(
+        throw new CloudPDFApiException(
             message: 'API request failed',
             statusCode: $statusCode,
             body: $response->getBody()->getContents(),

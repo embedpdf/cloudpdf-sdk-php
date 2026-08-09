@@ -1,13 +1,13 @@
 <?php
 
-namespace Cloudpdf\Exceptions;
+namespace CloudPDF\Exceptions;
 
 use Throwable;
 
 /**
  * This exception type will be thrown for any non-2XX API responses.
  */
-class CloudpdfApiException extends CloudpdfException
+class CloudPDFApiException extends CloudPDFException
 {
     /**
      * @var mixed $body

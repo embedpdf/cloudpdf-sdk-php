@@ -1,10 +1,10 @@
 <?php
 
-namespace Cloudpdf\Types;
+namespace CloudPDF\Types;
 
-use Cloudpdf\Core\Json\JsonSerializableType;
-use Cloudpdf\Core\Json\JsonProperty;
-use Cloudpdf\Core\Types\ArrayType;
+use CloudPDF\Core\Json\JsonSerializableType;
+use CloudPDF\Core\Json\JsonProperty;
+use CloudPDF\Core\Types\ArrayType;
 
 class DocAnnotationsList200ResponseAnnotationsItemRedactActionsCursorExit extends JsonSerializableType
 {

@@ -1,11 +1,11 @@
 <?php
 
-namespace Cloudpdf\Utils;
+namespace CloudPDF\Utils;
 
 use Exception;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Psr\Http\Message\StreamInterface;
-use Cloudpdf\Core\Multipart\MultipartFormDataPart;
+use CloudPDF\Core\Multipart\MultipartFormDataPart;
 
 /**
  * File is a utility class used to transfer files as multipart form data.

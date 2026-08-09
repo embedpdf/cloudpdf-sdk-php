@@ -1,23 +1,23 @@
 <?php
 
-namespace Cloudpdf\Doc\Pages;
+namespace CloudPDF\Doc\Pages;
 
 use Psr\Http\Client\ClientInterface;
-use Cloudpdf\Core\Client\RawClient;
-use Cloudpdf\Doc\Pages\Requests\DeletePagesRequest;
-use Cloudpdf\Types\DocPagesDelete200Response;
-use Cloudpdf\Exceptions\CloudpdfException;
-use Cloudpdf\Exceptions\CloudpdfApiException;
-use Cloudpdf\Core\Json\JsonApiRequest;
-use Cloudpdf\Core\Client\HttpMethod;
+use CloudPDF\Core\Client\RawClient;
+use CloudPDF\Doc\Pages\Requests\DeletePagesRequest;
+use CloudPDF\Types\DocPagesDelete200Response;
+use CloudPDF\Exceptions\CloudPDFException;
+use CloudPDF\Exceptions\CloudPDFApiException;
+use CloudPDF\Core\Json\JsonApiRequest;
+use CloudPDF\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
-use Cloudpdf\Doc\Pages\Requests\FlattenPagesRequest;
-use Cloudpdf\Types\DocPagesFlatten200Response;
-use Cloudpdf\Doc\Pages\Requests\MovePagesRequest;
-use Cloudpdf\Types\DocPagesMove200Response;
-use Cloudpdf\Doc\Pages\Requests\RotatePagesRequest;
-use Cloudpdf\Types\DocPagesRotate200Response;
+use CloudPDF\Doc\Pages\Requests\FlattenPagesRequest;
+use CloudPDF\Types\DocPagesFlatten200Response;
+use CloudPDF\Doc\Pages\Requests\MovePagesRequest;
+use CloudPDF\Types\DocPagesMove200Response;
+use CloudPDF\Doc\Pages\Requests\RotatePagesRequest;
+use CloudPDF\Types\DocPagesRotate200Response;
 
 class PagesClient
 {
@@ -81,8 +81,8 @@ class PagesClient
      *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return ?DocPagesDelete200Response
-     * @throws CloudpdfException
-     * @throws CloudpdfApiException
+     * @throws CloudPDFException
+     * @throws CloudPDFApiException
      */
     public function delete(string $docId, string $layerName, DeletePagesRequest $request, ?array $options = null): ?DocPagesDelete200Response
     {
@@ -111,11 +111,11 @@ class PagesClient
                 return DocPagesDelete200Response::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new CloudpdfException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new CloudpdfException(message: $e->getMessage(), previous: $e);
+            throw new CloudPDFException(message: $e->getMessage(), previous: $e);
         }
-        throw new CloudpdfApiException(
+        throw new CloudPDFApiException(
             message: 'API request failed',
             statusCode: $statusCode,
             body: $response->getBody()->getContents(),
@@ -148,8 +148,8 @@ class PagesClient
      *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return ?DocPagesFlatten200Response
-     * @throws CloudpdfException
-     * @throws CloudpdfApiException
+     * @throws CloudPDFException
+     * @throws CloudPDFApiException
      */
     public function flatten(string $docId, string $layerName, FlattenPagesRequest $request, ?array $options = null): ?DocPagesFlatten200Response
     {
@@ -178,11 +178,11 @@ class PagesClient
                 return DocPagesFlatten200Response::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new CloudpdfException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new CloudpdfException(message: $e->getMessage(), previous: $e);
+            throw new CloudPDFException(message: $e->getMessage(), previous: $e);
         }
-        throw new CloudpdfApiException(
+        throw new CloudPDFApiException(
             message: 'API request failed',
             statusCode: $statusCode,
             body: $response->getBody()->getContents(),
@@ -215,8 +215,8 @@ class PagesClient
      *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return ?DocPagesMove200Response
-     * @throws CloudpdfException
-     * @throws CloudpdfApiException
+     * @throws CloudPDFException
+     * @throws CloudPDFApiException
      */
     public function move(string $docId, string $layerName, MovePagesRequest $request, ?array $options = null): ?DocPagesMove200Response
     {
@@ -245,11 +245,11 @@ class PagesClient
                 return DocPagesMove200Response::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new CloudpdfException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new CloudpdfException(message: $e->getMessage(), previous: $e);
+            throw new CloudPDFException(message: $e->getMessage(), previous: $e);
         }
-        throw new CloudpdfApiException(
+        throw new CloudPDFApiException(
             message: 'API request failed',
             statusCode: $statusCode,
             body: $response->getBody()->getContents(),
@@ -282,8 +282,8 @@ class PagesClient
      *   bodyProperties?: array<string, mixed>,
      * } $options
      * @return ?DocPagesRotate200Response
-     * @throws CloudpdfException
-     * @throws CloudpdfApiException
+     * @throws CloudPDFException
+     * @throws CloudPDFApiException
      */
     public function rotate(string $docId, string $layerName, RotatePagesRequest $request, ?array $options = null): ?DocPagesRotate200Response
     {
@@ -312,11 +312,11 @@ class PagesClient
                 return DocPagesRotate200Response::fromJson($json);
             }
         } catch (JsonException $e) {
-            throw new CloudpdfException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
-            throw new CloudpdfException(message: $e->getMessage(), previous: $e);
+            throw new CloudPDFException(message: $e->getMessage(), previous: $e);
         }
-        throw new CloudpdfApiException(
+        throw new CloudPDFApiException(
             message: 'API request failed',
             statusCode: $statusCode,
             body: $response->getBody()->getContents(),

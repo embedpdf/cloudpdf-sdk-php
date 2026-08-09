@@ -1,23 +1,23 @@
 <?php
 
-namespace Cloudpdf\Tests\Core\Client;
+namespace CloudPDF\Tests\Core\Client;
 
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use Cloudpdf\Core\Client\HttpMethod;
-use Cloudpdf\Core\Client\HttpClientBuilder;
-use Cloudpdf\Core\Client\MockHttpClient;
-use Cloudpdf\Core\Client\RawClient;
-use Cloudpdf\Core\Client\RetryDecoratingClient;
-use Cloudpdf\Core\Json\JsonApiRequest;
-use Cloudpdf\Core\Json\JsonEncoder;
-use Cloudpdf\Core\Json\JsonSerializableType;
-use Cloudpdf\Core\Json\JsonProperty;
-use Cloudpdf\Core\Multipart\MultipartApiRequest;
-use Cloudpdf\Core\Multipart\MultipartFormData;
-use Cloudpdf\Core\Multipart\MultipartFormDataPart;
+use CloudPDF\Core\Client\HttpMethod;
+use CloudPDF\Core\Client\HttpClientBuilder;
+use CloudPDF\Core\Client\MockHttpClient;
+use CloudPDF\Core\Client\RawClient;
+use CloudPDF\Core\Client\RetryDecoratingClient;
+use CloudPDF\Core\Json\JsonApiRequest;
+use CloudPDF\Core\Json\JsonEncoder;
+use CloudPDF\Core\Json\JsonSerializableType;
+use CloudPDF\Core\Json\JsonProperty;
+use CloudPDF\Core\Multipart\MultipartApiRequest;
+use CloudPDF\Core\Multipart\MultipartFormData;
+use CloudPDF\Core\Multipart\MultipartFormDataPart;
 
 class JsonRequest extends JsonSerializableType
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Cloudpdf\Doc\Forms\Types;
+namespace CloudPDF\Doc\Forms\Types;
 
 enum ExportDataFormsRequestFormat: string
 {

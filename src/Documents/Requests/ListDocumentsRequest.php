@@ -1,9 +1,9 @@
 <?php
 
-namespace Cloudpdf\Documents\Requests;
+namespace CloudPDF\Documents\Requests;
 
-use Cloudpdf\Core\Json\JsonSerializableType;
-use Cloudpdf\Documents\Types\ListDocumentsRequestState;
+use CloudPDF\Core\Json\JsonSerializableType;
+use CloudPDF\Documents\Types\ListDocumentsRequestState;
 
 class ListDocumentsRequest extends JsonSerializableType
 {

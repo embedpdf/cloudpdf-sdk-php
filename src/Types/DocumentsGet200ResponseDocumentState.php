@@ -1,6 +1,6 @@
 <?php
 
-namespace Cloudpdf\Types;
+namespace CloudPDF\Types;
 
 enum DocumentsGet200ResponseDocumentState: string
 {

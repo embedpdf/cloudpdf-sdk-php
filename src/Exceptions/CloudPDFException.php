@@ -1,12 +1,12 @@
 <?php
 
-namespace Cloudpdf\Exceptions;
+namespace CloudPDF\Exceptions;
 
 use Exception;
 
 /**
  * Base exception class for all exceptions thrown by the SDK.
  */
-class CloudpdfException extends Exception
+class CloudPDFException extends Exception
 {
 }

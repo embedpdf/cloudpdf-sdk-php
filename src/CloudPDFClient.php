@@ -1,16 +1,16 @@
 <?php
 
-namespace Cloudpdf;
+namespace CloudPDF;
 
-use Cloudpdf\Deployment\DeploymentClient;
-use Cloudpdf\Doc\DocClient;
-use Cloudpdf\Tenants\TenantsClient;
-use Cloudpdf\Documents\DocumentsClient;
-use Cloudpdf\Tokens\TokensClient;
+use CloudPDF\Deployment\DeploymentClient;
+use CloudPDF\Doc\DocClient;
+use CloudPDF\Tenants\TenantsClient;
+use CloudPDF\Documents\DocumentsClient;
+use CloudPDF\Tokens\TokensClient;
 use Psr\Http\Client\ClientInterface;
-use Cloudpdf\Core\Client\RawClient;
+use CloudPDF\Core\Client\RawClient;
 
-class CloudpdfClient
+class CloudPDFClient
 {
     /**
      * @var DeploymentClient $deployment
@@ -70,9 +70,9 @@ class CloudpdfClient
         $defaultHeaders = [
             'Authorization' => "Bearer $token",
             'X-Fern-Language' => 'PHP',
-            'X-Fern-SDK-Name' => 'Cloudpdf',
+            'X-Fern-SDK-Name' => 'CloudPDF',
             'X-Fern-SDK-Version' => '3.0.0-alpha.1',
-            'User-Agent' => 'cloudpdf/cloudpdf/3.0.0-alpha.1',
+            'User-Agent' => 'cloudpdf/sdk/3.0.0-alpha.1',
         ];
 
         $this->options = $options ?? [];

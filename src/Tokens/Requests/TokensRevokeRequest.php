@@ -1,9 +1,9 @@
 <?php
 
-namespace Cloudpdf\Tokens\Requests;
+namespace CloudPDF\Tokens\Requests;
 
-use Cloudpdf\Core\Json\JsonSerializableType;
-use Cloudpdf\Core\Json\JsonProperty;
+use CloudPDF\Core\Json\JsonSerializableType;
+use CloudPDF\Core\Json\JsonProperty;
 
 class TokensRevokeRequest extends JsonSerializableType
 {
