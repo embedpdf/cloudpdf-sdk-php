@@ -1,6 +1,5 @@
 {
   "name": "cloudpdf/sdk",
-  "version": "3.0.0-alpha.1",
   "description": "CloudPDF PHP Library",
   "keywords": [
     "cloudpdf",
@@ -43,5 +42,16 @@
     "test": "phpunit",
     "analyze": "phpstan analyze src tests --memory-limit=1G"
   },
-  "homepage": "https://www.cloudpdf.com"
+  "homepage": "https://www.cloudpdf.com",
+  "authors": [
+    {
+      "name": "CloudPDF",
+      "email": "hello@cloudpdf.com",
+      "homepage": "https://www.cloudpdf.com"
+    }
+  ],
+  "support": {
+    "issues": "https://github.com/embedpdf/cloudpdf-sdk-php/issues",
+    "source": "https://github.com/embedpdf/cloudpdf-sdk-php"
+  }
 }
