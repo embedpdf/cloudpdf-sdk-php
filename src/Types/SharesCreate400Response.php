@@ -5,23 +5,23 @@ namespace CloudPDF\Types;
 use CloudPDF\Core\Json\JsonSerializableType;
 use CloudPDF\Core\Json\JsonProperty;
 
-class DocumentsUploadDirect200Response extends JsonSerializableType
+class SharesCreate400Response extends JsonSerializableType
 {
     /**
-     * @var string $sha256
+     * @var SharesCreate400ResponseError $error
      */
-    #[JsonProperty('sha256')]
-    public string $sha256;
+    #[JsonProperty('error')]
+    public SharesCreate400ResponseError $error;
 
     /**
      * @param array{
-     *   sha256: string,
+     *   error: SharesCreate400ResponseError,
      * } $values
      */
     public function __construct(
         array $values,
     ) {
-        $this->sha256 = $values['sha256'];
+        $this->error = $values['error'];
     }
 
     /**

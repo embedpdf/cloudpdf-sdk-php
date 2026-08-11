@@ -5,7 +5,7 @@ namespace CloudPDF\Types;
 use CloudPDF\Core\Json\JsonSerializableType;
 use CloudPDF\Core\Json\JsonProperty;
 
-class DocumentsUploadDirect400ResponseError extends JsonSerializableType
+class SharesExchange422ResponseError extends JsonSerializableType
 {
     /**
      * @var string $code
