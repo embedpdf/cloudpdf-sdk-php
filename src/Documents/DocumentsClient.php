@@ -15,7 +15,10 @@ use Psr\Http\Client\ClientExceptionInterface;
 use CloudPDF\Types\DocumentsGet200Response;
 use CloudPDF\Documents\Requests\DocumentsCommitRequest;
 use CloudPDF\Types\DocumentsCommit200Response;
-use CloudPDF\Types\DocumentsUploadDirect200Response;
+use CloudPDF\Documents\Requests\UploadProxyDocumentsRequest;
+use CloudPDF\Types\DocumentsUploadProxy200Response;
+use CloudPDF\Core\Multipart\MultipartFormData;
+use CloudPDF\Core\Multipart\MultipartApiRequest;
 use CloudPDF\Documents\Requests\DocumentsInitRequest;
 use CloudPDF\Types\DocumentsInit200Response;
 
@@ -383,29 +386,45 @@ class DocumentsClient
     }
 
     /**
+     * This bounded origin-mediated fallback must only be used after documents.init returns upload.kind=proxy. Auto mode prefers a presigned object-store PUT whenever available.
+     *
+     * Example:
+     * ```php
+     * $client->documents->uploadProxy(
+     *     'tenantId',
+     *     'id',
+     *     new UploadProxyDocumentsRequest([
+     *         'file' => File::createFromString("example_file", "example_file"),
+     *     ]),
+     * );
+     * ```
+     *
      * @param string $tenantId
      * @param string $id
+     * @param UploadProxyDocumentsRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
      *   timeout?: float,
      *   headers?: array<string, string>,
      *   queryParameters?: array<string, mixed>,
-     *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?DocumentsUploadDirect200Response
+     * @return ?DocumentsUploadProxy200Response
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function uploadDirect(string $tenantId, string $id, ?array $options = null): ?DocumentsUploadDirect200Response
+    public function uploadProxy(string $tenantId, string $id, UploadProxyDocumentsRequest $request, ?array $options = null): ?DocumentsUploadProxy200Response
     {
         $options = array_merge($this->options, $options ?? []);
+        $body = new MultipartFormData();
+        $body->addPart($request->file->toMultipartFormDataPart('file'));
         try {
             $response = $this->client->sendRequest(
-                new JsonApiRequest(
+                new MultipartApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "v1/tenants/{$tenantId}/documents/{$id}/upload-direct",
+                    path: "v1/tenants/{$tenantId}/documents/{$id}/upload-proxy",
                     method: HttpMethod::POST,
+                    body: $body,
                 ),
                 $options,
             );
@@ -415,7 +434,7 @@ class DocumentsClient
                 if (empty($json)) {
                     return null;
                 }
-                return DocumentsUploadDirect200Response::fromJson($json);
+                return DocumentsUploadProxy200Response::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);

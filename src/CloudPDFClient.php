@@ -4,6 +4,7 @@ namespace CloudPDF;
 
 use CloudPDF\Deployment\DeploymentClient;
 use CloudPDF\Doc\DocClient;
+use CloudPDF\Shares\SharesClient;
 use CloudPDF\Tenants\TenantsClient;
 use CloudPDF\Documents\DocumentsClient;
 use CloudPDF\Tokens\TokensClient;
@@ -21,6 +22,11 @@ class CloudPDFClient
      * @var DocClient $doc
      */
     public DocClient $doc;
+
+    /**
+     * @var SharesClient $shares
+     */
+    public SharesClient $shares;
 
     /**
      * @var TenantsClient $tenants
@@ -54,7 +60,7 @@ class CloudPDFClient
     private RawClient $client;
 
     /**
-     * @param string $token The token to use for authentication.
+     * @param ?string $token The token to use for authentication.
      * @param ?array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
@@ -64,16 +70,18 @@ class CloudPDFClient
      * } $options
      */
     public function __construct(
-        string $token,
+        ?string $token = null,
         ?array $options = null,
     ) {
         $defaultHeaders = [
-            'Authorization' => "Bearer $token",
             'X-Fern-Language' => 'PHP',
             'X-Fern-SDK-Name' => 'CloudPDF',
-            'X-Fern-SDK-Version' => '3.0.0-alpha.1',
-            'User-Agent' => 'cloudpdf/sdk/3.0.0-alpha.1',
+            'X-Fern-SDK-Version' => '3.0.0-alpha.3',
+            'User-Agent' => 'cloudpdf/sdk/3.0.0-alpha.3',
         ];
+        if ($token != null) {
+            $defaultHeaders['Authorization'] = "Bearer $token";
+        }
 
         $this->options = $options ?? [];
 
@@ -88,6 +96,7 @@ class CloudPDFClient
 
         $this->deployment = new DeploymentClient($this->client, $this->options);
         $this->doc = new DocClient($this->client, $this->options);
+        $this->shares = new SharesClient($this->client, $this->options);
         $this->tenants = new TenantsClient($this->client, $this->options);
         $this->documents = new DocumentsClient($this->client, $this->options);
         $this->tokens = new TokensClient($this->client, $this->options);

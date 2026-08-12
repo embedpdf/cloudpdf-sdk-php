@@ -26,6 +26,12 @@ class TenantsList200ResponseTenantsItem extends JsonSerializableType
     public bool $autoProvisioned;
 
     /**
+     * @var ?value-of<TenantsList200ResponseTenantsItemStatus> $status
+     */
+    #[JsonProperty('status')]
+    public ?string $status;
+
+    /**
      * @var float $createdAt
      */
     #[JsonProperty('createdAt')]
@@ -37,6 +43,7 @@ class TenantsList200ResponseTenantsItem extends JsonSerializableType
      *   name: string,
      *   autoProvisioned: bool,
      *   createdAt: float,
+     *   status?: ?value-of<TenantsList200ResponseTenantsItemStatus>,
      * } $values
      */
     public function __construct(
@@ -45,6 +52,7 @@ class TenantsList200ResponseTenantsItem extends JsonSerializableType
         $this->id = $values['id'];
         $this->name = $values['name'];
         $this->autoProvisioned = $values['autoProvisioned'];
+        $this->status = $values['status'] ?? null;
         $this->createdAt = $values['createdAt'];
     }
 
