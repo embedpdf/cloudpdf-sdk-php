@@ -15,6 +15,9 @@ use Psr\Http\Client\ClientExceptionInterface;
 use CloudPDF\Tenants\Requests\TenantsCreateRequest;
 use CloudPDF\Types\TenantsCreate200Response;
 use CloudPDF\Types\TenantsGet200Response;
+use CloudPDF\Tenants\Requests\TenantsSuspendRequest;
+use CloudPDF\Tenants\Requests\UsageTenantsRequest;
+use CloudPDF\Types\TenantsUsage200Response;
 
 class TenantsClient
 {
@@ -260,6 +263,165 @@ class TenantsClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 return;
             }
+        } catch (ClientExceptionInterface $e) {
+            throw new CloudPDFException(message: $e->getMessage(), previous: $e);
+        }
+        throw new CloudPDFApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * Example:
+     * ```php
+     * $client->tenants->resume(
+     *     'tenantId',
+     * );
+     * ```
+     *
+     * @param string $tenantId
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @throws CloudPDFException
+     * @throws CloudPDFApiException
+     */
+    public function resume(string $tenantId, ?array $options = null): void
+    {
+        $options = array_merge($this->options, $options ?? []);
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "v1/tenants/{$tenantId}/resume",
+                    method: HttpMethod::POST,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                return;
+            }
+        } catch (ClientExceptionInterface $e) {
+            throw new CloudPDFException(message: $e->getMessage(), previous: $e);
+        }
+        throw new CloudPDFApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * Instantly reversible with resume. The API token is exempt, so a suspended tenant can still be inspected, exported, resumed, or deleted.
+     *
+     * Example:
+     * ```php
+     * $client->tenants->suspend(
+     *     'tenantId',
+     *     new TenantsSuspendRequest([]),
+     * );
+     * ```
+     *
+     * @param string $tenantId
+     * @param TenantsSuspendRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @throws CloudPDFException
+     * @throws CloudPDFApiException
+     */
+    public function suspend(string $tenantId, TenantsSuspendRequest $request = new TenantsSuspendRequest(), ?array $options = null): void
+    {
+        $options = array_merge($this->options, $options ?? []);
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "v1/tenants/{$tenantId}/suspend",
+                    method: HttpMethod::POST,
+                    body: $request,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                return;
+            }
+        } catch (ClientExceptionInterface $e) {
+            throw new CloudPDFException(message: $e->getMessage(), previous: $e);
+        }
+        throw new CloudPDFApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * Facts only — no limits or billing state. Views count share exchanges plus authorized /v1/access grants, deduplicated across the two.
+     *
+     * Example:
+     * ```php
+     * $client->tenants->usage(
+     *     'tenantId',
+     *     new UsageTenantsRequest([]),
+     * );
+     * ```
+     *
+     * @param string $tenantId
+     * @param UsageTenantsRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return ?TenantsUsage200Response
+     * @throws CloudPDFException
+     * @throws CloudPDFApiException
+     */
+    public function usage(string $tenantId, UsageTenantsRequest $request = new UsageTenantsRequest(), ?array $options = null): ?TenantsUsage200Response
+    {
+        $options = array_merge($this->options, $options ?? []);
+        $query = [];
+        if ($request->period != null) {
+            $query['period'] = $request->period;
+        }
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "v1/tenants/{$tenantId}/usage",
+                    method: HttpMethod::GET,
+                    query: $query,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
+                return TenantsUsage200Response::fromJson($json);
+            }
+        } catch (JsonException $e) {
+            throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
             throw new CloudPDFException(message: $e->getMessage(), previous: $e);
         }

@@ -349,6 +349,460 @@ $client->doc->text(
 </dl>
 </details>
 
+## Shares
+<details><summary><code>$client-&gt;shares-&gt;exchange($request) -> ?SharesExchange200Response</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Unauthenticated, but requires a browser Origin header, checked against the grant allowlist. Unknown, revoked, and disabled tokens are indistinguishable (404). Passphrase-protected grants return 422 SharePasswordRequired until `password` is supplied. Mounted only when the deployment can sign (HS256 mode).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->shares->exchange(
+    new SharesExchangeRequest([
+        'shareToken' => 'shareToken',
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$shareToken:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$password:** `?string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;shares-&gt;list($tenantId, $request) -> ?SharesList200Response</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->shares->list(
+    'tenantId',
+    new ListSharesRequest([]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$tenantId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$limit:** `?int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$cursor:** `?string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$docId:** `?string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;shares-&gt;create($tenantId, $request) -> ?SharesCreate200Response</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+The returned share id IS the public share token. Mounted only when the deployment can sign (HS256 mode) — exchange mints session JWTs, so grants exist only where minting does.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->shares->create(
+    'tenantId',
+    new SharesCreateRequest([
+        'docId' => 'docId',
+        'scope' => [
+            'scope',
+        ],
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$tenantId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$docId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$layerName:** `?string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$scope:** `array` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$origins:** `?array` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$password:** `?string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$sessionTtlSeconds:** `?int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$expiresAt:** `?int` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;shares-&gt;get($tenantId, $shareId) -> ?SharesGet200Response</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->shares->get(
+    'tenantId',
+    'shareId',
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$tenantId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$shareId:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;shares-&gt;delete($tenantId, $shareId)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->shares->delete(
+    'tenantId',
+    'shareId',
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$tenantId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$shareId:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;shares-&gt;update($tenantId, $shareId, $request) -> ?SharesUpdate200Response</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->shares->update(
+    'tenantId',
+    'shareId',
+    new SharesUpdateRequest([]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$tenantId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$shareId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$scope:** `?array` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$origins:** `?array` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$password:** `?string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$sessionTtlSeconds:** `?int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$disabled:** `?bool` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$expiresAt:** `?int` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Tenants
 <details><summary><code>$client-&gt;tenants-&gt;list($request) -> ?TenantsList200Response</code></summary>
 <dl>
@@ -539,6 +993,178 @@ $client->tenants->delete(
 <dd>
 
 **$tenantId:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;tenants-&gt;resume($tenantId)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->tenants->resume(
+    'tenantId',
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$tenantId:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;tenants-&gt;suspend($tenantId, $request)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Instantly reversible with resume. The API token is exempt, so a suspended tenant can still be inspected, exported, resumed, or deleted.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->tenants->suspend(
+    'tenantId',
+    new TenantsSuspendRequest([]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$tenantId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$reason:** `?string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;tenants-&gt;usage($tenantId, $request) -> ?TenantsUsage200Response</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Facts only — no limits or billing state. Views count share exchanges plus authorized /v1/access grants, deduplicated across the two.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->tenants->usage(
+    'tenantId',
+    new UsageTenantsRequest([]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$tenantId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$period:** `?string` 
     
 </dd>
 </dl>
@@ -884,9 +1510,23 @@ $client->documents->thumbnail(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;documents-&gt;uploadDirect($tenantId, $id) -> ?DocumentsUploadDirect200Response</code></summary>
+<details><summary><code>$client-&gt;documents-&gt;uploadProxy($tenantId, $id, $request) -> ?DocumentsUploadProxy200Response</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+This bounded origin-mediated fallback must only be used after documents.init returns upload.kind=proxy. Auto mode prefers a presigned object-store PUT whenever available.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -897,7 +1537,13 @@ $client->documents->thumbnail(
 <dd>
 
 ```php
-$client->documents->uploadDirect($tenantId, $id): ?DocumentsUploadDirect200Response;
+$client->documents->uploadProxy(
+    'tenantId',
+    'id',
+    new UploadProxyDocumentsRequest([
+        'file' => File::createFromString("example_file", "example_file"),
+    ]),
+);
 ```
 </dd>
 </dl>
@@ -1023,6 +1669,14 @@ $client->documents->init(
 <dd>
 
 **$uploadTtlSec:** `?float` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$uploadPreference:** `?string` 
     
 </dd>
 </dl>

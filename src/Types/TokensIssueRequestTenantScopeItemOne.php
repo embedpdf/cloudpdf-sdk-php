@@ -9,4 +9,5 @@ enum TokensIssueRequestTenantScopeItemOne: string
     case DocsDelete = "docs.delete";
     case TokensIssueDoc = "tokens.issue-doc";
     case TokensRevoke = "tokens.revoke";
+    case SharesManage = "shares.manage";
 }

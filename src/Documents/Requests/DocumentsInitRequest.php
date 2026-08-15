@@ -6,6 +6,7 @@ use CloudPDF\Core\Json\JsonSerializableType;
 use CloudPDF\Core\Json\JsonProperty;
 use CloudPDF\Core\Types\ArrayType;
 use CloudPDF\Documents\Types\DocumentsInitRequestDedupMode;
+use CloudPDF\Documents\Types\DocumentsInitRequestUploadPreference;
 
 class DocumentsInitRequest extends JsonSerializableType
 {
@@ -52,6 +53,12 @@ class DocumentsInitRequest extends JsonSerializableType
     public ?float $uploadTtlSec;
 
     /**
+     * @var ?value-of<DocumentsInitRequestUploadPreference> $uploadPreference
+     */
+    #[JsonProperty('uploadPreference')]
+    public ?string $uploadPreference;
+
+    /**
      * @param array{
      *   contentLength: float,
      *   contentSha256: string,
@@ -60,6 +67,7 @@ class DocumentsInitRequest extends JsonSerializableType
      *   dedupMode?: ?value-of<DocumentsInitRequestDedupMode>,
      *   docId?: ?string,
      *   uploadTtlSec?: ?float,
+     *   uploadPreference?: ?value-of<DocumentsInitRequestUploadPreference>,
      * } $values
      */
     public function __construct(
@@ -72,5 +80,6 @@ class DocumentsInitRequest extends JsonSerializableType
         $this->dedupMode = $values['dedupMode'] ?? null;
         $this->docId = $values['docId'] ?? null;
         $this->uploadTtlSec = $values['uploadTtlSec'] ?? null;
+        $this->uploadPreference = $values['uploadPreference'] ?? null;
     }
 }
