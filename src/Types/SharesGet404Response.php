@@ -5,31 +5,23 @@ namespace CloudPDF\Types;
 use CloudPDF\Core\Json\JsonSerializableType;
 use CloudPDF\Core\Json\JsonProperty;
 
-class DocumentsInit200ResponseResumedUploadDirect extends JsonSerializableType
+class SharesGet404Response extends JsonSerializableType
 {
     /**
-     * @var string $url
+     * @var SharesGet404ResponseError $error
      */
-    #[JsonProperty('url')]
-    public string $url;
-
-    /**
-     * @var string $key
-     */
-    #[JsonProperty('key')]
-    public string $key;
+    #[JsonProperty('error')]
+    public SharesGet404ResponseError $error;
 
     /**
      * @param array{
-     *   url: string,
-     *   key: string,
+     *   error: SharesGet404ResponseError,
      * } $values
      */
     public function __construct(
         array $values,
     ) {
-        $this->url = $values['url'];
-        $this->key = $values['key'];
+        $this->error = $values['error'];
     }
 
     /**

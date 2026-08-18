@@ -10,6 +10,7 @@ enum DocFormsExportDataResponseCode: string
     case DocOpenFailed = "DocOpenFailed";
     case DocPasswordRequired = "DocPasswordRequired";
     case DocPasswordIncorrect = "DocPasswordIncorrect";
+    case SharePasswordRequired = "SharePasswordRequired";
     case Aborted = "Aborted";
     case Network = "Network";
     case Unauthenticated = "Unauthenticated";
