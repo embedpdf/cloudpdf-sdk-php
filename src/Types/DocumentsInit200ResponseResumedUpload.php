@@ -10,7 +10,7 @@ class DocumentsInit200ResponseResumedUpload extends JsonSerializableType
     /**
      * @var (
      *    'presigned'
-     *   |'direct'
+     *   |'proxy'
      *   |'_unknown'
      * ) $kind
      */
@@ -19,7 +19,7 @@ class DocumentsInit200ResponseResumedUpload extends JsonSerializableType
     /**
      * @var (
      *    DocumentsInit200ResponseResumedUploadPresigned
-     *   |DocumentsInit200ResponseResumedUploadDirect
+     *   |DocumentsInit200ResponseResumedUploadProxy
      *   |mixed
      * ) $value
      */
@@ -29,12 +29,12 @@ class DocumentsInit200ResponseResumedUpload extends JsonSerializableType
      * @param array{
      *   kind: (
      *    'presigned'
-     *   |'direct'
+     *   |'proxy'
      *   |'_unknown'
      * ),
      *   value: (
      *    DocumentsInit200ResponseResumedUploadPresigned
-     *   |DocumentsInit200ResponseResumedUploadDirect
+     *   |DocumentsInit200ResponseResumedUploadProxy
      *   |mixed
      * ),
      * } $values
@@ -59,14 +59,14 @@ class DocumentsInit200ResponseResumedUpload extends JsonSerializableType
     }
 
     /**
-     * @param DocumentsInit200ResponseResumedUploadDirect $direct
+     * @param DocumentsInit200ResponseResumedUploadProxy $proxy
      * @return DocumentsInit200ResponseResumedUpload
      */
-    public static function direct(DocumentsInit200ResponseResumedUploadDirect $direct): DocumentsInit200ResponseResumedUpload
+    public static function proxy(DocumentsInit200ResponseResumedUploadProxy $proxy): DocumentsInit200ResponseResumedUpload
     {
         return new DocumentsInit200ResponseResumedUpload([
-            'kind' => 'direct',
-            'value' => $direct,
+            'kind' => 'proxy',
+            'value' => $proxy,
         ]);
     }
 
@@ -95,19 +95,19 @@ class DocumentsInit200ResponseResumedUpload extends JsonSerializableType
     /**
      * @return bool
      */
-    public function isDirect(): bool
+    public function isProxy(): bool
     {
-        return $this->value instanceof DocumentsInit200ResponseResumedUploadDirect && $this->kind === 'direct';
+        return $this->value instanceof DocumentsInit200ResponseResumedUploadProxy && $this->kind === 'proxy';
     }
 
     /**
-     * @return DocumentsInit200ResponseResumedUploadDirect
+     * @return DocumentsInit200ResponseResumedUploadProxy
      */
-    public function asDirect(): DocumentsInit200ResponseResumedUploadDirect
+    public function asProxy(): DocumentsInit200ResponseResumedUploadProxy
     {
-        if (!($this->value instanceof DocumentsInit200ResponseResumedUploadDirect && $this->kind === 'direct')) {
+        if (!($this->value instanceof DocumentsInit200ResponseResumedUploadProxy && $this->kind === 'proxy')) {
             throw new Exception(
-                "Expected direct; got " . $this->kind . " with value of type " . get_debug_type($this->value),
+                "Expected proxy; got " . $this->kind . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -138,8 +138,8 @@ class DocumentsInit200ResponseResumedUpload extends JsonSerializableType
                 $value = $this->asPresigned()->jsonSerialize();
                 $result = array_merge($value, $result);
                 break;
-            case 'direct':
-                $value = $this->asDirect()->jsonSerialize();
+            case 'proxy':
+                $value = $this->asProxy()->jsonSerialize();
                 $result = array_merge($value, $result);
                 break;
             case '_unknown':
@@ -181,8 +181,8 @@ class DocumentsInit200ResponseResumedUpload extends JsonSerializableType
             case 'presigned':
                 $args['value'] = DocumentsInit200ResponseResumedUploadPresigned::jsonDeserialize($data);
                 break;
-            case 'direct':
-                $args['value'] = DocumentsInit200ResponseResumedUploadDirect::jsonDeserialize($data);
+            case 'proxy':
+                $args['value'] = DocumentsInit200ResponseResumedUploadProxy::jsonDeserialize($data);
                 break;
             case '_unknown':
             default:

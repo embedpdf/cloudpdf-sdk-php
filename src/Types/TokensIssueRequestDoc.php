@@ -57,6 +57,12 @@ class TokensIssueRequestDoc extends JsonSerializableType
     public ?array $groups;
 
     /**
+     * @var ?array<string> $origins
+     */
+    #[JsonProperty('origins'), ArrayType(['string'])]
+    public ?array $origins;
+
+    /**
      * @var int $expiresIn
      */
     #[JsonProperty('expiresIn')]
@@ -73,6 +79,7 @@ class TokensIssueRequestDoc extends JsonSerializableType
      *   displayName?: ?string,
      *   groupId?: ?string,
      *   groups?: ?array<string>,
+     *   origins?: ?array<string>,
      * } $values
      */
     public function __construct(
@@ -86,6 +93,7 @@ class TokensIssueRequestDoc extends JsonSerializableType
         $this->displayName = $values['displayName'] ?? null;
         $this->groupId = $values['groupId'] ?? null;
         $this->groups = $values['groups'] ?? null;
+        $this->origins = $values['origins'] ?? null;
         $this->expiresIn = $values['expiresIn'];
     }
 

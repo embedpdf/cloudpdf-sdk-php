@@ -148,6 +148,18 @@ class DocAnnotationsList200ResponseAnnotationsItemCaret extends JsonSerializable
     public ?DocAnnotationsList200ResponseAnnotationsItemCaretRectDifferences $rectDifferences;
 
     /**
+     * @var ?float $rotation
+     */
+    #[JsonProperty('rotation')]
+    public ?float $rotation;
+
+    /**
+     * @var ?DocAnnotationsList200ResponseAnnotationsItemCaretUnrotatedRect $unrotatedRect
+     */
+    #[JsonProperty('unrotatedRect')]
+    public ?DocAnnotationsList200ResponseAnnotationsItemCaretUnrotatedRect $unrotatedRect;
+
+    /**
      * @param array{
      *   ref: DocAnnotationsList200ResponseAnnotationsItemCaretRef,
      *   pageObjectNumber: int,
@@ -172,6 +184,8 @@ class DocAnnotationsList200ResponseAnnotationsItemCaret extends JsonSerializable
      *   actions?: ?DocAnnotationsList200ResponseAnnotationsItemCaretActions,
      *   intent?: ?value-of<DocAnnotationsList200ResponseAnnotationsItemCaretIntent>,
      *   rectDifferences?: ?DocAnnotationsList200ResponseAnnotationsItemCaretRectDifferences,
+     *   rotation?: ?float,
+     *   unrotatedRect?: ?DocAnnotationsList200ResponseAnnotationsItemCaretUnrotatedRect,
      * } $values
      */
     public function __construct(
@@ -200,6 +214,8 @@ class DocAnnotationsList200ResponseAnnotationsItemCaret extends JsonSerializable
         $this->opacity = $values['opacity'];
         $this->intent = $values['intent'] ?? null;
         $this->rectDifferences = $values['rectDifferences'] ?? null;
+        $this->rotation = $values['rotation'] ?? null;
+        $this->unrotatedRect = $values['unrotatedRect'] ?? null;
     }
 
     /**
