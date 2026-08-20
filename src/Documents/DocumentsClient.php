@@ -19,6 +19,8 @@ use CloudPDF\Documents\Requests\UploadProxyDocumentsRequest;
 use CloudPDF\Types\DocumentsUploadProxy200Response;
 use CloudPDF\Core\Multipart\MultipartFormData;
 use CloudPDF\Core\Multipart\MultipartApiRequest;
+use CloudPDF\Documents\Requests\DocumentsImportFromRequest;
+use CloudPDF\Types\DocumentsImportFrom200Response;
 use CloudPDF\Documents\Requests\DocumentsInitRequest;
 use CloudPDF\Types\DocumentsInit200Response;
 
@@ -435,6 +437,68 @@ class DocumentsClient
                     return null;
                 }
                 return DocumentsUploadProxy200Response::fromJson($json);
+            }
+        } catch (JsonException $e) {
+            throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (ClientExceptionInterface $e) {
+            throw new CloudPDFException(message: $e->getMessage(), previous: $e);
+        }
+        throw new CloudPDFApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * Default mode is synchronous and bounded: the response returns only after the transfer verified and committed (or failed). mode=async (connection sources only) answers 202 immediately and an in-process worker performs the transfer with leased, fenced retries; poll the document until ready/failed. The deployment import policy gates scheme, network range, and size; sources must declare a length. CloudPDF copies and owns the bytes — the source is never referenced in place. A 502 marks a retryable upstream failure: retry with the same idempotencyKey to resume the same document. URL sources are capabilities and never echoed back. Connection sources name operator-registered storage (bucket/prefix scope, allowed credential classes, and tenant bindings are deployment configuration); `revision` is provider-interpreted (S3 VersionId, GCS generation, Azure version id).
+     *
+     * Example:
+     * ```php
+     * $client->documents->importFrom(
+     *     'tenantId',
+     *     new DocumentsImportFromRequest([
+     *         'source' => DocumentsImportFromRequestSource::url(new DocumentsImportFromRequestSourceUrl([
+     *             'url' => 'url',
+     *         ])),
+     *     ]),
+     * );
+     * ```
+     *
+     * @param string $tenantId
+     * @param DocumentsImportFromRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return ?DocumentsImportFrom200Response
+     * @throws CloudPDFException
+     * @throws CloudPDFApiException
+     */
+    public function importFrom(string $tenantId, DocumentsImportFromRequest $request, ?array $options = null): ?DocumentsImportFrom200Response
+    {
+        $options = array_merge($this->options, $options ?? []);
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "v1/tenants/{$tenantId}/documents/import",
+                    method: HttpMethod::POST,
+                    body: $request,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
+                return DocumentsImportFrom200Response::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
