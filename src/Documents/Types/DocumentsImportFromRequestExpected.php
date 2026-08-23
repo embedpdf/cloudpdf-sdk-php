@@ -5,16 +5,19 @@ namespace CloudPDF\Documents\Types;
 use CloudPDF\Core\Json\JsonSerializableType;
 use CloudPDF\Core\Json\JsonProperty;
 
+/**
+ * Integrity pins, enforced when present. When absent, the server-observed values become authoritative.
+ */
 class DocumentsImportFromRequestExpected extends JsonSerializableType
 {
     /**
-     * @var ?int $sizeBytes
+     * @var ?int $sizeBytes Checked against the source's declared Content-Length before the transfer.
      */
     #[JsonProperty('sizeBytes')]
     public ?int $sizeBytes;
 
     /**
-     * @var ?string $sha256
+     * @var ?string $sha256 Checked against the server-observed digest after the transfer. Required when dedupMode is reuse-existing.
      */
     #[JsonProperty('sha256')]
     public ?string $sha256;

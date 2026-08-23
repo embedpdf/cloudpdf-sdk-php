@@ -13,13 +13,13 @@ use CloudPDF\Documents\Types\DocumentsImportFromRequestMode;
 class DocumentsImportFromRequest extends JsonSerializableType
 {
     /**
-     * @var DocumentsImportFromRequestSource $source
+     * @var DocumentsImportFromRequestSource $source Where CloudPDF pulls the bytes from. The two shapes differ in WHO supplies the authority to read, not in which storage vendor holds the file.
      */
     #[JsonProperty('source')]
     public DocumentsImportFromRequestSource $source;
 
     /**
-     * @var ?DocumentsImportFromRequestExpected $expected
+     * @var ?DocumentsImportFromRequestExpected $expected Integrity pins, enforced when present. When absent, the server-observed values become authoritative.
      */
     #[JsonProperty('expected')]
     public ?DocumentsImportFromRequestExpected $expected;
@@ -31,13 +31,13 @@ class DocumentsImportFromRequest extends JsonSerializableType
     public ?array $metadata;
 
     /**
-     * @var ?string $idempotencyKey
+     * @var ?string $idempotencyKey Retrying with the same key resumes the same document rather than importing a second copy — including after a 502.
      */
     #[JsonProperty('idempotencyKey')]
     public ?string $idempotencyKey;
 
     /**
-     * @var ?value-of<DocumentsImportFromRequestDedupMode> $dedupMode
+     * @var ?value-of<DocumentsImportFromRequestDedupMode> $dedupMode always-create (default) creates a new document every time. reuse-existing returns a document that already holds the same content instead of storing it twice.
      */
     #[JsonProperty('dedupMode')]
     public ?string $dedupMode;
@@ -49,7 +49,7 @@ class DocumentsImportFromRequest extends JsonSerializableType
     public ?string $docId;
 
     /**
-     * @var ?value-of<DocumentsImportFromRequestMode> $mode
+     * @var ?value-of<DocumentsImportFromRequestMode> $mode sync (default) holds the response open for the whole transfer. async answers 202 with the document pending and transfers in the background; it requires a connection source, and filesystem connections additionally require expected.sha256.
      */
     #[JsonProperty('mode')]
     public ?string $mode;

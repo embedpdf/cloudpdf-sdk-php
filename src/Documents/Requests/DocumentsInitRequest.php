@@ -35,7 +35,7 @@ class DocumentsInitRequest extends JsonSerializableType
     public ?string $idempotencyKey;
 
     /**
-     * @var ?value-of<DocumentsInitRequestDedupMode> $dedupMode
+     * @var ?value-of<DocumentsInitRequestDedupMode> $dedupMode always-create (default) creates a new document every time. reuse-existing returns a document that already holds the same content instead of storing it twice.
      */
     #[JsonProperty('dedupMode')]
     public ?string $dedupMode;
