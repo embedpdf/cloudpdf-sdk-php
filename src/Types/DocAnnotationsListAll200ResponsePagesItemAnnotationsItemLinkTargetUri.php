@@ -1,0 +1,34 @@
+<?php
+
+namespace CloudPDF\Types;
+
+use CloudPDF\Core\Json\JsonSerializableType;
+use CloudPDF\Core\Json\JsonProperty;
+
+class DocAnnotationsListAll200ResponsePagesItemAnnotationsItemLinkTargetUri extends JsonSerializableType
+{
+    /**
+     * @var string $uri
+     */
+    #[JsonProperty('uri')]
+    public string $uri;
+
+    /**
+     * @param array{
+     *   uri: string,
+     * } $values
+     */
+    public function __construct(
+        array $values,
+    ) {
+        $this->uri = $values['uri'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
+}

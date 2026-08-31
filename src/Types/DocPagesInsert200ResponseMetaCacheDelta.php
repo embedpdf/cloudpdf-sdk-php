@@ -21,6 +21,12 @@ class DocPagesInsert200ResponseMetaCacheDelta extends JsonSerializableType
     public int $docVersion;
 
     /**
+     * @var ?int $annotationsVersion
+     */
+    #[JsonProperty('annotationsVersion')]
+    public ?int $annotationsVersion;
+
+    /**
      * @var array<DocPagesInsert200ResponseMetaCacheDeltaPagesItem> $pages
      */
     #[JsonProperty('pages'), ArrayType([DocPagesInsert200ResponseMetaCacheDeltaPagesItem::class])]
@@ -31,6 +37,7 @@ class DocPagesInsert200ResponseMetaCacheDelta extends JsonSerializableType
      *   previousDocVersion: int,
      *   docVersion: int,
      *   pages: array<DocPagesInsert200ResponseMetaCacheDeltaPagesItem>,
+     *   annotationsVersion?: ?int,
      * } $values
      */
     public function __construct(
@@ -38,6 +45,7 @@ class DocPagesInsert200ResponseMetaCacheDelta extends JsonSerializableType
     ) {
         $this->previousDocVersion = $values['previousDocVersion'];
         $this->docVersion = $values['docVersion'];
+        $this->annotationsVersion = $values['annotationsVersion'] ?? null;
         $this->pages = $values['pages'];
     }
 

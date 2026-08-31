@@ -59,6 +59,12 @@ class DocAnnotationsList200ResponseAnnotationsItemStrikeout extends JsonSerializ
     public ?string $contents;
 
     /**
+     * @var ?string $subject
+     */
+    #[JsonProperty('subject')]
+    public ?string $subject;
+
+    /**
      * @var ?string $author
      */
     #[JsonProperty('author')]
@@ -162,6 +168,7 @@ class DocAnnotationsList200ResponseAnnotationsItemStrikeout extends JsonSerializ
      *   quadPoints: array<DocAnnotationsList200ResponseAnnotationsItemStrikeoutQuadPointsItem>,
      *   nm?: ?string,
      *   contents?: ?string,
+     *   subject?: ?string,
      *   author?: ?string,
      *   created?: ?DateTime,
      *   modified?: ?DateTime,
@@ -186,6 +193,7 @@ class DocAnnotationsList200ResponseAnnotationsItemStrikeout extends JsonSerializ
         $this->flags = $values['flags'];
         $this->rect = $values['rect'];
         $this->contents = $values['contents'] ?? null;
+        $this->subject = $values['subject'] ?? null;
         $this->author = $values['author'] ?? null;
         $this->created = $values['created'] ?? null;
         $this->modified = $values['modified'] ?? null;

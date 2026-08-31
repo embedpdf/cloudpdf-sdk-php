@@ -1963,6 +1963,80 @@ $client->tokens->revoke(
 </details>
 
 ## Doc Annotations
+<details><summary><code>$client-&gt;doc-&gt;annotations-&gt;listAll($docId, $layerName, $request) -> ?DocAnnotationsListAll200Response</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns one entry per page plus the audit-log cursor for reconciling subsequent document events. Page order is unspecified; join by `pageState.pageObjectNumber` when display order matters.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->doc->annotations->listAll(
+    'docId',
+    'layerName',
+    new ListAllAnnotationsRequest([]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$docId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$layerName:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$documentPassword:** `?string` — Base64-encoded password for an encrypted document. Valid only with the API token (403 anywhere else). An encrypted document answers 422 DocPasswordRequired when the header is absent. Viewer doc JWTs use the SDK password-session flow instead.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>$client-&gt;doc-&gt;annotations-&gt;list($docId, $layerName, $pon, $request) -> ?DocAnnotationsList200Response</code></summary>
 <dl>
 <dd>
