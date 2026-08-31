@@ -58,6 +58,12 @@ class DocAnnotationsList200ResponseAnnotationsItemText extends JsonSerializableT
     public ?string $contents;
 
     /**
+     * @var ?string $subject
+     */
+    #[JsonProperty('subject')]
+    public ?string $subject;
+
+    /**
      * @var ?string $author
      */
     #[JsonProperty('author')]
@@ -142,6 +148,18 @@ class DocAnnotationsList200ResponseAnnotationsItemText extends JsonSerializableT
     public string $icon;
 
     /**
+     * @var ?string $state
+     */
+    #[JsonProperty('state')]
+    public ?string $state;
+
+    /**
+     * @var ?string $stateModel
+     */
+    #[JsonProperty('stateModel')]
+    public ?string $stateModel;
+
+    /**
      * @param array{
      *   ref: DocAnnotationsList200ResponseAnnotationsItemTextRef,
      *   pageObjectNumber: int,
@@ -155,6 +173,7 @@ class DocAnnotationsList200ResponseAnnotationsItemText extends JsonSerializableT
      *   icon: value-of<DocAnnotationsList200ResponseAnnotationsItemTextIcon>,
      *   nm?: ?string,
      *   contents?: ?string,
+     *   subject?: ?string,
      *   author?: ?string,
      *   created?: ?DateTime,
      *   modified?: ?DateTime,
@@ -165,6 +184,8 @@ class DocAnnotationsList200ResponseAnnotationsItemText extends JsonSerializableT
      *   createdBy?: ?string,
      *   updatedBy?: ?string,
      *   actions?: ?DocAnnotationsList200ResponseAnnotationsItemTextActions,
+     *   state?: ?string,
+     *   stateModel?: ?string,
      * } $values
      */
     public function __construct(
@@ -178,6 +199,7 @@ class DocAnnotationsList200ResponseAnnotationsItemText extends JsonSerializableT
         $this->flags = $values['flags'];
         $this->rect = $values['rect'];
         $this->contents = $values['contents'] ?? null;
+        $this->subject = $values['subject'] ?? null;
         $this->author = $values['author'] ?? null;
         $this->created = $values['created'] ?? null;
         $this->modified = $values['modified'] ?? null;
@@ -192,6 +214,8 @@ class DocAnnotationsList200ResponseAnnotationsItemText extends JsonSerializableT
         $this->color = $values['color'];
         $this->opacity = $values['opacity'];
         $this->icon = $values['icon'];
+        $this->state = $values['state'] ?? null;
+        $this->stateModel = $values['stateModel'] ?? null;
     }
 
     /**

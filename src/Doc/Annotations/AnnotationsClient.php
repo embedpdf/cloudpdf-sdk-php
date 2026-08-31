@@ -4,14 +4,16 @@ namespace CloudPDF\Doc\Annotations;
 
 use Psr\Http\Client\ClientInterface;
 use CloudPDF\Core\Client\RawClient;
-use CloudPDF\Doc\Annotations\Requests\ListAnnotationsRequest;
-use CloudPDF\Types\DocAnnotationsList200Response;
+use CloudPDF\Doc\Annotations\Requests\ListAllAnnotationsRequest;
+use CloudPDF\Types\DocAnnotationsListAll200Response;
 use CloudPDF\Exceptions\CloudPDFException;
 use CloudPDF\Exceptions\CloudPDFApiException;
 use CloudPDF\Core\Json\JsonApiRequest;
 use CloudPDF\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
+use CloudPDF\Doc\Annotations\Requests\ListAnnotationsRequest;
+use CloudPDF\Types\DocAnnotationsList200Response;
 use CloudPDF\Doc\Annotations\Requests\CreateAnnotationsRequest;
 use CloudPDF\Types\DocAnnotationsCreate200Response;
 use CloudPDF\Doc\Annotations\Requests\DeleteAnnotationsRequest;
@@ -53,6 +55,70 @@ class AnnotationsClient
     ) {
         $this->client = $client;
         $this->options = $options ?? [];
+    }
+
+    /**
+     * Returns one entry per page plus the audit-log cursor for reconciling subsequent document events. Page order is unspecified; join by `pageState.pageObjectNumber` when display order matters.
+     *
+     * Example:
+     * ```php
+     * $client->doc->annotations->listAll(
+     *     'docId',
+     *     'layerName',
+     *     new ListAllAnnotationsRequest([]),
+     * );
+     * ```
+     *
+     * @param string $docId
+     * @param string $layerName
+     * @param ListAllAnnotationsRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return ?DocAnnotationsListAll200Response
+     * @throws CloudPDFException
+     * @throws CloudPDFApiException
+     */
+    public function listAll(string $docId, string $layerName, ListAllAnnotationsRequest $request = new ListAllAnnotationsRequest(), ?array $options = null): ?DocAnnotationsListAll200Response
+    {
+        $options = array_merge($this->options, $options ?? []);
+        $headers = [];
+        if ($request->documentPassword != null) {
+            $headers['X-Document-Password'] = $request->documentPassword;
+        }
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "v1/docs/{$docId}/layers/{$layerName}/annotations/items",
+                    method: HttpMethod::GET,
+                    headers: $headers,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
+                return DocAnnotationsListAll200Response::fromJson($json);
+            }
+        } catch (JsonException $e) {
+            throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (ClientExceptionInterface $e) {
+            throw new CloudPDFException(message: $e->getMessage(), previous: $e);
+        }
+        throw new CloudPDFApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
     }
 
     /**
