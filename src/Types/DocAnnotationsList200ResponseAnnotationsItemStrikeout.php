@@ -125,10 +125,10 @@ class DocAnnotationsList200ResponseAnnotationsItemStrikeout extends JsonSerializ
     public ?string $updatedBy;
 
     /**
-     * @var ?DocAnnotationsList200ResponseAnnotationsItemStrikeoutActions $actions
+     * @var ?PdfAnnotationActions $actions
      */
     #[JsonProperty('actions')]
-    public ?DocAnnotationsList200ResponseAnnotationsItemStrikeoutActions $actions;
+    public ?PdfAnnotationActions $actions;
 
     /**
      * @var DocAnnotationsList200ResponseAnnotationsItemStrikeoutColor $color
@@ -178,7 +178,7 @@ class DocAnnotationsList200ResponseAnnotationsItemStrikeout extends JsonSerializ
      *   groupId?: ?string,
      *   createdBy?: ?string,
      *   updatedBy?: ?string,
-     *   actions?: ?DocAnnotationsList200ResponseAnnotationsItemStrikeoutActions,
+     *   actions?: ?PdfAnnotationActions,
      *   intent?: ?value-of<DocAnnotationsList200ResponseAnnotationsItemStrikeoutIntent>,
      * } $values
      */

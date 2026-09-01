@@ -124,10 +124,10 @@ class DocAnnotationsListAll200ResponsePagesItemAnnotationsItemFileAttachment ext
     public ?string $updatedBy;
 
     /**
-     * @var ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemFileAttachmentActions $actions
+     * @var ?PdfAnnotationActions $actions
      */
     #[JsonProperty('actions')]
-    public ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemFileAttachmentActions $actions;
+    public ?PdfAnnotationActions $actions;
 
     /**
      * @var DocAnnotationsListAll200ResponsePagesItemAnnotationsItemFileAttachmentColor $color
@@ -178,7 +178,7 @@ class DocAnnotationsListAll200ResponsePagesItemAnnotationsItemFileAttachment ext
      *   groupId?: ?string,
      *   createdBy?: ?string,
      *   updatedBy?: ?string,
-     *   actions?: ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemFileAttachmentActions,
+     *   actions?: ?PdfAnnotationActions,
      * } $values
      */
     public function __construct(

@@ -124,10 +124,10 @@ class DocAnnotationsList200ResponseAnnotationsItemCaret extends JsonSerializable
     public ?string $updatedBy;
 
     /**
-     * @var ?DocAnnotationsList200ResponseAnnotationsItemCaretActions $actions
+     * @var ?PdfAnnotationActions $actions
      */
     #[JsonProperty('actions')]
-    public ?DocAnnotationsList200ResponseAnnotationsItemCaretActions $actions;
+    public ?PdfAnnotationActions $actions;
 
     /**
      * @var DocAnnotationsList200ResponseAnnotationsItemCaretColor $color
@@ -188,7 +188,7 @@ class DocAnnotationsList200ResponseAnnotationsItemCaret extends JsonSerializable
      *   groupId?: ?string,
      *   createdBy?: ?string,
      *   updatedBy?: ?string,
-     *   actions?: ?DocAnnotationsList200ResponseAnnotationsItemCaretActions,
+     *   actions?: ?PdfAnnotationActions,
      *   intent?: ?value-of<DocAnnotationsList200ResponseAnnotationsItemCaretIntent>,
      *   rectDifferences?: ?DocAnnotationsList200ResponseAnnotationsItemCaretRectDifferences,
      *   rotation?: ?float,

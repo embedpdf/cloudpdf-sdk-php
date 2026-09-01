@@ -125,10 +125,10 @@ class DocAnnotationsList200ResponseAnnotationsItemHighlight extends JsonSerializ
     public ?string $updatedBy;
 
     /**
-     * @var ?DocAnnotationsList200ResponseAnnotationsItemHighlightActions $actions
+     * @var ?PdfAnnotationActions $actions
      */
     #[JsonProperty('actions')]
-    public ?DocAnnotationsList200ResponseAnnotationsItemHighlightActions $actions;
+    public ?PdfAnnotationActions $actions;
 
     /**
      * @var DocAnnotationsList200ResponseAnnotationsItemHighlightColor $color
@@ -172,7 +172,7 @@ class DocAnnotationsList200ResponseAnnotationsItemHighlight extends JsonSerializ
      *   groupId?: ?string,
      *   createdBy?: ?string,
      *   updatedBy?: ?string,
-     *   actions?: ?DocAnnotationsList200ResponseAnnotationsItemHighlightActions,
+     *   actions?: ?PdfAnnotationActions,
      * } $values
      */
     public function __construct(

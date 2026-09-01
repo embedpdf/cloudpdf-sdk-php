@@ -63,10 +63,10 @@ class DocFormsGet200ResponseFieldsItemPushbutton extends JsonSerializableType
     public DocFormsGet200ResponseFieldsItemPushbuttonDefaultValueEntry $defaultValueEntry;
 
     /**
-     * @var ?DocFormsGet200ResponseFieldsItemPushbuttonActions $actions
+     * @var ?PdfFieldActions $actions
      */
     #[JsonProperty('actions')]
-    public ?DocFormsGet200ResponseFieldsItemPushbuttonActions $actions;
+    public ?PdfFieldActions $actions;
 
     /**
      * @var array<DocFormsGet200ResponseFieldsItemPushbuttonWidgetsItem> $widgets
@@ -86,7 +86,7 @@ class DocFormsGet200ResponseFieldsItemPushbutton extends JsonSerializableType
      *   widgets: array<DocFormsGet200ResponseFieldsItemPushbuttonWidgetsItem>,
      *   alternateName?: ?string,
      *   mappingName?: ?string,
-     *   actions?: ?DocFormsGet200ResponseFieldsItemPushbuttonActions,
+     *   actions?: ?PdfFieldActions,
      * } $values
      */
     public function __construct(

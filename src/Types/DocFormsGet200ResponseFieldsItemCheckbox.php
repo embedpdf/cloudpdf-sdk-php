@@ -63,10 +63,10 @@ class DocFormsGet200ResponseFieldsItemCheckbox extends JsonSerializableType
     public DocFormsGet200ResponseFieldsItemCheckboxDefaultValueEntry $defaultValueEntry;
 
     /**
-     * @var ?DocFormsGet200ResponseFieldsItemCheckboxActions $actions
+     * @var ?PdfFieldActions $actions
      */
     #[JsonProperty('actions')]
-    public ?DocFormsGet200ResponseFieldsItemCheckboxActions $actions;
+    public ?PdfFieldActions $actions;
 
     /**
      * @var array<DocFormsGet200ResponseFieldsItemCheckboxWidgetsItem> $widgets
@@ -100,7 +100,7 @@ class DocFormsGet200ResponseFieldsItemCheckbox extends JsonSerializableType
      *   exportValue: string,
      *   alternateName?: ?string,
      *   mappingName?: ?string,
-     *   actions?: ?DocFormsGet200ResponseFieldsItemCheckboxActions,
+     *   actions?: ?PdfFieldActions,
      * } $values
      */
     public function __construct(

@@ -63,10 +63,10 @@ class DocFormsGet200ResponseFieldsItemUnknown extends JsonSerializableType
     public DocFormsGet200ResponseFieldsItemUnknownDefaultValueEntry $defaultValueEntry;
 
     /**
-     * @var ?DocFormsGet200ResponseFieldsItemUnknownActions $actions
+     * @var ?PdfFieldActions $actions
      */
     #[JsonProperty('actions')]
-    public ?DocFormsGet200ResponseFieldsItemUnknownActions $actions;
+    public ?PdfFieldActions $actions;
 
     /**
      * @var array<DocFormsGet200ResponseFieldsItemUnknownWidgetsItem> $widgets
@@ -93,7 +93,7 @@ class DocFormsGet200ResponseFieldsItemUnknown extends JsonSerializableType
      *   rawValue: string,
      *   alternateName?: ?string,
      *   mappingName?: ?string,
-     *   actions?: ?DocFormsGet200ResponseFieldsItemUnknownActions,
+     *   actions?: ?PdfFieldActions,
      * } $values
      */
     public function __construct(

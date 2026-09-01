@@ -125,10 +125,10 @@ class DocAnnotationsListAll200ResponsePagesItemAnnotationsItemFreeText extends J
     public ?string $updatedBy;
 
     /**
-     * @var ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemFreeTextActions $actions
+     * @var ?PdfAnnotationActions $actions
      */
     #[JsonProperty('actions')]
-    public ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemFreeTextActions $actions;
+    public ?PdfAnnotationActions $actions;
 
     /**
      * @var value-of<DocAnnotationsListAll200ResponsePagesItemAnnotationsItemFreeTextIntent> $intent
@@ -255,7 +255,7 @@ class DocAnnotationsListAll200ResponsePagesItemAnnotationsItemFreeText extends J
      *   groupId?: ?string,
      *   createdBy?: ?string,
      *   updatedBy?: ?string,
-     *   actions?: ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemFreeTextActions,
+     *   actions?: ?PdfAnnotationActions,
      *   fontColor?: ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemFreeTextFontColor,
      *   interiorColor?: ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemFreeTextInteriorColor,
      *   dashArray?: ?array<float>,

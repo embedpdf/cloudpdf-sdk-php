@@ -125,10 +125,10 @@ class DocAnnotationsListAll200ResponsePagesItemAnnotationsItemUnderline extends 
     public ?string $updatedBy;
 
     /**
-     * @var ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemUnderlineActions $actions
+     * @var ?PdfAnnotationActions $actions
      */
     #[JsonProperty('actions')]
-    public ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemUnderlineActions $actions;
+    public ?PdfAnnotationActions $actions;
 
     /**
      * @var DocAnnotationsListAll200ResponsePagesItemAnnotationsItemUnderlineColor $color
@@ -172,7 +172,7 @@ class DocAnnotationsListAll200ResponsePagesItemAnnotationsItemUnderline extends 
      *   groupId?: ?string,
      *   createdBy?: ?string,
      *   updatedBy?: ?string,
-     *   actions?: ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemUnderlineActions,
+     *   actions?: ?PdfAnnotationActions,
      * } $values
      */
     public function __construct(

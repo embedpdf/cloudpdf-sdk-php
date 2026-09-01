@@ -125,10 +125,10 @@ class DocAnnotationsListAll200ResponsePagesItemAnnotationsItemSquare extends Jso
     public ?string $updatedBy;
 
     /**
-     * @var ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemSquareActions $actions
+     * @var ?PdfAnnotationActions $actions
      */
     #[JsonProperty('actions')]
-    public ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemSquareActions $actions;
+    public ?PdfAnnotationActions $actions;
 
     /**
      * @var DocAnnotationsListAll200ResponsePagesItemAnnotationsItemSquareColor $color
@@ -215,7 +215,7 @@ class DocAnnotationsListAll200ResponsePagesItemAnnotationsItemSquare extends Jso
      *   groupId?: ?string,
      *   createdBy?: ?string,
      *   updatedBy?: ?string,
-     *   actions?: ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemSquareActions,
+     *   actions?: ?PdfAnnotationActions,
      *   dashArray?: ?array<float>,
      *   interiorColor?: ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemSquareInteriorColor,
      *   cloudyIntensity?: ?float,

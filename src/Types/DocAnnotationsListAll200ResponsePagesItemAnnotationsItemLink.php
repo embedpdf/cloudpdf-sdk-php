@@ -124,10 +124,10 @@ class DocAnnotationsListAll200ResponsePagesItemAnnotationsItemLink extends JsonS
     public ?string $updatedBy;
 
     /**
-     * @var ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemLinkActions $actions
+     * @var ?PdfAnnotationActions $actions
      */
     #[JsonProperty('actions')]
-    public ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemLinkActions $actions;
+    public ?PdfAnnotationActions $actions;
 
     /**
      * @var ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemLinkTarget $target
@@ -156,7 +156,7 @@ class DocAnnotationsListAll200ResponsePagesItemAnnotationsItemLink extends JsonS
      *   groupId?: ?string,
      *   createdBy?: ?string,
      *   updatedBy?: ?string,
-     *   actions?: ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemLinkActions,
+     *   actions?: ?PdfAnnotationActions,
      *   target?: ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemLinkTarget,
      * } $values
      */

@@ -63,10 +63,10 @@ class DocFormsGet200ResponseFieldsItemSignature extends JsonSerializableType
     public DocFormsGet200ResponseFieldsItemSignatureDefaultValueEntry $defaultValueEntry;
 
     /**
-     * @var ?DocFormsGet200ResponseFieldsItemSignatureActions $actions
+     * @var ?PdfFieldActions $actions
      */
     #[JsonProperty('actions')]
-    public ?DocFormsGet200ResponseFieldsItemSignatureActions $actions;
+    public ?PdfFieldActions $actions;
 
     /**
      * @var array<DocFormsGet200ResponseFieldsItemSignatureWidgetsItem> $widgets
@@ -86,7 +86,7 @@ class DocFormsGet200ResponseFieldsItemSignature extends JsonSerializableType
      *   widgets: array<DocFormsGet200ResponseFieldsItemSignatureWidgetsItem>,
      *   alternateName?: ?string,
      *   mappingName?: ?string,
-     *   actions?: ?DocFormsGet200ResponseFieldsItemSignatureActions,
+     *   actions?: ?PdfFieldActions,
      * } $values
      */
     public function __construct(

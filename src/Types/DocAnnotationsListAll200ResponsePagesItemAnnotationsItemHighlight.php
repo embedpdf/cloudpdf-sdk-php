@@ -125,10 +125,10 @@ class DocAnnotationsListAll200ResponsePagesItemAnnotationsItemHighlight extends 
     public ?string $updatedBy;
 
     /**
-     * @var ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemHighlightActions $actions
+     * @var ?PdfAnnotationActions $actions
      */
     #[JsonProperty('actions')]
-    public ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemHighlightActions $actions;
+    public ?PdfAnnotationActions $actions;
 
     /**
      * @var DocAnnotationsListAll200ResponsePagesItemAnnotationsItemHighlightColor $color
@@ -172,7 +172,7 @@ class DocAnnotationsListAll200ResponsePagesItemAnnotationsItemHighlight extends 
      *   groupId?: ?string,
      *   createdBy?: ?string,
      *   updatedBy?: ?string,
-     *   actions?: ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemHighlightActions,
+     *   actions?: ?PdfAnnotationActions,
      * } $values
      */
     public function __construct(

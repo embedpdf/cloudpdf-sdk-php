@@ -124,10 +124,10 @@ class DocAnnotationsListAll200ResponsePagesItemAnnotationsItemCaret extends Json
     public ?string $updatedBy;
 
     /**
-     * @var ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemCaretActions $actions
+     * @var ?PdfAnnotationActions $actions
      */
     #[JsonProperty('actions')]
-    public ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemCaretActions $actions;
+    public ?PdfAnnotationActions $actions;
 
     /**
      * @var DocAnnotationsListAll200ResponsePagesItemAnnotationsItemCaretColor $color
@@ -188,7 +188,7 @@ class DocAnnotationsListAll200ResponsePagesItemAnnotationsItemCaret extends Json
      *   groupId?: ?string,
      *   createdBy?: ?string,
      *   updatedBy?: ?string,
-     *   actions?: ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemCaretActions,
+     *   actions?: ?PdfAnnotationActions,
      *   intent?: ?value-of<DocAnnotationsListAll200ResponsePagesItemAnnotationsItemCaretIntent>,
      *   rectDifferences?: ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemCaretRectDifferences,
      *   rotation?: ?float,

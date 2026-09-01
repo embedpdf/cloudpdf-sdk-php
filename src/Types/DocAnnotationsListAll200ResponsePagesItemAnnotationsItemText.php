@@ -124,10 +124,10 @@ class DocAnnotationsListAll200ResponsePagesItemAnnotationsItemText extends JsonS
     public ?string $updatedBy;
 
     /**
-     * @var ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemTextActions $actions
+     * @var ?PdfAnnotationActions $actions
      */
     #[JsonProperty('actions')]
-    public ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemTextActions $actions;
+    public ?PdfAnnotationActions $actions;
 
     /**
      * @var DocAnnotationsListAll200ResponsePagesItemAnnotationsItemTextColor $color
@@ -183,7 +183,7 @@ class DocAnnotationsListAll200ResponsePagesItemAnnotationsItemText extends JsonS
      *   groupId?: ?string,
      *   createdBy?: ?string,
      *   updatedBy?: ?string,
-     *   actions?: ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemTextActions,
+     *   actions?: ?PdfAnnotationActions,
      *   state?: ?string,
      *   stateModel?: ?string,
      * } $values

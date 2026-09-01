@@ -124,10 +124,10 @@ class DocAnnotationsList200ResponseAnnotationsItemFileAttachment extends JsonSer
     public ?string $updatedBy;
 
     /**
-     * @var ?DocAnnotationsList200ResponseAnnotationsItemFileAttachmentActions $actions
+     * @var ?PdfAnnotationActions $actions
      */
     #[JsonProperty('actions')]
-    public ?DocAnnotationsList200ResponseAnnotationsItemFileAttachmentActions $actions;
+    public ?PdfAnnotationActions $actions;
 
     /**
      * @var DocAnnotationsList200ResponseAnnotationsItemFileAttachmentColor $color
@@ -178,7 +178,7 @@ class DocAnnotationsList200ResponseAnnotationsItemFileAttachment extends JsonSer
      *   groupId?: ?string,
      *   createdBy?: ?string,
      *   updatedBy?: ?string,
-     *   actions?: ?DocAnnotationsList200ResponseAnnotationsItemFileAttachmentActions,
+     *   actions?: ?PdfAnnotationActions,
      * } $values
      */
     public function __construct(

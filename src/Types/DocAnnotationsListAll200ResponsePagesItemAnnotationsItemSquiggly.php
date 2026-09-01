@@ -125,10 +125,10 @@ class DocAnnotationsListAll200ResponsePagesItemAnnotationsItemSquiggly extends J
     public ?string $updatedBy;
 
     /**
-     * @var ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemSquigglyActions $actions
+     * @var ?PdfAnnotationActions $actions
      */
     #[JsonProperty('actions')]
-    public ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemSquigglyActions $actions;
+    public ?PdfAnnotationActions $actions;
 
     /**
      * @var DocAnnotationsListAll200ResponsePagesItemAnnotationsItemSquigglyColor $color
@@ -172,7 +172,7 @@ class DocAnnotationsListAll200ResponsePagesItemAnnotationsItemSquiggly extends J
      *   groupId?: ?string,
      *   createdBy?: ?string,
      *   updatedBy?: ?string,
-     *   actions?: ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemSquigglyActions,
+     *   actions?: ?PdfAnnotationActions,
      * } $values
      */
     public function __construct(

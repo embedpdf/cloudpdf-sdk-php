@@ -125,10 +125,10 @@ class DocAnnotationsListAll200ResponsePagesItemAnnotationsItemPolygon extends Js
     public ?string $updatedBy;
 
     /**
-     * @var ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemPolygonActions $actions
+     * @var ?PdfAnnotationActions $actions
      */
     #[JsonProperty('actions')]
-    public ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemPolygonActions $actions;
+    public ?PdfAnnotationActions $actions;
 
     /**
      * @var DocAnnotationsListAll200ResponsePagesItemAnnotationsItemPolygonColor $color
@@ -210,7 +210,7 @@ class DocAnnotationsListAll200ResponsePagesItemAnnotationsItemPolygon extends Js
      *   groupId?: ?string,
      *   createdBy?: ?string,
      *   updatedBy?: ?string,
-     *   actions?: ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemPolygonActions,
+     *   actions?: ?PdfAnnotationActions,
      *   dashArray?: ?array<float>,
      *   interiorColor?: ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemPolygonInteriorColor,
      *   rotation?: ?float,

@@ -125,10 +125,10 @@ class DocAnnotationsList200ResponseAnnotationsItemCircle extends JsonSerializabl
     public ?string $updatedBy;
 
     /**
-     * @var ?DocAnnotationsList200ResponseAnnotationsItemCircleActions $actions
+     * @var ?PdfAnnotationActions $actions
      */
     #[JsonProperty('actions')]
-    public ?DocAnnotationsList200ResponseAnnotationsItemCircleActions $actions;
+    public ?PdfAnnotationActions $actions;
 
     /**
      * @var DocAnnotationsList200ResponseAnnotationsItemCircleColor $color
@@ -215,7 +215,7 @@ class DocAnnotationsList200ResponseAnnotationsItemCircle extends JsonSerializabl
      *   groupId?: ?string,
      *   createdBy?: ?string,
      *   updatedBy?: ?string,
-     *   actions?: ?DocAnnotationsList200ResponseAnnotationsItemCircleActions,
+     *   actions?: ?PdfAnnotationActions,
      *   dashArray?: ?array<float>,
      *   interiorColor?: ?DocAnnotationsList200ResponseAnnotationsItemCircleInteriorColor,
      *   cloudyIntensity?: ?float,

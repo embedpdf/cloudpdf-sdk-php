@@ -63,10 +63,10 @@ class DocFormsGet200ResponseFieldsItemCombobox extends JsonSerializableType
     public DocFormsGet200ResponseFieldsItemComboboxDefaultValueEntry $defaultValueEntry;
 
     /**
-     * @var ?DocFormsGet200ResponseFieldsItemComboboxActions $actions
+     * @var ?PdfFieldActions $actions
      */
     #[JsonProperty('actions')]
-    public ?DocFormsGet200ResponseFieldsItemComboboxActions $actions;
+    public ?PdfFieldActions $actions;
 
     /**
      * @var array<DocFormsGet200ResponseFieldsItemComboboxWidgetsItem> $widgets
@@ -114,7 +114,7 @@ class DocFormsGet200ResponseFieldsItemCombobox extends JsonSerializableType
      *   options: array<DocFormsGet200ResponseFieldsItemComboboxOptionsItem>,
      *   alternateName?: ?string,
      *   mappingName?: ?string,
-     *   actions?: ?DocFormsGet200ResponseFieldsItemComboboxActions,
+     *   actions?: ?PdfFieldActions,
      * } $values
      */
     public function __construct(
