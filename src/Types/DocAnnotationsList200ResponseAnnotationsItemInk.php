@@ -125,10 +125,10 @@ class DocAnnotationsList200ResponseAnnotationsItemInk extends JsonSerializableTy
     public ?string $updatedBy;
 
     /**
-     * @var ?DocAnnotationsList200ResponseAnnotationsItemInkActions $actions
+     * @var ?PdfAnnotationActions $actions
      */
     #[JsonProperty('actions')]
-    public ?DocAnnotationsList200ResponseAnnotationsItemInkActions $actions;
+    public ?PdfAnnotationActions $actions;
 
     /**
      * @var DocAnnotationsList200ResponseAnnotationsItemInkColor $color
@@ -204,7 +204,7 @@ class DocAnnotationsList200ResponseAnnotationsItemInk extends JsonSerializableTy
      *   groupId?: ?string,
      *   createdBy?: ?string,
      *   updatedBy?: ?string,
-     *   actions?: ?DocAnnotationsList200ResponseAnnotationsItemInkActions,
+     *   actions?: ?PdfAnnotationActions,
      *   dashArray?: ?array<float>,
      *   intent?: ?value-of<DocAnnotationsList200ResponseAnnotationsItemInkIntent>,
      *   rotation?: ?float,

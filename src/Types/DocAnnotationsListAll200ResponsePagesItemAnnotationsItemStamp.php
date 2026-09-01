@@ -124,10 +124,10 @@ class DocAnnotationsListAll200ResponsePagesItemAnnotationsItemStamp extends Json
     public ?string $updatedBy;
 
     /**
-     * @var ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemStampActions $actions
+     * @var ?PdfAnnotationActions $actions
      */
     #[JsonProperty('actions')]
-    public ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemStampActions $actions;
+    public ?PdfAnnotationActions $actions;
 
     /**
      * @var ?string $name
@@ -168,7 +168,7 @@ class DocAnnotationsListAll200ResponsePagesItemAnnotationsItemStamp extends Json
      *   groupId?: ?string,
      *   createdBy?: ?string,
      *   updatedBy?: ?string,
-     *   actions?: ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemStampActions,
+     *   actions?: ?PdfAnnotationActions,
      *   name?: ?string,
      *   rotation?: ?float,
      *   unrotatedRect?: ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemStampUnrotatedRect,

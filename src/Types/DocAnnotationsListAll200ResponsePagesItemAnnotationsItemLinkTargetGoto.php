@@ -8,14 +8,14 @@ use CloudPDF\Core\Json\JsonProperty;
 class DocAnnotationsListAll200ResponsePagesItemAnnotationsItemLinkTargetGoto extends JsonSerializableType
 {
     /**
-     * @var DocAnnotationsListAll200ResponsePagesItemAnnotationsItemLinkTargetGotoDestination $destination
+     * @var PdfDestination $destination
      */
     #[JsonProperty('destination')]
-    public DocAnnotationsListAll200ResponsePagesItemAnnotationsItemLinkTargetGotoDestination $destination;
+    public PdfDestination $destination;
 
     /**
      * @param array{
-     *   destination: DocAnnotationsListAll200ResponsePagesItemAnnotationsItemLinkTargetGotoDestination,
+     *   destination: PdfDestination,
      * } $values
      */
     public function __construct(

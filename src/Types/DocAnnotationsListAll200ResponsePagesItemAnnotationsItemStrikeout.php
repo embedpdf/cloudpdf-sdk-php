@@ -125,10 +125,10 @@ class DocAnnotationsListAll200ResponsePagesItemAnnotationsItemStrikeout extends 
     public ?string $updatedBy;
 
     /**
-     * @var ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemStrikeoutActions $actions
+     * @var ?PdfAnnotationActions $actions
      */
     #[JsonProperty('actions')]
-    public ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemStrikeoutActions $actions;
+    public ?PdfAnnotationActions $actions;
 
     /**
      * @var DocAnnotationsListAll200ResponsePagesItemAnnotationsItemStrikeoutColor $color
@@ -178,7 +178,7 @@ class DocAnnotationsListAll200ResponsePagesItemAnnotationsItemStrikeout extends 
      *   groupId?: ?string,
      *   createdBy?: ?string,
      *   updatedBy?: ?string,
-     *   actions?: ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemStrikeoutActions,
+     *   actions?: ?PdfAnnotationActions,
      *   intent?: ?value-of<DocAnnotationsListAll200ResponsePagesItemAnnotationsItemStrikeoutIntent>,
      * } $values
      */

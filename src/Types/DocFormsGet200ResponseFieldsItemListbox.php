@@ -63,10 +63,10 @@ class DocFormsGet200ResponseFieldsItemListbox extends JsonSerializableType
     public DocFormsGet200ResponseFieldsItemListboxDefaultValueEntry $defaultValueEntry;
 
     /**
-     * @var ?DocFormsGet200ResponseFieldsItemListboxActions $actions
+     * @var ?PdfFieldActions $actions
      */
     #[JsonProperty('actions')]
-    public ?DocFormsGet200ResponseFieldsItemListboxActions $actions;
+    public ?PdfFieldActions $actions;
 
     /**
      * @var array<DocFormsGet200ResponseFieldsItemListboxWidgetsItem> $widgets
@@ -107,7 +107,7 @@ class DocFormsGet200ResponseFieldsItemListbox extends JsonSerializableType
      *   options: array<DocFormsGet200ResponseFieldsItemListboxOptionsItem>,
      *   alternateName?: ?string,
      *   mappingName?: ?string,
-     *   actions?: ?DocFormsGet200ResponseFieldsItemListboxActions,
+     *   actions?: ?PdfFieldActions,
      * } $values
      */
     public function __construct(

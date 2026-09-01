@@ -124,10 +124,10 @@ class DocAnnotationsList200ResponseAnnotationsItemUnsupported extends JsonSerial
     public ?string $updatedBy;
 
     /**
-     * @var ?DocAnnotationsList200ResponseAnnotationsItemUnsupportedActions $actions
+     * @var ?PdfAnnotationActions $actions
      */
     #[JsonProperty('actions')]
-    public ?DocAnnotationsList200ResponseAnnotationsItemUnsupportedActions $actions;
+    public ?PdfAnnotationActions $actions;
 
     /**
      * @var int $rawSubtypeCode
@@ -163,7 +163,7 @@ class DocAnnotationsList200ResponseAnnotationsItemUnsupported extends JsonSerial
      *   groupId?: ?string,
      *   createdBy?: ?string,
      *   updatedBy?: ?string,
-     *   actions?: ?DocAnnotationsList200ResponseAnnotationsItemUnsupportedActions,
+     *   actions?: ?PdfAnnotationActions,
      *   rawSubtypeName?: ?string,
      * } $values
      */

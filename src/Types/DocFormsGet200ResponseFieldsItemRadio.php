@@ -63,10 +63,10 @@ class DocFormsGet200ResponseFieldsItemRadio extends JsonSerializableType
     public DocFormsGet200ResponseFieldsItemRadioDefaultValueEntry $defaultValueEntry;
 
     /**
-     * @var ?DocFormsGet200ResponseFieldsItemRadioActions $actions
+     * @var ?PdfFieldActions $actions
      */
     #[JsonProperty('actions')]
-    public ?DocFormsGet200ResponseFieldsItemRadioActions $actions;
+    public ?PdfFieldActions $actions;
 
     /**
      * @var array<DocFormsGet200ResponseFieldsItemRadioWidgetsItem> $widgets
@@ -107,7 +107,7 @@ class DocFormsGet200ResponseFieldsItemRadio extends JsonSerializableType
      *   noToggleToOff: bool,
      *   alternateName?: ?string,
      *   mappingName?: ?string,
-     *   actions?: ?DocFormsGet200ResponseFieldsItemRadioActions,
+     *   actions?: ?PdfFieldActions,
      * } $values
      */
     public function __construct(

@@ -124,10 +124,10 @@ class DocAnnotationsList200ResponseAnnotationsItemLink extends JsonSerializableT
     public ?string $updatedBy;
 
     /**
-     * @var ?DocAnnotationsList200ResponseAnnotationsItemLinkActions $actions
+     * @var ?PdfAnnotationActions $actions
      */
     #[JsonProperty('actions')]
-    public ?DocAnnotationsList200ResponseAnnotationsItemLinkActions $actions;
+    public ?PdfAnnotationActions $actions;
 
     /**
      * @var ?DocAnnotationsList200ResponseAnnotationsItemLinkTarget $target
@@ -156,7 +156,7 @@ class DocAnnotationsList200ResponseAnnotationsItemLink extends JsonSerializableT
      *   groupId?: ?string,
      *   createdBy?: ?string,
      *   updatedBy?: ?string,
-     *   actions?: ?DocAnnotationsList200ResponseAnnotationsItemLinkActions,
+     *   actions?: ?PdfAnnotationActions,
      *   target?: ?DocAnnotationsList200ResponseAnnotationsItemLinkTarget,
      * } $values
      */

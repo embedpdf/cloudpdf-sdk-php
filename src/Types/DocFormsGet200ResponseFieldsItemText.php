@@ -63,10 +63,10 @@ class DocFormsGet200ResponseFieldsItemText extends JsonSerializableType
     public DocFormsGet200ResponseFieldsItemTextDefaultValueEntry $defaultValueEntry;
 
     /**
-     * @var ?DocFormsGet200ResponseFieldsItemTextActions $actions
+     * @var ?PdfFieldActions $actions
      */
     #[JsonProperty('actions')]
-    public ?DocFormsGet200ResponseFieldsItemTextActions $actions;
+    public ?PdfFieldActions $actions;
 
     /**
      * @var array<DocFormsGet200ResponseFieldsItemTextWidgetsItem> $widgets
@@ -127,7 +127,7 @@ class DocFormsGet200ResponseFieldsItemText extends JsonSerializableType
      *   comb: bool,
      *   alternateName?: ?string,
      *   mappingName?: ?string,
-     *   actions?: ?DocFormsGet200ResponseFieldsItemTextActions,
+     *   actions?: ?PdfFieldActions,
      *   maxLength?: ?int,
      * } $values
      */

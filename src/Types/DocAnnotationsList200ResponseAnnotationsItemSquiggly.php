@@ -125,10 +125,10 @@ class DocAnnotationsList200ResponseAnnotationsItemSquiggly extends JsonSerializa
     public ?string $updatedBy;
 
     /**
-     * @var ?DocAnnotationsList200ResponseAnnotationsItemSquigglyActions $actions
+     * @var ?PdfAnnotationActions $actions
      */
     #[JsonProperty('actions')]
-    public ?DocAnnotationsList200ResponseAnnotationsItemSquigglyActions $actions;
+    public ?PdfAnnotationActions $actions;
 
     /**
      * @var DocAnnotationsList200ResponseAnnotationsItemSquigglyColor $color
@@ -172,7 +172,7 @@ class DocAnnotationsList200ResponseAnnotationsItemSquiggly extends JsonSerializa
      *   groupId?: ?string,
      *   createdBy?: ?string,
      *   updatedBy?: ?string,
-     *   actions?: ?DocAnnotationsList200ResponseAnnotationsItemSquigglyActions,
+     *   actions?: ?PdfAnnotationActions,
      * } $values
      */
     public function __construct(

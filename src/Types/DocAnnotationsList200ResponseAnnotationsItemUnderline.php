@@ -125,10 +125,10 @@ class DocAnnotationsList200ResponseAnnotationsItemUnderline extends JsonSerializ
     public ?string $updatedBy;
 
     /**
-     * @var ?DocAnnotationsList200ResponseAnnotationsItemUnderlineActions $actions
+     * @var ?PdfAnnotationActions $actions
      */
     #[JsonProperty('actions')]
-    public ?DocAnnotationsList200ResponseAnnotationsItemUnderlineActions $actions;
+    public ?PdfAnnotationActions $actions;
 
     /**
      * @var DocAnnotationsList200ResponseAnnotationsItemUnderlineColor $color
@@ -172,7 +172,7 @@ class DocAnnotationsList200ResponseAnnotationsItemUnderline extends JsonSerializ
      *   groupId?: ?string,
      *   createdBy?: ?string,
      *   updatedBy?: ?string,
-     *   actions?: ?DocAnnotationsList200ResponseAnnotationsItemUnderlineActions,
+     *   actions?: ?PdfAnnotationActions,
      * } $values
      */
     public function __construct(

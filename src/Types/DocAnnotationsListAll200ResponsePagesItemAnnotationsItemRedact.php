@@ -125,10 +125,10 @@ class DocAnnotationsListAll200ResponsePagesItemAnnotationsItemRedact extends Jso
     public ?string $updatedBy;
 
     /**
-     * @var ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemRedactActions $actions
+     * @var ?PdfAnnotationActions $actions
      */
     #[JsonProperty('actions')]
-    public ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemRedactActions $actions;
+    public ?PdfAnnotationActions $actions;
 
     /**
      * @var array<DocAnnotationsListAll200ResponsePagesItemAnnotationsItemRedactQuadPointsItem> $quadPoints
@@ -219,7 +219,7 @@ class DocAnnotationsListAll200ResponsePagesItemAnnotationsItemRedact extends Jso
      *   groupId?: ?string,
      *   createdBy?: ?string,
      *   updatedBy?: ?string,
-     *   actions?: ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemRedactActions,
+     *   actions?: ?PdfAnnotationActions,
      *   interiorColor?: ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemRedactInteriorColor,
      *   overlayText?: ?string,
      * } $values

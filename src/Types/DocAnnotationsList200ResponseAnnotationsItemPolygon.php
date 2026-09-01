@@ -125,10 +125,10 @@ class DocAnnotationsList200ResponseAnnotationsItemPolygon extends JsonSerializab
     public ?string $updatedBy;
 
     /**
-     * @var ?DocAnnotationsList200ResponseAnnotationsItemPolygonActions $actions
+     * @var ?PdfAnnotationActions $actions
      */
     #[JsonProperty('actions')]
-    public ?DocAnnotationsList200ResponseAnnotationsItemPolygonActions $actions;
+    public ?PdfAnnotationActions $actions;
 
     /**
      * @var DocAnnotationsList200ResponseAnnotationsItemPolygonColor $color
@@ -210,7 +210,7 @@ class DocAnnotationsList200ResponseAnnotationsItemPolygon extends JsonSerializab
      *   groupId?: ?string,
      *   createdBy?: ?string,
      *   updatedBy?: ?string,
-     *   actions?: ?DocAnnotationsList200ResponseAnnotationsItemPolygonActions,
+     *   actions?: ?PdfAnnotationActions,
      *   dashArray?: ?array<float>,
      *   interiorColor?: ?DocAnnotationsList200ResponseAnnotationsItemPolygonInteriorColor,
      *   rotation?: ?float,

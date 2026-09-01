@@ -124,10 +124,10 @@ class DocAnnotationsList200ResponseAnnotationsItemStamp extends JsonSerializable
     public ?string $updatedBy;
 
     /**
-     * @var ?DocAnnotationsList200ResponseAnnotationsItemStampActions $actions
+     * @var ?PdfAnnotationActions $actions
      */
     #[JsonProperty('actions')]
-    public ?DocAnnotationsList200ResponseAnnotationsItemStampActions $actions;
+    public ?PdfAnnotationActions $actions;
 
     /**
      * @var ?string $name
@@ -168,7 +168,7 @@ class DocAnnotationsList200ResponseAnnotationsItemStamp extends JsonSerializable
      *   groupId?: ?string,
      *   createdBy?: ?string,
      *   updatedBy?: ?string,
-     *   actions?: ?DocAnnotationsList200ResponseAnnotationsItemStampActions,
+     *   actions?: ?PdfAnnotationActions,
      *   name?: ?string,
      *   rotation?: ?float,
      *   unrotatedRect?: ?DocAnnotationsList200ResponseAnnotationsItemStampUnrotatedRect,

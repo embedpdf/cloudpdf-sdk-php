@@ -124,10 +124,10 @@ class DocAnnotationsListAll200ResponsePagesItemAnnotationsItemUnsupported extend
     public ?string $updatedBy;
 
     /**
-     * @var ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemUnsupportedActions $actions
+     * @var ?PdfAnnotationActions $actions
      */
     #[JsonProperty('actions')]
-    public ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemUnsupportedActions $actions;
+    public ?PdfAnnotationActions $actions;
 
     /**
      * @var int $rawSubtypeCode
@@ -163,7 +163,7 @@ class DocAnnotationsListAll200ResponsePagesItemAnnotationsItemUnsupported extend
      *   groupId?: ?string,
      *   createdBy?: ?string,
      *   updatedBy?: ?string,
-     *   actions?: ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemUnsupportedActions,
+     *   actions?: ?PdfAnnotationActions,
      *   rawSubtypeName?: ?string,
      * } $values
      */

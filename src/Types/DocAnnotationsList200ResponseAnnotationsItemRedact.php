@@ -125,10 +125,10 @@ class DocAnnotationsList200ResponseAnnotationsItemRedact extends JsonSerializabl
     public ?string $updatedBy;
 
     /**
-     * @var ?DocAnnotationsList200ResponseAnnotationsItemRedactActions $actions
+     * @var ?PdfAnnotationActions $actions
      */
     #[JsonProperty('actions')]
-    public ?DocAnnotationsList200ResponseAnnotationsItemRedactActions $actions;
+    public ?PdfAnnotationActions $actions;
 
     /**
      * @var array<DocAnnotationsList200ResponseAnnotationsItemRedactQuadPointsItem> $quadPoints
@@ -219,7 +219,7 @@ class DocAnnotationsList200ResponseAnnotationsItemRedact extends JsonSerializabl
      *   groupId?: ?string,
      *   createdBy?: ?string,
      *   updatedBy?: ?string,
-     *   actions?: ?DocAnnotationsList200ResponseAnnotationsItemRedactActions,
+     *   actions?: ?PdfAnnotationActions,
      *   interiorColor?: ?DocAnnotationsList200ResponseAnnotationsItemRedactInteriorColor,
      *   overlayText?: ?string,
      * } $values

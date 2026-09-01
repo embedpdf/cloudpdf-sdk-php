@@ -125,10 +125,10 @@ class DocAnnotationsList200ResponseAnnotationsItemFreeText extends JsonSerializa
     public ?string $updatedBy;
 
     /**
-     * @var ?DocAnnotationsList200ResponseAnnotationsItemFreeTextActions $actions
+     * @var ?PdfAnnotationActions $actions
      */
     #[JsonProperty('actions')]
-    public ?DocAnnotationsList200ResponseAnnotationsItemFreeTextActions $actions;
+    public ?PdfAnnotationActions $actions;
 
     /**
      * @var value-of<DocAnnotationsList200ResponseAnnotationsItemFreeTextIntent> $intent
@@ -255,7 +255,7 @@ class DocAnnotationsList200ResponseAnnotationsItemFreeText extends JsonSerializa
      *   groupId?: ?string,
      *   createdBy?: ?string,
      *   updatedBy?: ?string,
-     *   actions?: ?DocAnnotationsList200ResponseAnnotationsItemFreeTextActions,
+     *   actions?: ?PdfAnnotationActions,
      *   fontColor?: ?DocAnnotationsList200ResponseAnnotationsItemFreeTextFontColor,
      *   interiorColor?: ?DocAnnotationsList200ResponseAnnotationsItemFreeTextInteriorColor,
      *   dashArray?: ?array<float>,

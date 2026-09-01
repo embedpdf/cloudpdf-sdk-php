@@ -125,10 +125,10 @@ class DocAnnotationsList200ResponseAnnotationsItemPolyline extends JsonSerializa
     public ?string $updatedBy;
 
     /**
-     * @var ?DocAnnotationsList200ResponseAnnotationsItemPolylineActions $actions
+     * @var ?PdfAnnotationActions $actions
      */
     #[JsonProperty('actions')]
-    public ?DocAnnotationsList200ResponseAnnotationsItemPolylineActions $actions;
+    public ?PdfAnnotationActions $actions;
 
     /**
      * @var DocAnnotationsList200ResponseAnnotationsItemPolylineColor $color
@@ -211,7 +211,7 @@ class DocAnnotationsList200ResponseAnnotationsItemPolyline extends JsonSerializa
      *   groupId?: ?string,
      *   createdBy?: ?string,
      *   updatedBy?: ?string,
-     *   actions?: ?DocAnnotationsList200ResponseAnnotationsItemPolylineActions,
+     *   actions?: ?PdfAnnotationActions,
      *   dashArray?: ?array<float>,
      *   interiorColor?: ?DocAnnotationsList200ResponseAnnotationsItemPolylineInteriorColor,
      *   rotation?: ?float,

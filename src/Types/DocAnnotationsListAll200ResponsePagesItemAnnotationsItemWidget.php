@@ -124,10 +124,10 @@ class DocAnnotationsListAll200ResponsePagesItemAnnotationsItemWidget extends Jso
     public ?string $updatedBy;
 
     /**
-     * @var ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemWidgetActions $actions
+     * @var ?PdfAnnotationActions $actions
      */
     #[JsonProperty('actions')]
-    public ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemWidgetActions $actions;
+    public ?PdfAnnotationActions $actions;
 
     /**
      * @var ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemWidgetColor $color
@@ -215,7 +215,7 @@ class DocAnnotationsListAll200ResponsePagesItemAnnotationsItemWidget extends Jso
      *   groupId?: ?string,
      *   createdBy?: ?string,
      *   updatedBy?: ?string,
-     *   actions?: ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemWidgetActions,
+     *   actions?: ?PdfAnnotationActions,
      *   color?: ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemWidgetColor,
      *   interiorColor?: ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemWidgetInteriorColor,
      *   fontFamily?: ?value-of<DocAnnotationsListAll200ResponsePagesItemAnnotationsItemWidgetFontFamily>,
