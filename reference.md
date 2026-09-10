@@ -2369,6 +2369,170 @@ $client->doc->annotations->update(
 </dl>
 </details>
 
+<details><summary><code>$client-&gt;doc-&gt;annotations-&gt;exportAppearance($docId, $layerName, $pon, $request) -> string</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->doc->annotations->exportAppearance(
+    'docId',
+    'layerName',
+    1,
+    new ExportAppearanceAnnotationsRequest([
+        'body' => [
+            'string' => [
+                'key' => "value",
+            ],
+        ],
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$docId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$layerName:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$pon:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$documentPassword:** `?string` — Base64-encoded password for an encrypted document. Valid only with the API token (403 anywhere else). An encrypted document answers 422 DocPasswordRequired when the header is absent. Viewer doc JWTs use the SDK password-session flow instead.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$request:** `array` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;doc-&gt;annotations-&gt;flatten($docId, $layerName, $pon, $request) -> ?DocAnnotationsFlatten200Response</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->doc->annotations->flatten(
+    'docId',
+    'layerName',
+    1,
+    new FlattenAnnotationsRequest([
+        'body' => [
+            'key' => "value",
+        ],
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$docId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$layerName:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$pon:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$documentPassword:** `?string` — Base64-encoded password for an encrypted document. Valid only with the API token (403 anywhere else). An encrypted document answers 422 DocPasswordRequired when the header is absent. Viewer doc JWTs use the SDK password-session flow instead.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$request:** `array` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Doc Forms
 <details><summary><code>$client-&gt;doc-&gt;forms-&gt;get($docId, $layerName, $request) -> ?DocFormsGet200Response</code></summary>
 <dl>
@@ -3193,6 +3357,150 @@ $client->doc->pages->move(
     'docId',
     'layerName',
     new MovePagesRequest([
+        'body' => [
+            'key' => "value",
+        ],
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$docId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$layerName:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$documentPassword:** `?string` — Base64-encoded password for an encrypted document. Valid only with the API token (403 anywhere else). An encrypted document answers 422 DocPasswordRequired when the header is absent. Viewer doc JWTs use the SDK password-session flow instead.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$request:** `array` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;doc-&gt;pages-&gt;setName($docId, $layerName, $request) -> ?DocPagesSetName200Response</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->doc->pages->setName(
+    'docId',
+    'layerName',
+    new SetNamePagesRequest([
+        'body' => [
+            'key' => "value",
+        ],
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$docId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$layerName:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$documentPassword:** `?string` — Base64-encoded password for an encrypted document. Valid only with the API token (403 anywhere else). An encrypted document answers 422 DocPasswordRequired when the header is absent. Viewer doc JWTs use the SDK password-session flow instead.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$request:** `array` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;doc-&gt;pages-&gt;removeName($docId, $layerName, $request) -> ?DocPagesRemoveName200Response</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->doc->pages->removeName(
+    'docId',
+    'layerName',
+    new RemoveNamePagesRequest([
         'body' => [
             'key' => "value",
         ],

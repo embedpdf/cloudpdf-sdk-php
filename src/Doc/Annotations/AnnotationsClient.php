@@ -20,6 +20,9 @@ use CloudPDF\Doc\Annotations\Requests\DeleteAnnotationsRequest;
 use CloudPDF\Types\DocAnnotationsDelete200Response;
 use CloudPDF\Doc\Annotations\Requests\UpdateAnnotationsRequest;
 use CloudPDF\Types\DocAnnotationsUpdate200Response;
+use CloudPDF\Doc\Annotations\Requests\ExportAppearanceAnnotationsRequest;
+use CloudPDF\Doc\Annotations\Requests\FlattenAnnotationsRequest;
+use CloudPDF\Types\DocAnnotationsFlatten200Response;
 
 class AnnotationsClient
 {
@@ -380,6 +383,140 @@ class AnnotationsClient
                     return null;
                 }
                 return DocAnnotationsUpdate200Response::fromJson($json);
+            }
+        } catch (JsonException $e) {
+            throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (ClientExceptionInterface $e) {
+            throw new CloudPDFException(message: $e->getMessage(), previous: $e);
+        }
+        throw new CloudPDFApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * Example:
+     * ```php
+     * $client->doc->annotations->exportAppearance(
+     *     'docId',
+     *     'layerName',
+     *     1,
+     *     new ExportAppearanceAnnotationsRequest([
+     *         'body' => [
+     *             'string' => [
+     *                 'key' => "value",
+     *             ],
+     *         ],
+     *     ]),
+     * );
+     * ```
+     *
+     * @param string $docId
+     * @param string $layerName
+     * @param int $pon
+     * @param ExportAppearanceAnnotationsRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return string
+     * @throws CloudPDFException
+     * @throws CloudPDFApiException
+     */
+    public function exportAppearance(string $docId, string $layerName, int $pon, ExportAppearanceAnnotationsRequest $request, ?array $options = null): string
+    {
+        $options = array_merge($this->options, $options ?? []);
+        $headers = [];
+        if ($request->documentPassword != null) {
+            $headers['X-Document-Password'] = $request->documentPassword;
+        }
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "v1/docs/{$docId}/layers/{$layerName}/annotations/pages/{$pon}/items/appearance",
+                    method: HttpMethod::POST,
+                    headers: $headers,
+                    body: $request->body,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                return $response->getBody()->getContents();
+            }
+        } catch (ClientExceptionInterface $e) {
+            throw new CloudPDFException(message: $e->getMessage(), previous: $e);
+        }
+        throw new CloudPDFApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * Example:
+     * ```php
+     * $client->doc->annotations->flatten(
+     *     'docId',
+     *     'layerName',
+     *     1,
+     *     new FlattenAnnotationsRequest([
+     *         'body' => [
+     *             'key' => "value",
+     *         ],
+     *     ]),
+     * );
+     * ```
+     *
+     * @param string $docId
+     * @param string $layerName
+     * @param int $pon
+     * @param FlattenAnnotationsRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return ?DocAnnotationsFlatten200Response
+     * @throws CloudPDFException
+     * @throws CloudPDFApiException
+     */
+    public function flatten(string $docId, string $layerName, int $pon, FlattenAnnotationsRequest $request, ?array $options = null): ?DocAnnotationsFlatten200Response
+    {
+        $options = array_merge($this->options, $options ?? []);
+        $headers = [];
+        if ($request->documentPassword != null) {
+            $headers['X-Document-Password'] = $request->documentPassword;
+        }
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "v1/docs/{$docId}/layers/{$layerName}/annotations/pages/{$pon}/items/flatten",
+                    method: HttpMethod::POST,
+                    headers: $headers,
+                    body: $request->body,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
+                return DocAnnotationsFlatten200Response::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
