@@ -23,6 +23,10 @@ use CloudPDF\Doc\Pages\Requests\InsertBlankPagesRequest;
 use CloudPDF\Types\DocPagesInsertBlank200Response;
 use CloudPDF\Doc\Pages\Requests\MovePagesRequest;
 use CloudPDF\Types\DocPagesMove200Response;
+use CloudPDF\Doc\Pages\Requests\SetNamePagesRequest;
+use CloudPDF\Types\DocPagesSetName200Response;
+use CloudPDF\Doc\Pages\Requests\RemoveNamePagesRequest;
+use CloudPDF\Types\DocPagesRemoveName200Response;
 use CloudPDF\Doc\Pages\Requests\RotatePagesRequest;
 use CloudPDF\Types\DocPagesRotate200Response;
 
@@ -452,6 +456,140 @@ class PagesClient
                     return null;
                 }
                 return DocPagesMove200Response::fromJson($json);
+            }
+        } catch (JsonException $e) {
+            throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (ClientExceptionInterface $e) {
+            throw new CloudPDFException(message: $e->getMessage(), previous: $e);
+        }
+        throw new CloudPDFApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * Example:
+     * ```php
+     * $client->doc->pages->setName(
+     *     'docId',
+     *     'layerName',
+     *     new SetNamePagesRequest([
+     *         'body' => [
+     *             'key' => "value",
+     *         ],
+     *     ]),
+     * );
+     * ```
+     *
+     * @param string $docId
+     * @param string $layerName
+     * @param SetNamePagesRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return ?DocPagesSetName200Response
+     * @throws CloudPDFException
+     * @throws CloudPDFApiException
+     */
+    public function setName(string $docId, string $layerName, SetNamePagesRequest $request, ?array $options = null): ?DocPagesSetName200Response
+    {
+        $options = array_merge($this->options, $options ?? []);
+        $headers = [];
+        if ($request->documentPassword != null) {
+            $headers['X-Document-Password'] = $request->documentPassword;
+        }
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "v1/docs/{$docId}/layers/{$layerName}/pages/names",
+                    method: HttpMethod::POST,
+                    headers: $headers,
+                    body: $request->body,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
+                return DocPagesSetName200Response::fromJson($json);
+            }
+        } catch (JsonException $e) {
+            throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (ClientExceptionInterface $e) {
+            throw new CloudPDFException(message: $e->getMessage(), previous: $e);
+        }
+        throw new CloudPDFApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * Example:
+     * ```php
+     * $client->doc->pages->removeName(
+     *     'docId',
+     *     'layerName',
+     *     new RemoveNamePagesRequest([
+     *         'body' => [
+     *             'key' => "value",
+     *         ],
+     *     ]),
+     * );
+     * ```
+     *
+     * @param string $docId
+     * @param string $layerName
+     * @param RemoveNamePagesRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return ?DocPagesRemoveName200Response
+     * @throws CloudPDFException
+     * @throws CloudPDFApiException
+     */
+    public function removeName(string $docId, string $layerName, RemoveNamePagesRequest $request, ?array $options = null): ?DocPagesRemoveName200Response
+    {
+        $options = array_merge($this->options, $options ?? []);
+        $headers = [];
+        if ($request->documentPassword != null) {
+            $headers['X-Document-Password'] = $request->documentPassword;
+        }
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "v1/docs/{$docId}/layers/{$layerName}/pages/names/delete",
+                    method: HttpMethod::POST,
+                    headers: $headers,
+                    body: $request->body,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
+                return DocPagesRemoveName200Response::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
