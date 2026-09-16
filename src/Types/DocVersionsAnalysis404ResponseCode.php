@@ -1,0 +1,32 @@
+<?php
+
+namespace CloudPDF\Types;
+
+enum DocVersionsAnalysis404ResponseCode: string
+{
+    case Unknown = "Unknown";
+    case InvalidArg = "InvalidArg";
+    case DocNotOpen = "DocNotOpen";
+    case DocOpenFailed = "DocOpenFailed";
+    case DocPasswordRequired = "DocPasswordRequired";
+    case DocPasswordIncorrect = "DocPasswordIncorrect";
+    case SharePasswordRequired = "SharePasswordRequired";
+    case Aborted = "Aborted";
+    case Network = "Network";
+    case Unauthenticated = "Unauthenticated";
+    case Forbidden = "Forbidden";
+    case NotFound = "NotFound";
+    case WireFormat = "WireFormat";
+    case RuntimeUnavailable = "RuntimeUnavailable";
+    case InvalidReference = "InvalidReference";
+    case WeakAnnotationSessionConflict = "WeakAnnotationSessionConflict";
+    case LayerVersionConflict = "LayerVersionConflict";
+    case NotImplemented = "NotImplemented";
+    case MalformedPdf = "MalformedPdf";
+    case SigningPending = "SigningPending";
+    case SigningExpired = "SigningExpired";
+    case SigningVersionMismatch = "SigningVersionMismatch";
+    case SignatureRefused = "SignatureRefused";
+    case ProtectedDocument = "ProtectedDocument";
+    case StaleBase = "StaleBase";
+}

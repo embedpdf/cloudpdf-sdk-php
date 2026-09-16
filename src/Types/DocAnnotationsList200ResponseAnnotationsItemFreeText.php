@@ -137,7 +137,7 @@ class DocAnnotationsList200ResponseAnnotationsItemFreeText extends JsonSerializa
     public string $intent;
 
     /**
-     * @var value-of<DocAnnotationsList200ResponseAnnotationsItemFreeTextFontFamily> $fontFamily
+     * @var string $fontFamily
      */
     #[JsonProperty('fontFamily')]
     public string $fontFamily;
@@ -153,6 +153,12 @@ class DocAnnotationsList200ResponseAnnotationsItemFreeText extends JsonSerializa
      */
     #[JsonProperty('textAlign')]
     public string $textAlign;
+
+    /**
+     * @var DocAnnotationsList200ResponseAnnotationsItemFreeTextRichText $richText
+     */
+    #[JsonProperty('richText')]
+    public DocAnnotationsList200ResponseAnnotationsItemFreeTextRichText $richText;
 
     /**
      * @var DocAnnotationsList200ResponseAnnotationsItemFreeTextColor $color
@@ -236,9 +242,10 @@ class DocAnnotationsList200ResponseAnnotationsItemFreeText extends JsonSerializa
      *   rect: DocAnnotationsList200ResponseAnnotationsItemFreeTextRect,
      *   blendMode: value-of<DocAnnotationsList200ResponseAnnotationsItemFreeTextBlendMode>,
      *   intent: value-of<DocAnnotationsList200ResponseAnnotationsItemFreeTextIntent>,
-     *   fontFamily: value-of<DocAnnotationsList200ResponseAnnotationsItemFreeTextFontFamily>,
+     *   fontFamily: string,
      *   fontSize: float,
      *   textAlign: value-of<DocAnnotationsList200ResponseAnnotationsItemFreeTextTextAlign>,
+     *   richText: DocAnnotationsList200ResponseAnnotationsItemFreeTextRichText,
      *   color: DocAnnotationsList200ResponseAnnotationsItemFreeTextColor,
      *   opacity: float,
      *   strokeWidth: float,
@@ -293,6 +300,7 @@ class DocAnnotationsList200ResponseAnnotationsItemFreeText extends JsonSerializa
         $this->fontFamily = $values['fontFamily'];
         $this->fontSize = $values['fontSize'];
         $this->textAlign = $values['textAlign'];
+        $this->richText = $values['richText'];
         $this->color = $values['color'];
         $this->fontColor = $values['fontColor'] ?? null;
         $this->interiorColor = $values['interiorColor'] ?? null;

@@ -57,6 +57,24 @@ class DocManifest200Response extends JsonSerializableType
     public string $baseSha;
 
     /**
+     * @var ?int $layerVersion
+     */
+    #[JsonProperty('layerVersion')]
+    public ?int $layerVersion;
+
+    /**
+     * @var ?bool $working
+     */
+    #[JsonProperty('working')]
+    public ?bool $working;
+
+    /**
+     * @var ?int $baseByteLength
+     */
+    #[JsonProperty('baseByteLength')]
+    public ?int $baseByteLength;
+
+    /**
      * @var ?DocManifest200ResponseScopes $scopes
      */
     #[JsonProperty('scopes')]
@@ -79,6 +97,9 @@ class DocManifest200Response extends JsonSerializableType
      *   actionsVersion?: ?int,
      *   attachmentsVersion?: ?int,
      *   annotationsVersion?: ?int,
+     *   layerVersion?: ?int,
+     *   working?: ?bool,
+     *   baseByteLength?: ?int,
      *   scopes?: ?DocManifest200ResponseScopes,
      * } $values
      */
@@ -93,6 +114,9 @@ class DocManifest200Response extends JsonSerializableType
         $this->annotationsVersion = $values['annotationsVersion'] ?? null;
         $this->auditHead = $values['auditHead'];
         $this->baseSha = $values['baseSha'];
+        $this->layerVersion = $values['layerVersion'] ?? null;
+        $this->working = $values['working'] ?? null;
+        $this->baseByteLength = $values['baseByteLength'] ?? null;
         $this->scopes = $values['scopes'] ?? null;
         $this->pages = $values['pages'];
     }

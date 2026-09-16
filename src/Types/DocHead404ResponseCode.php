@@ -23,4 +23,10 @@ enum DocHead404ResponseCode: string
     case LayerVersionConflict = "LayerVersionConflict";
     case NotImplemented = "NotImplemented";
     case MalformedPdf = "MalformedPdf";
+    case SigningPending = "SigningPending";
+    case SigningExpired = "SigningExpired";
+    case SigningVersionMismatch = "SigningVersionMismatch";
+    case SignatureRefused = "SignatureRefused";
+    case ProtectedDocument = "ProtectedDocument";
+    case StaleBase = "StaleBase";
 }
