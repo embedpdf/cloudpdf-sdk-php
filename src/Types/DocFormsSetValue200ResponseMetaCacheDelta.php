@@ -27,6 +27,18 @@ class DocFormsSetValue200ResponseMetaCacheDelta extends JsonSerializableType
     public ?int $annotationsVersion;
 
     /**
+     * @var ?int $layerVersion
+     */
+    #[JsonProperty('layerVersion')]
+    public ?int $layerVersion;
+
+    /**
+     * @var ?bool $working
+     */
+    #[JsonProperty('working')]
+    public ?bool $working;
+
+    /**
      * @var array<DocFormsSetValue200ResponseMetaCacheDeltaPagesItem> $pages
      */
     #[JsonProperty('pages'), ArrayType([DocFormsSetValue200ResponseMetaCacheDeltaPagesItem::class])]
@@ -38,6 +50,8 @@ class DocFormsSetValue200ResponseMetaCacheDelta extends JsonSerializableType
      *   docVersion: int,
      *   pages: array<DocFormsSetValue200ResponseMetaCacheDeltaPagesItem>,
      *   annotationsVersion?: ?int,
+     *   layerVersion?: ?int,
+     *   working?: ?bool,
      * } $values
      */
     public function __construct(
@@ -46,6 +60,8 @@ class DocFormsSetValue200ResponseMetaCacheDelta extends JsonSerializableType
         $this->previousDocVersion = $values['previousDocVersion'];
         $this->docVersion = $values['docVersion'];
         $this->annotationsVersion = $values['annotationsVersion'] ?? null;
+        $this->layerVersion = $values['layerVersion'] ?? null;
+        $this->working = $values['working'] ?? null;
         $this->pages = $values['pages'];
     }
 

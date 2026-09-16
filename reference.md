@@ -3701,3 +3701,970 @@ $client->doc->redactions->apply(
 </dl>
 </details>
 
+## Doc Signatures
+<details><summary><code>$client-&gt;doc-&gt;signatures-&gt;list($docId, $layerName, $request) -> ?DocSignaturesList200Response</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Describes the bytes the layer is over: the base version's signatures plus the layer's own edits as the last revision. Signed bytes (contents, digests, revision prefixes) are served per base version under /versions.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->doc->signatures->list(
+    'docId',
+    'layerName',
+    new ListSignaturesRequest([]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$docId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$layerName:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$documentPassword:** `?string` — Base64-encoded password for an encrypted document. Valid only with the API token (403 anywhere else). An encrypted document answers 422 DocPasswordRequired when the header is absent. Viewer doc JWTs use the SDK password-session flow instead.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;doc-&gt;signatures-&gt;abort($docId, $layerName, $signingId, $request) -> ?DocSignaturesAbort200Response</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->doc->signatures->abort(
+    'docId',
+    'layerName',
+    'signingId',
+    new AbortSignaturesRequest([]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$docId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$layerName:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$signingId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$documentPassword:** `?string` — Base64-encoded password for an encrypted document. Valid only with the API token (403 anywhere else). An encrypted document answers 422 DocPasswordRequired when the header is absent. Viewer doc JWTs use the SDK password-session flow instead.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;doc-&gt;signatures-&gt;complete($docId, $layerName, $signingId, $request) -> ?DocSignaturesComplete200Response</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+`cms` is the detached CMS over the prepared digest, base64. `expectedVersion` must be what prepare returned. Idempotent by signing id: the same CMS again answers `already-completed`. Every layer of the document then sits over the new version; refetch the manifest after a completion.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->doc->signatures->complete(
+    'docId',
+    'layerName',
+    'signingId',
+    new DocSignaturesCompleteRequest([
+        'cms' => 'cms',
+        'expectedVersion' => new DocSignaturesCompleteRequestExpectedVersion([
+            'baseSha256' => 'baseSha256',
+            'editsVersion' => 1,
+        ]),
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$docId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$layerName:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$signingId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$documentPassword:** `?string` — Base64-encoded password for an encrypted document. Valid only with the API token (403 anywhere else). An encrypted document answers 422 DocPasswordRequired when the header is absent. Viewer doc JWTs use the SDK password-session flow instead.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$cms:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$expectedVersion:** `DocSignaturesCompleteRequestExpectedVersion` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;doc-&gt;signatures-&gt;analysis($docId, $layerName, $request) -> ?DocSignaturesAnalysis200Response</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Exactly one of `since.signature=<index>` or `since.revision=<index>`; the layer's pending edits are the end. `level=fill|annotate|lta|none` evaluates exploratorily and never becomes a verdict. For history between two base revisions use the version analysis.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->doc->signatures->analysis(
+    'docId',
+    'layerName',
+    new AnalysisSignaturesRequest([]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$docId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$layerName:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$sinceSignature:** `?int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$sinceRevision:** `?int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$level:** `?string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$documentPassword:** `?string` — Base64-encoded password for an encrypted document. Valid only with the API token (403 anywhere else). An encrypted document answers 422 DocPasswordRequired when the header is absent. Viewer doc JWTs use the SDK password-session flow instead.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;doc-&gt;signatures-&gt;prepare($docId, $layerName, $request) -> ?DocSignaturesPrepare200Response</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+The multipart envelope: a JSON `body` part (field, subFilter, digest, contentsSize, signer, certify, lock, appearance) and an optional `resource:<key>` PDF part the body's `appearance.resource` names. A certification (`certify.permission`) additionally requires `doc.sign.certify`. The layer is read-only until the signing completes, is aborted, or expires (15 minutes). A layer behind the document head cannot sign (StaleBase).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->doc->signatures->prepare(
+    'docId',
+    'layerName',
+    new PrepareSignaturesRequest([
+        'file' => File::createFromString("example_file", "example_file"),
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$docId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$layerName:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$documentPassword:** `?string` — Base64-encoded password for an encrypted document. Valid only with the API token (403 anywhere else). An encrypted document answers 422 DocPasswordRequired when the header is absent. Viewer doc JWTs use the SDK password-session flow instead.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Doc Versions
+<details><summary><code>$client-&gt;doc-&gt;versions-&gt;list($docId, $request) -> ?DocVersionsList200Response</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Every completed signature publishes a new version. Never cached: the list grows.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->doc->versions->list(
+    'docId',
+    new ListVersionsRequest([]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$docId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$documentPassword:** `?string` — Base64-encoded password for an encrypted document. Valid only with the API token (403 anywhere else). An encrypted document answers 422 DocPasswordRequired when the header is absent. Viewer doc JWTs use the SDK password-session flow instead.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;doc-&gt;versions-&gt;analysis($docId, $sha, $request) -> ?DocVersionsAnalysis200Response</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Exactly one of `since.signature` / `since.revision`; `until=<revision>` defaults to the last. The same answer for every layer and every caller.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->doc->versions->analysis(
+    'docId',
+    'sha',
+    new AnalysisVersionsRequest([]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$docId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$sha:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$sinceSignature:** `?int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$sinceRevision:** `?int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$level:** `?string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$until:** `?int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$policy:** `?int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$documentPassword:** `?string` — Base64-encoded password for an encrypted document. Valid only with the API token (403 anywhere else). An encrypted document answers 422 DocPasswordRequired when the header is absent. Viewer doc JWTs use the SDK password-session flow instead.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;doc-&gt;versions-&gt;download($docId, $sha, $request) -> string</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->doc->versions->download(
+    'docId',
+    'sha',
+    new DownloadVersionsRequest([]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$docId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$sha:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$documentPassword:** `?string` — Base64-encoded password for an encrypted document. Valid only with the API token (403 anywhere else). An encrypted document answers 422 DocPasswordRequired when the header is absent. Viewer doc JWTs use the SDK password-session flow instead.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;doc-&gt;versions-&gt;revision($docId, $sha, $index, $request) -> string</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->doc->versions->revision(
+    'docId',
+    'sha',
+    1,
+    new RevisionVersionsRequest([]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$docId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$sha:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$index:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$documentPassword:** `?string` — Base64-encoded password for an encrypted document. Valid only with the API token (403 anywhere else). An encrypted document answers 422 DocPasswordRequired when the header is absent. Viewer doc JWTs use the SDK password-session flow instead.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;doc-&gt;versions-&gt;signatures($docId, $sha, $request) -> ?DocVersionsSignatures200Response</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->doc->versions->signatures(
+    'docId',
+    'sha',
+    new SignaturesVersionsRequest([]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$docId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$sha:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$documentPassword:** `?string` — Base64-encoded password for an encrypted document. Valid only with the API token (403 anywhere else). An encrypted document answers 422 DocPasswordRequired when the header is absent. Viewer doc JWTs use the SDK password-session flow instead.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;doc-&gt;versions-&gt;signatureContents($docId, $sha, $fieldKey, $request) -> string</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+`fieldKey` is the field's fully qualified name, token-text encoded (the same encoding attachment keys use).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->doc->versions->signatureContents(
+    'docId',
+    'sha',
+    'fieldKey',
+    new SignatureContentsVersionsRequest([]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$docId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$sha:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$fieldKey:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$documentPassword:** `?string` — Base64-encoded password for an encrypted document. Valid only with the API token (403 anywhere else). An encrypted document answers 422 DocPasswordRequired when the header is absent. Viewer doc JWTs use the SDK password-session flow instead.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;doc-&gt;versions-&gt;signatureDigest($docId, $sha, $fieldKey, $algorithm, $request) -> string</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+What a CMS verifier compares its message digest to.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->doc->versions->signatureDigest(
+    'docId',
+    'sha',
+    'fieldKey',
+    SignatureDigestVersionsRequestAlgorithm::Sha1->value,
+    new SignatureDigestVersionsRequest([]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$docId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$sha:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$fieldKey:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$algorithm:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$documentPassword:** `?string` — Base64-encoded password for an encrypted document. Valid only with the API token (403 anywhere else). An encrypted document answers 422 DocPasswordRequired when the header is absent. Viewer doc JWTs use the SDK password-session flow instead.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+

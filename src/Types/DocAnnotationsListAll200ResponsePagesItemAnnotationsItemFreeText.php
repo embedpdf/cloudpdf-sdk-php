@@ -137,7 +137,7 @@ class DocAnnotationsListAll200ResponsePagesItemAnnotationsItemFreeText extends J
     public string $intent;
 
     /**
-     * @var value-of<DocAnnotationsListAll200ResponsePagesItemAnnotationsItemFreeTextFontFamily> $fontFamily
+     * @var string $fontFamily
      */
     #[JsonProperty('fontFamily')]
     public string $fontFamily;
@@ -153,6 +153,12 @@ class DocAnnotationsListAll200ResponsePagesItemAnnotationsItemFreeText extends J
      */
     #[JsonProperty('textAlign')]
     public string $textAlign;
+
+    /**
+     * @var DocAnnotationsListAll200ResponsePagesItemAnnotationsItemFreeTextRichText $richText
+     */
+    #[JsonProperty('richText')]
+    public DocAnnotationsListAll200ResponsePagesItemAnnotationsItemFreeTextRichText $richText;
 
     /**
      * @var DocAnnotationsListAll200ResponsePagesItemAnnotationsItemFreeTextColor $color
@@ -236,9 +242,10 @@ class DocAnnotationsListAll200ResponsePagesItemAnnotationsItemFreeText extends J
      *   rect: DocAnnotationsListAll200ResponsePagesItemAnnotationsItemFreeTextRect,
      *   blendMode: value-of<DocAnnotationsListAll200ResponsePagesItemAnnotationsItemFreeTextBlendMode>,
      *   intent: value-of<DocAnnotationsListAll200ResponsePagesItemAnnotationsItemFreeTextIntent>,
-     *   fontFamily: value-of<DocAnnotationsListAll200ResponsePagesItemAnnotationsItemFreeTextFontFamily>,
+     *   fontFamily: string,
      *   fontSize: float,
      *   textAlign: value-of<DocAnnotationsListAll200ResponsePagesItemAnnotationsItemFreeTextTextAlign>,
+     *   richText: DocAnnotationsListAll200ResponsePagesItemAnnotationsItemFreeTextRichText,
      *   color: DocAnnotationsListAll200ResponsePagesItemAnnotationsItemFreeTextColor,
      *   opacity: float,
      *   strokeWidth: float,
@@ -293,6 +300,7 @@ class DocAnnotationsListAll200ResponsePagesItemAnnotationsItemFreeText extends J
         $this->fontFamily = $values['fontFamily'];
         $this->fontSize = $values['fontSize'];
         $this->textAlign = $values['textAlign'];
+        $this->richText = $values['richText'];
         $this->color = $values['color'];
         $this->fontColor = $values['fontColor'] ?? null;
         $this->interiorColor = $values['interiorColor'] ?? null;

@@ -7,6 +7,8 @@ use CloudPDF\Doc\Forms\FormsClient;
 use CloudPDF\Doc\Metadata\MetadataClient;
 use CloudPDF\Doc\Pages\PagesClient;
 use CloudPDF\Doc\Redactions\RedactionsClient;
+use CloudPDF\Doc\Signatures\SignaturesClient;
+use CloudPDF\Doc\Versions\VersionsClient;
 use Psr\Http\Client\ClientInterface;
 use CloudPDF\Core\Client\RawClient;
 use CloudPDF\Doc\Requests\HeadDocRequest;
@@ -52,6 +54,16 @@ class DocClient
     public RedactionsClient $redactions;
 
     /**
+     * @var SignaturesClient $signatures
+     */
+    public SignaturesClient $signatures;
+
+    /**
+     * @var VersionsClient $versions
+     */
+    public VersionsClient $versions;
+
+    /**
      * @var array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
@@ -88,6 +100,8 @@ class DocClient
         $this->metadata = new MetadataClient($this->client, $this->options);
         $this->pages = new PagesClient($this->client, $this->options);
         $this->redactions = new RedactionsClient($this->client, $this->options);
+        $this->signatures = new SignaturesClient($this->client, $this->options);
+        $this->versions = new VersionsClient($this->client, $this->options);
     }
 
     /**
