@@ -11,6 +11,24 @@ use CloudPDF\Core\Types\ArrayType;
 class DocAnnotationsListAll200ResponsePagesItemAnnotationsItemPolygon extends JsonSerializableType
 {
     /**
+     * @var ?value-of<DocAnnotationsListAll200ResponsePagesItemAnnotationsItemPolygonIntent> $intent
+     */
+    #[JsonProperty('intent')]
+    public ?string $intent;
+
+    /**
+     * @var ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemPolygonMeasure $measure
+     */
+    #[JsonProperty('measure')]
+    public ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemPolygonMeasure $measure;
+
+    /**
+     * @var ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemPolygonCaption $caption
+     */
+    #[JsonProperty('caption')]
+    public ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemPolygonCaption $caption;
+
+    /**
      * @var DocAnnotationsListAll200ResponsePagesItemAnnotationsItemPolygonRef $ref
      */
     #[JsonProperty('ref')]
@@ -198,6 +216,9 @@ class DocAnnotationsListAll200ResponsePagesItemAnnotationsItemPolygon extends Js
      *   strokeWidth: float,
      *   borderStyle: value-of<DocAnnotationsListAll200ResponsePagesItemAnnotationsItemPolygonBorderStyle>,
      *   vertices: array<DocAnnotationsListAll200ResponsePagesItemAnnotationsItemPolygonVerticesItem>,
+     *   intent?: ?value-of<DocAnnotationsListAll200ResponsePagesItemAnnotationsItemPolygonIntent>,
+     *   measure?: ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemPolygonMeasure,
+     *   caption?: ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemPolygonCaption,
      *   nm?: ?string,
      *   contents?: ?string,
      *   subject?: ?string,
@@ -220,6 +241,9 @@ class DocAnnotationsListAll200ResponsePagesItemAnnotationsItemPolygon extends Js
     public function __construct(
         array $values,
     ) {
+        $this->intent = $values['intent'] ?? null;
+        $this->measure = $values['measure'] ?? null;
+        $this->caption = $values['caption'] ?? null;
         $this->ref = $values['ref'];
         $this->pageObjectNumber = $values['pageObjectNumber'];
         $this->index = $values['index'];

@@ -4,14 +4,19 @@ namespace CloudPDF\Doc\Pages;
 
 use Psr\Http\Client\ClientInterface;
 use CloudPDF\Core\Client\RawClient;
-use CloudPDF\Doc\Pages\Requests\DeletePagesRequest;
-use CloudPDF\Types\DocPagesDelete200Response;
+use CloudPDF\Doc\Pages\Requests\DocPagesSetScaleRequest;
+use CloudPDF\Types\DocPagesSetScale200Response;
 use CloudPDF\Exceptions\CloudPDFException;
 use CloudPDF\Exceptions\CloudPDFApiException;
 use CloudPDF\Core\Json\JsonApiRequest;
 use CloudPDF\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
+use CloudPDF\Doc\Pages\Requests\ViewportsPagesRequest;
+use CloudPDF\Types\DocPagesViewports200ResponseItem;
+use CloudPDF\Core\Json\JsonDecoder;
+use CloudPDF\Doc\Pages\Requests\DeletePagesRequest;
+use CloudPDF\Types\DocPagesDelete200Response;
 use CloudPDF\Doc\Pages\Requests\ExtractPagesRequest;
 use CloudPDF\Doc\Pages\Requests\FlattenPagesRequest;
 use CloudPDF\Types\DocPagesFlatten200Response;
@@ -64,6 +69,135 @@ class PagesClient
     ) {
         $this->client = $client;
         $this->options = $options ?? [];
+    }
+
+    /**
+     * Example:
+     * ```php
+     * $client->doc->pages->setScale(
+     *     'docId',
+     *     'layerName',
+     *     1,
+     *     new DocPagesSetScaleRequest([]),
+     * );
+     * ```
+     *
+     * @param string $docId
+     * @param string $layerName
+     * @param int $pon
+     * @param DocPagesSetScaleRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return ?DocPagesSetScale200Response
+     * @throws CloudPDFException
+     * @throws CloudPDFApiException
+     */
+    public function setScale(string $docId, string $layerName, int $pon, DocPagesSetScaleRequest $request, ?array $options = null): ?DocPagesSetScale200Response
+    {
+        $options = array_merge($this->options, $options ?? []);
+        $headers = [];
+        if ($request->documentPassword != null) {
+            $headers['X-Document-Password'] = $request->documentPassword;
+        }
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "v1/docs/{$docId}/layers/{$layerName}/pages/{$pon}/scale",
+                    method: HttpMethod::PUT,
+                    headers: $headers,
+                    body: $request,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
+                return DocPagesSetScale200Response::fromJson($json);
+            }
+        } catch (JsonException $e) {
+            throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (ClientExceptionInterface $e) {
+            throw new CloudPDFException(message: $e->getMessage(), previous: $e);
+        }
+        throw new CloudPDFApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * Example:
+     * ```php
+     * $client->doc->pages->viewports(
+     *     'docId',
+     *     'layerName',
+     *     1,
+     *     new ViewportsPagesRequest([]),
+     * );
+     * ```
+     *
+     * @param string $docId
+     * @param string $layerName
+     * @param int $pon
+     * @param ViewportsPagesRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return ?array<DocPagesViewports200ResponseItem>
+     * @throws CloudPDFException
+     * @throws CloudPDFApiException
+     */
+    public function viewports(string $docId, string $layerName, int $pon, ViewportsPagesRequest $request = new ViewportsPagesRequest(), ?array $options = null): ?array
+    {
+        $options = array_merge($this->options, $options ?? []);
+        $headers = [];
+        if ($request->documentPassword != null) {
+            $headers['X-Document-Password'] = $request->documentPassword;
+        }
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "v1/docs/{$docId}/layers/{$layerName}/pages/{$pon}/viewports",
+                    method: HttpMethod::GET,
+                    headers: $headers,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
+                return JsonDecoder::decodeArray($json, [DocPagesViewports200ResponseItem::class]); // @phpstan-ignore-line
+            }
+        } catch (JsonException $e) {
+            throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (ClientExceptionInterface $e) {
+            throw new CloudPDFException(message: $e->getMessage(), previous: $e);
+        }
+        throw new CloudPDFApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
     }
 
     /**

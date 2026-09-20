@@ -2946,6 +2946,152 @@ $client->doc->metadata->get(
 </details>
 
 ## Doc Pages
+<details><summary><code>$client-&gt;doc-&gt;pages-&gt;setScale($docId, $layerName, $pon, $request) -> ?DocPagesSetScale200Response</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->doc->pages->setScale(
+    'docId',
+    'layerName',
+    1,
+    new DocPagesSetScaleRequest([]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$docId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$layerName:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$pon:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$documentPassword:** `?string` — Base64-encoded password for an encrypted document. Valid only with the API token (403 anywhere else). An encrypted document answers 422 DocPasswordRequired when the header is absent. Viewer doc JWTs use the SDK password-session flow instead.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$measure:** `?DocPagesSetScaleRequestMeasure` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;doc-&gt;pages-&gt;viewports($docId, $layerName, $pon, $request) -> ?array</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->doc->pages->viewports(
+    'docId',
+    'layerName',
+    1,
+    new ViewportsPagesRequest([]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$docId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$layerName:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$pon:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$documentPassword:** `?string` — Base64-encoded password for an encrypted document. Valid only with the API token (403 anywhere else). An encrypted document answers 422 DocPasswordRequired when the header is absent. Viewer doc JWTs use the SDK password-session flow instead.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>$client-&gt;doc-&gt;pages-&gt;delete($docId, $layerName, $request) -> ?DocPagesDelete200Response</code></summary>
 <dl>
 <dd>

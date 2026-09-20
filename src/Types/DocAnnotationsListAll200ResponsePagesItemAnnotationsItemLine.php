@@ -11,6 +11,30 @@ use CloudPDF\Core\Types\ArrayType;
 class DocAnnotationsListAll200ResponsePagesItemAnnotationsItemLine extends JsonSerializableType
 {
     /**
+     * @var ?value-of<DocAnnotationsListAll200ResponsePagesItemAnnotationsItemLineIntent> $intent
+     */
+    #[JsonProperty('intent')]
+    public ?string $intent;
+
+    /**
+     * @var ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemLineMeasure $measure
+     */
+    #[JsonProperty('measure')]
+    public ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemLineMeasure $measure;
+
+    /**
+     * @var ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemLineCaption $caption
+     */
+    #[JsonProperty('caption')]
+    public ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemLineCaption $caption;
+
+    /**
+     * @var ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemLineLeader $leader
+     */
+    #[JsonProperty('leader')]
+    public ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemLineLeader $leader;
+
+    /**
      * @var DocAnnotationsListAll200ResponsePagesItemAnnotationsItemLineRef $ref
      */
     #[JsonProperty('ref')]
@@ -199,6 +223,10 @@ class DocAnnotationsListAll200ResponsePagesItemAnnotationsItemLine extends JsonS
      *   borderStyle: value-of<DocAnnotationsListAll200ResponsePagesItemAnnotationsItemLineBorderStyle>,
      *   linePoints: DocAnnotationsListAll200ResponsePagesItemAnnotationsItemLineLinePoints,
      *   lineEndings: DocAnnotationsListAll200ResponsePagesItemAnnotationsItemLineLineEndings,
+     *   intent?: ?value-of<DocAnnotationsListAll200ResponsePagesItemAnnotationsItemLineIntent>,
+     *   measure?: ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemLineMeasure,
+     *   caption?: ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemLineCaption,
+     *   leader?: ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemLineLeader,
      *   nm?: ?string,
      *   contents?: ?string,
      *   subject?: ?string,
@@ -220,6 +248,10 @@ class DocAnnotationsListAll200ResponsePagesItemAnnotationsItemLine extends JsonS
     public function __construct(
         array $values,
     ) {
+        $this->intent = $values['intent'] ?? null;
+        $this->measure = $values['measure'] ?? null;
+        $this->caption = $values['caption'] ?? null;
+        $this->leader = $values['leader'] ?? null;
         $this->ref = $values['ref'];
         $this->pageObjectNumber = $values['pageObjectNumber'];
         $this->index = $values['index'];
