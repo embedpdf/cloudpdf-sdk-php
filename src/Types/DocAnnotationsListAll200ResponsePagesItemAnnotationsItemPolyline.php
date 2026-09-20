@@ -11,6 +11,24 @@ use CloudPDF\Core\Types\ArrayType;
 class DocAnnotationsListAll200ResponsePagesItemAnnotationsItemPolyline extends JsonSerializableType
 {
     /**
+     * @var ?value-of<DocAnnotationsListAll200ResponsePagesItemAnnotationsItemPolylineIntent> $intent
+     */
+    #[JsonProperty('intent')]
+    public ?string $intent;
+
+    /**
+     * @var ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemPolylineMeasure $measure
+     */
+    #[JsonProperty('measure')]
+    public ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemPolylineMeasure $measure;
+
+    /**
+     * @var ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemPolylineCaption $caption
+     */
+    #[JsonProperty('caption')]
+    public ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemPolylineCaption $caption;
+
+    /**
      * @var DocAnnotationsListAll200ResponsePagesItemAnnotationsItemPolylineRef $ref
      */
     #[JsonProperty('ref')]
@@ -199,6 +217,9 @@ class DocAnnotationsListAll200ResponsePagesItemAnnotationsItemPolyline extends J
      *   borderStyle: value-of<DocAnnotationsListAll200ResponsePagesItemAnnotationsItemPolylineBorderStyle>,
      *   vertices: array<DocAnnotationsListAll200ResponsePagesItemAnnotationsItemPolylineVerticesItem>,
      *   lineEndings: DocAnnotationsListAll200ResponsePagesItemAnnotationsItemPolylineLineEndings,
+     *   intent?: ?value-of<DocAnnotationsListAll200ResponsePagesItemAnnotationsItemPolylineIntent>,
+     *   measure?: ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemPolylineMeasure,
+     *   caption?: ?DocAnnotationsListAll200ResponsePagesItemAnnotationsItemPolylineCaption,
      *   nm?: ?string,
      *   contents?: ?string,
      *   subject?: ?string,
@@ -220,6 +241,9 @@ class DocAnnotationsListAll200ResponsePagesItemAnnotationsItemPolyline extends J
     public function __construct(
         array $values,
     ) {
+        $this->intent = $values['intent'] ?? null;
+        $this->measure = $values['measure'] ?? null;
+        $this->caption = $values['caption'] ?? null;
         $this->ref = $values['ref'];
         $this->pageObjectNumber = $values['pageObjectNumber'];
         $this->index = $values['index'];

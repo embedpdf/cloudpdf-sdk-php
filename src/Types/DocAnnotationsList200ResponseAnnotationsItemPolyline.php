@@ -11,6 +11,24 @@ use CloudPDF\Core\Types\ArrayType;
 class DocAnnotationsList200ResponseAnnotationsItemPolyline extends JsonSerializableType
 {
     /**
+     * @var ?value-of<DocAnnotationsList200ResponseAnnotationsItemPolylineIntent> $intent
+     */
+    #[JsonProperty('intent')]
+    public ?string $intent;
+
+    /**
+     * @var ?DocAnnotationsList200ResponseAnnotationsItemPolylineMeasure $measure
+     */
+    #[JsonProperty('measure')]
+    public ?DocAnnotationsList200ResponseAnnotationsItemPolylineMeasure $measure;
+
+    /**
+     * @var ?DocAnnotationsList200ResponseAnnotationsItemPolylineCaption $caption
+     */
+    #[JsonProperty('caption')]
+    public ?DocAnnotationsList200ResponseAnnotationsItemPolylineCaption $caption;
+
+    /**
      * @var DocAnnotationsList200ResponseAnnotationsItemPolylineRef $ref
      */
     #[JsonProperty('ref')]
@@ -199,6 +217,9 @@ class DocAnnotationsList200ResponseAnnotationsItemPolyline extends JsonSerializa
      *   borderStyle: value-of<DocAnnotationsList200ResponseAnnotationsItemPolylineBorderStyle>,
      *   vertices: array<DocAnnotationsList200ResponseAnnotationsItemPolylineVerticesItem>,
      *   lineEndings: DocAnnotationsList200ResponseAnnotationsItemPolylineLineEndings,
+     *   intent?: ?value-of<DocAnnotationsList200ResponseAnnotationsItemPolylineIntent>,
+     *   measure?: ?DocAnnotationsList200ResponseAnnotationsItemPolylineMeasure,
+     *   caption?: ?DocAnnotationsList200ResponseAnnotationsItemPolylineCaption,
      *   nm?: ?string,
      *   contents?: ?string,
      *   subject?: ?string,
@@ -220,6 +241,9 @@ class DocAnnotationsList200ResponseAnnotationsItemPolyline extends JsonSerializa
     public function __construct(
         array $values,
     ) {
+        $this->intent = $values['intent'] ?? null;
+        $this->measure = $values['measure'] ?? null;
+        $this->caption = $values['caption'] ?? null;
         $this->ref = $values['ref'];
         $this->pageObjectNumber = $values['pageObjectNumber'];
         $this->index = $values['index'];

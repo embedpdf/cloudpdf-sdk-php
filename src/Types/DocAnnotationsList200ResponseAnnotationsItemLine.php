@@ -11,6 +11,30 @@ use CloudPDF\Core\Types\ArrayType;
 class DocAnnotationsList200ResponseAnnotationsItemLine extends JsonSerializableType
 {
     /**
+     * @var ?value-of<DocAnnotationsList200ResponseAnnotationsItemLineIntent> $intent
+     */
+    #[JsonProperty('intent')]
+    public ?string $intent;
+
+    /**
+     * @var ?DocAnnotationsList200ResponseAnnotationsItemLineMeasure $measure
+     */
+    #[JsonProperty('measure')]
+    public ?DocAnnotationsList200ResponseAnnotationsItemLineMeasure $measure;
+
+    /**
+     * @var ?DocAnnotationsList200ResponseAnnotationsItemLineCaption $caption
+     */
+    #[JsonProperty('caption')]
+    public ?DocAnnotationsList200ResponseAnnotationsItemLineCaption $caption;
+
+    /**
+     * @var ?DocAnnotationsList200ResponseAnnotationsItemLineLeader $leader
+     */
+    #[JsonProperty('leader')]
+    public ?DocAnnotationsList200ResponseAnnotationsItemLineLeader $leader;
+
+    /**
      * @var DocAnnotationsList200ResponseAnnotationsItemLineRef $ref
      */
     #[JsonProperty('ref')]
@@ -199,6 +223,10 @@ class DocAnnotationsList200ResponseAnnotationsItemLine extends JsonSerializableT
      *   borderStyle: value-of<DocAnnotationsList200ResponseAnnotationsItemLineBorderStyle>,
      *   linePoints: DocAnnotationsList200ResponseAnnotationsItemLineLinePoints,
      *   lineEndings: DocAnnotationsList200ResponseAnnotationsItemLineLineEndings,
+     *   intent?: ?value-of<DocAnnotationsList200ResponseAnnotationsItemLineIntent>,
+     *   measure?: ?DocAnnotationsList200ResponseAnnotationsItemLineMeasure,
+     *   caption?: ?DocAnnotationsList200ResponseAnnotationsItemLineCaption,
+     *   leader?: ?DocAnnotationsList200ResponseAnnotationsItemLineLeader,
      *   nm?: ?string,
      *   contents?: ?string,
      *   subject?: ?string,
@@ -220,6 +248,10 @@ class DocAnnotationsList200ResponseAnnotationsItemLine extends JsonSerializableT
     public function __construct(
         array $values,
     ) {
+        $this->intent = $values['intent'] ?? null;
+        $this->measure = $values['measure'] ?? null;
+        $this->caption = $values['caption'] ?? null;
+        $this->leader = $values['leader'] ?? null;
         $this->ref = $values['ref'];
         $this->pageObjectNumber = $values['pageObjectNumber'];
         $this->index = $values['index'];

@@ -11,6 +11,24 @@ use CloudPDF\Core\Types\ArrayType;
 class DocAnnotationsList200ResponseAnnotationsItemPolygon extends JsonSerializableType
 {
     /**
+     * @var ?value-of<DocAnnotationsList200ResponseAnnotationsItemPolygonIntent> $intent
+     */
+    #[JsonProperty('intent')]
+    public ?string $intent;
+
+    /**
+     * @var ?DocAnnotationsList200ResponseAnnotationsItemPolygonMeasure $measure
+     */
+    #[JsonProperty('measure')]
+    public ?DocAnnotationsList200ResponseAnnotationsItemPolygonMeasure $measure;
+
+    /**
+     * @var ?DocAnnotationsList200ResponseAnnotationsItemPolygonCaption $caption
+     */
+    #[JsonProperty('caption')]
+    public ?DocAnnotationsList200ResponseAnnotationsItemPolygonCaption $caption;
+
+    /**
      * @var DocAnnotationsList200ResponseAnnotationsItemPolygonRef $ref
      */
     #[JsonProperty('ref')]
@@ -198,6 +216,9 @@ class DocAnnotationsList200ResponseAnnotationsItemPolygon extends JsonSerializab
      *   strokeWidth: float,
      *   borderStyle: value-of<DocAnnotationsList200ResponseAnnotationsItemPolygonBorderStyle>,
      *   vertices: array<DocAnnotationsList200ResponseAnnotationsItemPolygonVerticesItem>,
+     *   intent?: ?value-of<DocAnnotationsList200ResponseAnnotationsItemPolygonIntent>,
+     *   measure?: ?DocAnnotationsList200ResponseAnnotationsItemPolygonMeasure,
+     *   caption?: ?DocAnnotationsList200ResponseAnnotationsItemPolygonCaption,
      *   nm?: ?string,
      *   contents?: ?string,
      *   subject?: ?string,
@@ -220,6 +241,9 @@ class DocAnnotationsList200ResponseAnnotationsItemPolygon extends JsonSerializab
     public function __construct(
         array $values,
     ) {
+        $this->intent = $values['intent'] ?? null;
+        $this->measure = $values['measure'] ?? null;
+        $this->caption = $values['caption'] ?? null;
         $this->ref = $values['ref'];
         $this->pageObjectNumber = $values['pageObjectNumber'];
         $this->index = $values['index'];
