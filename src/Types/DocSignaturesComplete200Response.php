@@ -38,10 +38,10 @@ class DocSignaturesComplete200Response extends JsonSerializableType
     public DocSignaturesComplete200ResponseProtection $protection;
 
     /**
-     * @var DocSignaturesComplete200ResponseMeta $meta
+     * @var MutationMeta $meta
      */
     #[JsonProperty('meta')]
-    public DocSignaturesComplete200ResponseMeta $meta;
+    public MutationMeta $meta;
 
     /**
      * @param array{
@@ -50,7 +50,7 @@ class DocSignaturesComplete200Response extends JsonSerializableType
      *   version: DocSignaturesComplete200ResponseVersion,
      *   previous: DocSignaturesComplete200ResponsePrevious,
      *   protection: DocSignaturesComplete200ResponseProtection,
-     *   meta: DocSignaturesComplete200ResponseMeta,
+     *   meta: MutationMeta,
      * } $values
      */
     public function __construct(

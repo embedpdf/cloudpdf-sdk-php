@@ -37,14 +37,21 @@ Instantiate and use the client with the following:
 namespace Example;
 
 use CloudPDF\CloudPDFClient;
-use CloudPDF\Shares\Requests\SharesExchangeRequest;
+use CloudPDF\Doc\Requests\DocChangesRequest;
+use CloudPDF\Doc\Types\DocChangesRequestChangesItem;
 
 $client = new CloudPDFClient(
     token: '<token>',
 );
-$client->shares->exchange(
-    new SharesExchangeRequest([
-        'shareToken' => 'shareToken',
+$client->doc->changes(
+    'docId',
+    'layerName',
+    new DocChangesRequest([
+        'changes' => [
+            new DocChangesRequestChangesItem([
+                'opId' => 'opId',
+            ]),
+        ],
     ]),
 );
 
@@ -59,7 +66,7 @@ use CloudPDF\Exceptions\CloudPDFApiException;
 use CloudPDF\Exceptions\CloudPDFException;
 
 try {
-    $response = $client->shares->exchange(...);
+    $response = $client->doc->changes(...);
 } catch (CloudPDFApiException $e) {
     echo 'API Exception occurred: ' . $e->getMessage() . "\n";
     echo 'Status Code: ' . $e->getCode() . "\n";
@@ -118,7 +125,7 @@ The `retryStatusCodes` configuration controls which [5XX](https://developer.mozi
 Use the `maxRetries` request option to configure this behavior.
 
 ```php
-$response = $client->shares->exchange(
+$response = $client->doc->changes(
     ...,
     options: [
         'maxRetries' => 0 // Override maxRetries at the request level
@@ -131,7 +138,7 @@ $response = $client->shares->exchange(
 The SDK defaults to a 30 second timeout. Use the `timeout` option to configure this behavior.
 
 ```php
-$response = $client->shares->exchange(
+$response = $client->doc->changes(
     ...,
     options: [
         'timeout' => 3.0 // Override timeout at the request level

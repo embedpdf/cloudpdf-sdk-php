@@ -20,6 +20,12 @@ class DocManifest200ResponseScopes extends JsonSerializableType
     public string $annotations;
 
     /**
+     * @var value-of<DocManifest200ResponseScopesForms> $forms
+     */
+    #[JsonProperty('forms')]
+    public string $forms;
+
+    /**
      * @var value-of<DocManifest200ResponseScopesLayout> $layout
      */
     #[JsonProperty('layout')]
@@ -47,6 +53,7 @@ class DocManifest200ResponseScopes extends JsonSerializableType
      * @param array{
      *   content: value-of<DocManifest200ResponseScopesContent>,
      *   annotations: value-of<DocManifest200ResponseScopesAnnotations>,
+     *   forms: value-of<DocManifest200ResponseScopesForms>,
      *   layout: value-of<DocManifest200ResponseScopesLayout>,
      *   attachments: value-of<DocManifest200ResponseScopesAttachments>,
      *   metadata: value-of<DocManifest200ResponseScopesMetadata>,
@@ -58,6 +65,7 @@ class DocManifest200ResponseScopes extends JsonSerializableType
     ) {
         $this->content = $values['content'];
         $this->annotations = $values['annotations'];
+        $this->forms = $values['forms'];
         $this->layout = $values['layout'];
         $this->attachments = $values['attachments'];
         $this->metadata = $values['metadata'];

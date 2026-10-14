@@ -13,6 +13,11 @@ class InsertPagesRequest extends JsonSerializableType
     public ?string $documentPassword;
 
     /**
+     * @var ?string $idempotencyKey Names the change: 1 to 255 printable ASCII characters. A retry under the same key on the same layer answers with what the first request committed, and changes nothing.
+     */
+    public ?string $idempotencyKey;
+
+    /**
      * @var File $file
      */
     public File $file;
@@ -21,12 +26,14 @@ class InsertPagesRequest extends JsonSerializableType
      * @param array{
      *   file: File,
      *   documentPassword?: ?string,
+     *   idempotencyKey?: ?string,
      * } $values
      */
     public function __construct(
         array $values,
     ) {
         $this->documentPassword = $values['documentPassword'] ?? null;
+        $this->idempotencyKey = $values['idempotencyKey'] ?? null;
         $this->file = $values['file'];
     }
 }

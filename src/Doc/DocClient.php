@@ -19,6 +19,8 @@ use CloudPDF\Core\Json\JsonApiRequest;
 use CloudPDF\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
+use CloudPDF\Doc\Requests\DocChangesRequest;
+use CloudPDF\Types\DocChanges200Response;
 use CloudPDF\Doc\Requests\DownloadDocRequest;
 use CloudPDF\Doc\Requests\ManifestDocRequest;
 use CloudPDF\Types\DocManifest200Response;
@@ -165,6 +167,77 @@ class DocClient
     }
 
     /**
+     * Each change stands on its own and names itself by `opId`: a refused change rolls back alone, and the answer lists every change in order, applied with its result or refused with its error. Asked again under its `opId`, a change gets the same answer, refusals included; a different change under an answered `opId` is refused (IdempotencyKeyReused). `{ opId, undoOf }` undoes an earlier change of the caller, here or in an earlier request; an undo leaves alone what was changed since, and the undo of an undo redoes. A redaction, a flatten, a form repair or a completed signature ends undo for the changes before it (UndoUnavailable). Each op is checked against its own capability: annotation ops need `doc.annotate.modify`, form values `doc.forms.fill`, form structure `doc.forms.modify`, metadata `doc.metadata.modify`. Bytes (a stamp's drawing, an attached file, a signature's artwork) travel as multipart: a JSON `body` part, each op naming its files by role as `resources: { <role>: '<key>' }`, and each file as the part `resource:<key>`. At most 64 changes per request and 512 ops per change.
+     *
+     * Example:
+     * ```php
+     * $client->doc->changes(
+     *     'docId',
+     *     'layerName',
+     *     new DocChangesRequest([
+     *         'changes' => [
+     *             new DocChangesRequestChangesItem([
+     *                 'opId' => 'opId',
+     *             ]),
+     *         ],
+     *     ]),
+     * );
+     * ```
+     *
+     * @param string $docId
+     * @param string $layerName
+     * @param DocChangesRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return ?DocChanges200Response
+     * @throws CloudPDFException
+     * @throws CloudPDFApiException
+     */
+    public function changes(string $docId, string $layerName, DocChangesRequest $request, ?array $options = null): ?DocChanges200Response
+    {
+        $options = array_merge($this->options, $options ?? []);
+        $headers = [];
+        if ($request->documentPassword != null) {
+            $headers['X-Document-Password'] = $request->documentPassword;
+        }
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "v1/docs/{$docId}/layers/{$layerName}/changes",
+                    method: HttpMethod::POST,
+                    headers: $headers,
+                    body: $request,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
+                return DocChanges200Response::fromJson($json);
+            }
+        } catch (JsonException $e) {
+            throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (ClientExceptionInterface $e) {
+            throw new CloudPDFException(message: $e->getMessage(), previous: $e);
+        }
+        throw new CloudPDFApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
      * Example:
      * ```php
      * $client->doc->download(
@@ -290,14 +363,14 @@ class DocClient
      * $client->doc->render(
      *     'docId',
      *     'layerName',
-     *     1,
+     *     'pageKey',
      *     new RenderDocRequest([]),
      * );
      * ```
      *
      * @param string $docId
      * @param string $layerName
-     * @param int $pon
+     * @param string $pageKey The page's address, `obj:N`: the page's indirect object number, the durable identity every `PageLayout.ref` carries. Mirrors `annotKey` and `fieldKey`.
      * @param RenderDocRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -311,7 +384,7 @@ class DocClient
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function render(string $docId, string $layerName, int $pon, RenderDocRequest $request = new RenderDocRequest(), ?array $options = null): string
+    public function render(string $docId, string $layerName, string $pageKey, RenderDocRequest $request = new RenderDocRequest(), ?array $options = null): string
     {
         $options = array_merge($this->options, $options ?? []);
         $headers = [];
@@ -322,7 +395,7 @@ class DocClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "v1/docs/{$docId}/layers/{$layerName}/render/pages/{$pon}/data",
+                    path: "v1/docs/{$docId}/layers/{$layerName}/render/pages/{$pageKey}/data",
                     method: HttpMethod::GET,
                     headers: $headers,
                 ),
@@ -348,14 +421,14 @@ class DocClient
      * $client->doc->text(
      *     'docId',
      *     'layerName',
-     *     1,
+     *     'pageKey',
      *     new TextDocRequest([]),
      * );
      * ```
      *
      * @param string $docId
      * @param string $layerName
-     * @param int $pon
+     * @param string $pageKey The page's address, `obj:N`: the page's indirect object number, the durable identity every `PageLayout.ref` carries. Mirrors `annotKey` and `fieldKey`.
      * @param TextDocRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -369,7 +442,7 @@ class DocClient
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function text(string $docId, string $layerName, int $pon, TextDocRequest $request = new TextDocRequest(), ?array $options = null): ?DocText200Response
+    public function text(string $docId, string $layerName, string $pageKey, TextDocRequest $request = new TextDocRequest(), ?array $options = null): ?DocText200Response
     {
         $options = array_merge($this->options, $options ?? []);
         $headers = [];
@@ -380,7 +453,7 @@ class DocClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "v1/docs/{$docId}/layers/{$layerName}/text/pages/{$pon}/data",
+                    path: "v1/docs/{$docId}/layers/{$layerName}/text/pages/{$pageKey}/data",
                     method: HttpMethod::GET,
                     headers: $headers,
                 ),

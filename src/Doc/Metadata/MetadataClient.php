@@ -2,10 +2,11 @@
 
 namespace CloudPDF\Doc\Metadata;
 
+use CloudPDF\Doc\Metadata\Custom\CustomClient;
 use Psr\Http\Client\ClientInterface;
 use CloudPDF\Core\Client\RawClient;
 use CloudPDF\Doc\Metadata\Requests\GetMetadataRequest;
-use CloudPDF\Types\DocMetadataGet200Response;
+use CloudPDF\Types\DocumentMetadata;
 use CloudPDF\Exceptions\CloudPDFException;
 use CloudPDF\Exceptions\CloudPDFApiException;
 use CloudPDF\Core\Json\JsonApiRequest;
@@ -15,6 +16,11 @@ use Psr\Http\Client\ClientExceptionInterface;
 
 class MetadataClient
 {
+    /**
+     * @var CustomClient $custom
+     */
+    public CustomClient $custom;
+
     /**
      * @var array{
      *   baseUrl?: string,
@@ -47,6 +53,7 @@ class MetadataClient
     ) {
         $this->client = $client;
         $this->options = $options ?? [];
+        $this->custom = new CustomClient($this->client, $this->options);
     }
 
     /**
@@ -70,11 +77,11 @@ class MetadataClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?DocMetadataGet200Response
+     * @return ?DocumentMetadata
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function get(string $docId, string $layerName, GetMetadataRequest $request = new GetMetadataRequest(), ?array $options = null): ?DocMetadataGet200Response
+    public function get(string $docId, string $layerName, GetMetadataRequest $request = new GetMetadataRequest(), ?array $options = null): ?DocumentMetadata
     {
         $options = array_merge($this->options, $options ?? []);
         $headers = [];
@@ -97,7 +104,7 @@ class MetadataClient
                 if (empty($json)) {
                     return null;
                 }
-                return DocMetadataGet200Response::fromJson($json);
+                return DocumentMetadata::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);

@@ -6,7 +6,7 @@ use CloudPDF\Core\Json\JsonSerializableType;
 use Exception;
 
 /**
- * Where CloudPDF pulls the bytes from. The two shapes differ in WHO supplies the authority to read, not in which storage vendor holds the file.
+ * Where CloudPDF pulls the bytes from. The two shapes differ in who supplies the authority to read, not in which storage vendor holds the file.
  */
 class DocumentsImportFromRequestSource extends JsonSerializableType
 {

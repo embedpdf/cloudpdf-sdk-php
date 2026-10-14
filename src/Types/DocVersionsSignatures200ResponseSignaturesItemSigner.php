@@ -4,6 +4,8 @@ namespace CloudPDF\Types;
 
 use CloudPDF\Core\Json\JsonSerializableType;
 use CloudPDF\Core\Json\JsonProperty;
+use DateTime;
+use CloudPDF\Core\Types\Date;
 
 class DocVersionsSignatures200ResponseSignaturesItemSigner extends JsonSerializableType
 {
@@ -32,10 +34,10 @@ class DocVersionsSignatures200ResponseSignaturesItemSigner extends JsonSerializa
     public ?string $contactInfo;
 
     /**
-     * @var ?string $claimedTime
+     * @var ?DateTime $signedAt
      */
-    #[JsonProperty('claimedTime')]
-    public ?string $claimedTime;
+    #[JsonProperty('signedAt'), Date(Date::TYPE_DATETIME)]
+    public ?DateTime $signedAt;
 
     /**
      * @param array{
@@ -43,7 +45,7 @@ class DocVersionsSignatures200ResponseSignaturesItemSigner extends JsonSerializa
      *   reason?: ?string,
      *   location?: ?string,
      *   contactInfo?: ?string,
-     *   claimedTime?: ?string,
+     *   signedAt?: ?DateTime,
      * } $values
      */
     public function __construct(
@@ -53,7 +55,7 @@ class DocVersionsSignatures200ResponseSignaturesItemSigner extends JsonSerializa
         $this->reason = $values['reason'] ?? null;
         $this->location = $values['location'] ?? null;
         $this->contactInfo = $values['contactInfo'] ?? null;
-        $this->claimedTime = $values['claimedTime'] ?? null;
+        $this->signedAt = $values['signedAt'] ?? null;
     }
 
     /**

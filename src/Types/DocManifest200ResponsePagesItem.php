@@ -8,10 +8,10 @@ use CloudPDF\Core\Json\JsonProperty;
 class DocManifest200ResponsePagesItem extends JsonSerializableType
 {
     /**
-     * @var DocManifest200ResponsePagesItemState $state
+     * @var PageRef $page
      */
-    #[JsonProperty('state')]
-    public DocManifest200ResponsePagesItemState $state;
+    #[JsonProperty('page')]
+    public PageRef $page;
 
     /**
      * @var DocManifest200ResponsePagesItemCache $cache
@@ -21,14 +21,14 @@ class DocManifest200ResponsePagesItem extends JsonSerializableType
 
     /**
      * @param array{
-     *   state: DocManifest200ResponsePagesItemState,
+     *   page: PageRef,
      *   cache: DocManifest200ResponsePagesItemCache,
      * } $values
      */
     public function __construct(
         array $values,
     ) {
-        $this->state = $values['state'];
+        $this->page = $values['page'];
         $this->cache = $values['cache'];
     }
 

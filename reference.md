@@ -77,6 +77,94 @@ $client->doc->head(
 </dl>
 </details>
 
+<details><summary><code>$client-&gt;doc-&gt;changes($docId, $layerName, $request) -> ?DocChanges200Response</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Each change stands on its own and names itself by `opId`: a refused change rolls back alone, and the answer lists every change in order, applied with its result or refused with its error. Asked again under its `opId`, a change gets the same answer, refusals included; a different change under an answered `opId` is refused (IdempotencyKeyReused). `{ opId, undoOf }` undoes an earlier change of the caller, here or in an earlier request; an undo leaves alone what was changed since, and the undo of an undo redoes. A redaction, a flatten, a form repair or a completed signature ends undo for the changes before it (UndoUnavailable). Each op is checked against its own capability: annotation ops need `doc.annotate.modify`, form values `doc.forms.fill`, form structure `doc.forms.modify`, metadata `doc.metadata.modify`. Bytes (a stamp's drawing, an attached file, a signature's artwork) travel as multipart: a JSON `body` part, each op naming its files by role as `resources: { <role>: '<key>' }`, and each file as the part `resource:<key>`. At most 64 changes per request and 512 ops per change.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->doc->changes(
+    'docId',
+    'layerName',
+    new DocChangesRequest([
+        'changes' => [
+            new DocChangesRequestChangesItem([
+                'opId' => 'opId',
+            ]),
+        ],
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$docId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$layerName:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$documentPassword:** `?string` — Base64-encoded password for an encrypted document. Valid only with the API token (403 anywhere else). An encrypted document answers 422 DocPasswordRequired when the header is absent. Viewer doc JWTs use the SDK password-session flow instead.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$changes:** `array` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>$client-&gt;doc-&gt;download($docId, $layerName, $request) -> string</code></summary>
 <dl>
 <dd>
@@ -197,7 +285,7 @@ $client->doc->manifest(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;doc-&gt;render($docId, $layerName, $pon, $request) -> string</code></summary>
+<details><summary><code>$client-&gt;doc-&gt;render($docId, $layerName, $pageKey, $request) -> string</code></summary>
 <dl>
 <dd>
 
@@ -227,7 +315,7 @@ Render parameters (viewport, format) pass as flat dotted query keys, e.g. `?view
 $client->doc->render(
     'docId',
     'layerName',
-    1,
+    'pageKey',
     new RenderDocRequest([]),
 );
 ```
@@ -260,7 +348,7 @@ $client->doc->render(
 <dl>
 <dd>
 
-**$pon:** `int` 
+**$pageKey:** `string` — The page's address, `obj:N`: the page's indirect object number, the durable identity every `PageLayout.ref` carries. Mirrors `annotKey` and `fieldKey`.
     
 </dd>
 </dl>
@@ -280,7 +368,7 @@ $client->doc->render(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;doc-&gt;text($docId, $layerName, $pon, $request) -> ?DocText200Response</code></summary>
+<details><summary><code>$client-&gt;doc-&gt;text($docId, $layerName, $pageKey, $request) -> ?DocText200Response</code></summary>
 <dl>
 <dd>
 
@@ -296,7 +384,7 @@ $client->doc->render(
 $client->doc->text(
     'docId',
     'layerName',
-    1,
+    'pageKey',
     new TextDocRequest([]),
 );
 ```
@@ -329,7 +417,7 @@ $client->doc->text(
 <dl>
 <dd>
 
-**$pon:** `int` 
+**$pageKey:** `string` — The page's address, `obj:N`: the page's indirect object number, the durable identity every `PageLayout.ref` carries. Mirrors `annotKey` and `fieldKey`.
     
 </dd>
 </dl>
@@ -495,7 +583,7 @@ $client->shares->list(
 <dl>
 <dd>
 
-The returned share id IS the public share token. Mounted only when the deployment can sign (HS256 mode) — exchange mints session JWTs, so grants exist only where minting does.
+The returned share id is the public share token. Mounted only when the deployment can sign (HS256 mode) — exchange mints session JWTs, so grants exist only where minting does.
 </dd>
 </dl>
 </dd>
@@ -1635,7 +1723,7 @@ $client->documents->importFrom(
 <dl>
 <dd>
 
-**$source:** `DocumentsImportFromRequestSource` — Where CloudPDF pulls the bytes from. The two shapes differ in WHO supplies the authority to read, not in which storage vendor holds the file.
+**$source:** `DocumentsImportFromRequestSource` — Where CloudPDF pulls the bytes from. The two shapes differ in who supplies the authority to read, not in which storage vendor holds the file.
     
 </dd>
 </dl>
@@ -1963,7 +2051,7 @@ $client->tokens->revoke(
 </details>
 
 ## Doc Annotations
-<details><summary><code>$client-&gt;doc-&gt;annotations-&gt;listAll($docId, $layerName, $request) -> ?DocAnnotationsListAll200Response</code></summary>
+<details><summary><code>$client-&gt;doc-&gt;annotations-&gt;listAll($docId, $layerName, $request) -> ?AnnotationList</code></summary>
 <dl>
 <dd>
 
@@ -1975,7 +2063,7 @@ $client->tokens->revoke(
 <dl>
 <dd>
 
-Returns one entry per page plus the audit-log cursor for reconciling subsequent document events. Page order is unspecified; join by `pageState.pageObjectNumber` when display order matters.
+Returns one entry per page plus the audit-log cursor for reconciling subsequent document events. Page order is unspecified; join by `page` (a `PageRef`) when display order matters.
 </dd>
 </dl>
 </dd>
@@ -2037,7 +2125,7 @@ $client->doc->annotations->listAll(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;doc-&gt;annotations-&gt;list($docId, $layerName, $pon, $request) -> ?DocAnnotationsList200Response</code></summary>
+<details><summary><code>$client-&gt;doc-&gt;annotations-&gt;list($docId, $layerName, $pageKey, $request) -> ?AnnotationList</code></summary>
 <dl>
 <dd>
 
@@ -2053,7 +2141,7 @@ $client->doc->annotations->listAll(
 $client->doc->annotations->list(
     'docId',
     'layerName',
-    1,
+    'pageKey',
     new ListAnnotationsRequest([]),
 );
 ```
@@ -2086,7 +2174,7 @@ $client->doc->annotations->list(
 <dl>
 <dd>
 
-**$pon:** `int` 
+**$pageKey:** `string` — The page's address, `obj:N`: the page's indirect object number, the durable identity every `PageLayout.ref` carries. Mirrors `annotKey` and `fieldKey`.
     
 </dd>
 </dl>
@@ -2106,7 +2194,7 @@ $client->doc->annotations->list(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;doc-&gt;annotations-&gt;create($docId, $layerName, $pon, $request) -> ?DocAnnotationsCreate200Response</code></summary>
+<details><summary><code>$client-&gt;doc-&gt;annotations-&gt;create($docId, $layerName, $pageKey, $request) -> ?DocAnnotationsCreate200Response</code></summary>
 <dl>
 <dd>
 
@@ -2136,7 +2224,7 @@ Doc JWTs may instead carry collab scopes (annotations:create:self, …) that ref
 $client->doc->annotations->create(
     'docId',
     'layerName',
-    1,
+    'pageKey',
     new CreateAnnotationsRequest([
         'body' => [
             'key' => "value",
@@ -2173,7 +2261,7 @@ $client->doc->annotations->create(
 <dl>
 <dd>
 
-**$pon:** `int` 
+**$pageKey:** `string` — The page's address, `obj:N`: the page's indirect object number, the durable identity every `PageLayout.ref` carries. Mirrors `annotKey` and `fieldKey`.
     
 </dd>
 </dl>
@@ -2182,6 +2270,14 @@ $client->doc->annotations->create(
 <dd>
 
 **$documentPassword:** `?string` — Base64-encoded password for an encrypted document. Valid only with the API token (403 anywhere else). An encrypted document answers 422 DocPasswordRequired when the header is absent. Viewer doc JWTs use the SDK password-session flow instead.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$idempotencyKey:** `?string` — Names the change: 1 to 255 printable ASCII characters. A retry under the same key on the same layer answers with what the first request committed, and changes nothing.
     
 </dd>
 </dl>
@@ -2201,7 +2297,7 @@ $client->doc->annotations->create(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;doc-&gt;annotations-&gt;delete($docId, $layerName, $pon, $annotKey, $request) -> ?DocAnnotationsDelete200Response</code></summary>
+<details><summary><code>$client-&gt;doc-&gt;annotations-&gt;delete($docId, $layerName, $pageKey, $annotKey, $request) -> ?DocAnnotationsDelete200Response</code></summary>
 <dl>
 <dd>
 
@@ -2217,7 +2313,7 @@ $client->doc->annotations->create(
 $client->doc->annotations->delete(
     'docId',
     'layerName',
-    1,
+    'pageKey',
     'annotKey',
     new DeleteAnnotationsRequest([]),
 );
@@ -2251,7 +2347,7 @@ $client->doc->annotations->delete(
 <dl>
 <dd>
 
-**$pon:** `int` 
+**$pageKey:** `string` — The page's address, `obj:N`: the page's indirect object number, the durable identity every `PageLayout.ref` carries. Mirrors `annotKey` and `fieldKey`.
     
 </dd>
 </dl>
@@ -2259,7 +2355,7 @@ $client->doc->annotations->delete(
 <dl>
 <dd>
 
-**$annotKey:** `string` 
+**$annotKey:** `string` — The annotation's address on the page: `obj:N`, its indirect object number, or `base:N` for an annotation the uploaded file stored inline (without an object number of its own), the position it was born at in the page's /Annots. The name the annotation's `ref` carries for life.
     
 </dd>
 </dl>
@@ -2271,6 +2367,14 @@ $client->doc->annotations->delete(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**$idempotencyKey:** `?string` — Names the change: 1 to 255 printable ASCII characters. A retry under the same key on the same layer answers with what the first request committed, and changes nothing.
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -2279,7 +2383,7 @@ $client->doc->annotations->delete(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;doc-&gt;annotations-&gt;update($docId, $layerName, $pon, $annotKey, $request) -> ?DocAnnotationsUpdate200Response</code></summary>
+<details><summary><code>$client-&gt;doc-&gt;annotations-&gt;update($docId, $layerName, $pageKey, $annotKey, $request) -> ?DocAnnotationsUpdate200Response</code></summary>
 <dl>
 <dd>
 
@@ -2295,7 +2399,7 @@ $client->doc->annotations->delete(
 $client->doc->annotations->update(
     'docId',
     'layerName',
-    1,
+    'pageKey',
     'annotKey',
     new UpdateAnnotationsRequest([
         'body' => [
@@ -2333,7 +2437,7 @@ $client->doc->annotations->update(
 <dl>
 <dd>
 
-**$pon:** `int` 
+**$pageKey:** `string` — The page's address, `obj:N`: the page's indirect object number, the durable identity every `PageLayout.ref` carries. Mirrors `annotKey` and `fieldKey`.
     
 </dd>
 </dl>
@@ -2341,7 +2445,7 @@ $client->doc->annotations->update(
 <dl>
 <dd>
 
-**$annotKey:** `string` 
+**$annotKey:** `string` — The annotation's address on the page: `obj:N`, its indirect object number, or `base:N` for an annotation the uploaded file stored inline (without an object number of its own), the position it was born at in the page's /Annots. The name the annotation's `ref` carries for life.
     
 </dd>
 </dl>
@@ -2350,6 +2454,14 @@ $client->doc->annotations->update(
 <dd>
 
 **$documentPassword:** `?string` — Base64-encoded password for an encrypted document. Valid only with the API token (403 anywhere else). An encrypted document answers 422 DocPasswordRequired when the header is absent. Viewer doc JWTs use the SDK password-session flow instead.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$idempotencyKey:** `?string` — Names the change: 1 to 255 printable ASCII characters. A retry under the same key on the same layer answers with what the first request committed, and changes nothing.
     
 </dd>
 </dl>
@@ -2369,7 +2481,85 @@ $client->doc->annotations->update(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;doc-&gt;annotations-&gt;exportAppearance($docId, $layerName, $pon, $request) -> string</code></summary>
+<details><summary><code>$client-&gt;doc-&gt;annotations-&gt;readAppearance($docId, $layerName, $pageKey, $annotKey, $request) -> string</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->doc->annotations->readAppearance(
+    'docId',
+    'layerName',
+    'pageKey',
+    'annotKey',
+    new ReadAppearanceAnnotationsRequest([]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$docId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$layerName:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$pageKey:** `string` — The page's address, `obj:N`: the page's indirect object number, the durable identity every `PageLayout.ref` carries. Mirrors `annotKey` and `fieldKey`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$annotKey:** `string` — The annotation's address on the page: `obj:N`, its indirect object number, or `base:N` for an annotation the uploaded file stored inline (without an object number of its own), the position it was born at in the page's /Annots. The name the annotation's `ref` carries for life.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$documentPassword:** `?string` — Base64-encoded password for an encrypted document. Valid only with the API token (403 anywhere else). An encrypted document answers 422 DocPasswordRequired when the header is absent. Viewer doc JWTs use the SDK password-session flow instead.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;doc-&gt;annotations-&gt;exportAppearance($docId, $layerName, $pageKey, $request) -> string</code></summary>
 <dl>
 <dd>
 
@@ -2385,7 +2575,7 @@ $client->doc->annotations->update(
 $client->doc->annotations->exportAppearance(
     'docId',
     'layerName',
-    1,
+    'pageKey',
     new ExportAppearanceAnnotationsRequest([
         'body' => [
             'string' => [
@@ -2424,7 +2614,7 @@ $client->doc->annotations->exportAppearance(
 <dl>
 <dd>
 
-**$pon:** `int` 
+**$pageKey:** `string` — The page's address, `obj:N`: the page's indirect object number, the durable identity every `PageLayout.ref` carries. Mirrors `annotKey` and `fieldKey`.
     
 </dd>
 </dl>
@@ -2452,7 +2642,7 @@ $client->doc->annotations->exportAppearance(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;doc-&gt;annotations-&gt;flatten($docId, $layerName, $pon, $request) -> ?DocAnnotationsFlatten200Response</code></summary>
+<details><summary><code>$client-&gt;doc-&gt;annotations-&gt;flatten($docId, $layerName, $pageKey, $request) -> ?DocAnnotationsFlatten200Response</code></summary>
 <dl>
 <dd>
 
@@ -2468,7 +2658,7 @@ $client->doc->annotations->exportAppearance(
 $client->doc->annotations->flatten(
     'docId',
     'layerName',
-    1,
+    'pageKey',
     new FlattenAnnotationsRequest([
         'body' => [
             'key' => "value",
@@ -2505,7 +2695,7 @@ $client->doc->annotations->flatten(
 <dl>
 <dd>
 
-**$pon:** `int` 
+**$pageKey:** `string` — The page's address, `obj:N`: the page's indirect object number, the durable identity every `PageLayout.ref` carries. Mirrors `annotKey` and `fieldKey`.
     
 </dd>
 </dl>
@@ -2514,6 +2704,14 @@ $client->doc->annotations->flatten(
 <dd>
 
 **$documentPassword:** `?string` — Base64-encoded password for an encrypted document. Valid only with the API token (403 anywhere else). An encrypted document answers 422 DocPasswordRequired when the header is absent. Viewer doc JWTs use the SDK password-session flow instead.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$idempotencyKey:** `?string` — Names the change: 1 to 255 printable ASCII characters. A retry under the same key on the same layer answers with what the first request committed, and changes nothing.
     
 </dd>
 </dl>
@@ -2533,8 +2731,7 @@ $client->doc->annotations->flatten(
 </dl>
 </details>
 
-## Doc Forms
-<details><summary><code>$client-&gt;doc-&gt;forms-&gt;get($docId, $layerName, $request) -> ?DocFormsGet200Response</code></summary>
+<details><summary><code>$client-&gt;doc-&gt;annotations-&gt;reorder($docId, $layerName, $pageKey, $request) -> ?DocAnnotationsReorder200Response</code></summary>
 <dl>
 <dd>
 
@@ -2547,141 +2744,181 @@ $client->doc->annotations->flatten(
 <dd>
 
 ```php
-$client->doc->forms->get(
+$client->doc->annotations->reorder(
     'docId',
     'layerName',
-    new GetFormsRequest([]),
-);
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$docId:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**$layerName:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**$documentPassword:** `?string` — Base64-encoded password for an encrypted document. Valid only with the API token (403 anywhere else). An encrypted document answers 422 DocPasswordRequired when the header is absent. Viewer doc JWTs use the SDK password-session flow instead.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>$client-&gt;doc-&gt;forms-&gt;exportData($docId, $layerName, $request) -> string</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```php
-$client->doc->forms->exportData(
-    'docId',
-    'layerName',
-    new ExportDataFormsRequest([]),
-);
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$docId:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**$layerName:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**$format:** `?string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**$documentPassword:** `?string` — Base64-encoded password for an encrypted document. Valid only with the API token (403 anywhere else). An encrypted document answers 422 DocPasswordRequired when the header is absent. Viewer doc JWTs use the SDK password-session flow instead.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>$client-&gt;doc-&gt;forms-&gt;importData($docId, $layerName, $request) -> ?DocFormsImportData200Response</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```php
-$client->doc->forms->importData(
-    'docId',
-    'layerName',
-    new ImportDataFormsRequest([
-        'body' => [
-            'key' => "value",
+    'pageKey',
+    new DocAnnotationsReorderRequest([
+        'refs' => [
+            AnnotationRef::objectNumber(new AnnotationRefObjectNumber([
+                'page' => new PageRef([
+                    'kind' => PageRefKind::ObjectNumber->value,
+                    'objectNumber' => 1,
+                ]),
+                'objectNumber' => 1,
+            ])),
         ],
+        'position' => AnnotationPositionZero::Start->value,
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$docId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$layerName:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$pageKey:** `string` — The page's address, `obj:N`: the page's indirect object number, the durable identity every `PageLayout.ref` carries. Mirrors `annotKey` and `fieldKey`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$documentPassword:** `?string` — Base64-encoded password for an encrypted document. Valid only with the API token (403 anywhere else). An encrypted document answers 422 DocPasswordRequired when the header is absent. Viewer doc JWTs use the SDK password-session flow instead.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$idempotencyKey:** `?string` — Names the change: 1 to 255 printable ASCII characters. A retry under the same key on the same layer answers with what the first request committed, and changes nothing.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$refs:** `array` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$position:** `string|AnnotationPositionAfter` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Doc Forms
+<details><summary><code>$client-&gt;doc-&gt;forms-&gt;list($docId, $layerName, $request) -> ?DocFormsList200Response</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->doc->forms->list(
+    'docId',
+    'layerName',
+    new ListFormsRequest([]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$docId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$layerName:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$documentPassword:** `?string` — Base64-encoded password for an encrypted document. Valid only with the API token (403 anywhere else). An encrypted document answers 422 DocPasswordRequired when the header is absent. Viewer doc JWTs use the SDK password-session flow instead.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;doc-&gt;forms-&gt;reorderCalculations($docId, $layerName, $request) -> ?DocFormsReorderCalculations200Response</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->doc->forms->reorderCalculations(
+    'docId',
+    'layerName',
+    new DocFormsReorderCalculationsRequest([
+        'fields' => [
+            FormFieldRef::objectNumber(new FormFieldRefObjectNumber([
+                'objectNumber' => 1,
+            ])),
+        ],
+        'position' => FieldPositionZero::Start->value,
     ]),
 );
 ```
@@ -2722,52 +2959,7 @@ $client->doc->forms->importData(
 <dl>
 <dd>
 
-**$request:** `array` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>$client-&gt;doc-&gt;forms-&gt;reset($docId, $layerName, $fieldKey, $request) -> ?DocFormsReset200Response</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```php
-$client->doc->forms->reset(
-    'docId',
-    'layerName',
-    'fieldKey',
-    new ResetFormsRequest([]),
-);
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$docId:** `string` 
+**$idempotencyKey:** `?string` — Names the change: 1 to 255 printable ASCII characters. A retry under the same key on the same layer answers with what the first request committed, and changes nothing.
     
 </dd>
 </dl>
@@ -2775,7 +2967,7 @@ $client->doc->forms->reset(
 <dl>
 <dd>
 
-**$layerName:** `string` 
+**$fields:** `array` 
     
 </dd>
 </dl>
@@ -2783,15 +2975,7 @@ $client->doc->forms->reset(
 <dl>
 <dd>
 
-**$fieldKey:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**$documentPassword:** `?string` — Base64-encoded password for an encrypted document. Valid only with the API token (403 anywhere else). An encrypted document answers 422 DocPasswordRequired when the header is absent. Viewer doc JWTs use the SDK password-session flow instead.
+**$position:** `string|FieldPositionAfter` 
     
 </dd>
 </dl>
@@ -2872,6 +3056,14 @@ $client->doc->forms->setValue(
 <dl>
 <dd>
 
+**$idempotencyKey:** `?string` — Names the change: 1 to 255 printable ASCII characters. A retry under the same key on the same layer answers with what the first request committed, and changes nothing.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **$request:** `array` 
     
 </dd>
@@ -2884,8 +3076,370 @@ $client->doc->forms->setValue(
 </dl>
 </details>
 
+<details><summary><code>$client-&gt;doc-&gt;forms-&gt;reset($docId, $layerName, $request) -> ?DocFormsReset200Response</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->doc->forms->reset(
+    'docId',
+    'layerName',
+    new DocFormsResetRequest([]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$docId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$layerName:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$documentPassword:** `?string` — Base64-encoded password for an encrypted document. Valid only with the API token (403 anywhere else). An encrypted document answers 422 DocPasswordRequired when the header is absent. Viewer doc JWTs use the SDK password-session flow instead.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$idempotencyKey:** `?string` — Names the change: 1 to 255 printable ASCII characters. A retry under the same key on the same layer answers with what the first request committed, and changes nothing.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$refs:** `?array` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;doc-&gt;forms-&gt;deleteWidget($docId, $layerName, $pageKey, $annotKey, $request) -> ?DocFormsDeleteWidget200Response</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->doc->forms->deleteWidget(
+    'docId',
+    'layerName',
+    'pageKey',
+    'annotKey',
+    new DeleteWidgetFormsRequest([]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$docId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$layerName:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$pageKey:** `string` — The page's address, `obj:N`: the page's indirect object number, the durable identity every `PageLayout.ref` carries. Mirrors `annotKey` and `fieldKey`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$annotKey:** `string` — The annotation's address on the page: `obj:N`, its indirect object number, or `base:N` for an annotation the uploaded file stored inline (without an object number of its own), the position it was born at in the page's /Annots. The name the annotation's `ref` carries for life.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$documentPassword:** `?string` — Base64-encoded password for an encrypted document. Valid only with the API token (403 anywhere else). An encrypted document answers 422 DocPasswordRequired when the header is absent. Viewer doc JWTs use the SDK password-session flow instead.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$idempotencyKey:** `?string` — Names the change: 1 to 255 printable ASCII characters. A retry under the same key on the same layer answers with what the first request committed, and changes nothing.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;doc-&gt;forms-&gt;updateWidget($docId, $layerName, $pageKey, $annotKey, $request) -> ?DocFormsUpdateWidget200Response</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->doc->forms->updateWidget(
+    'docId',
+    'layerName',
+    'pageKey',
+    'annotKey',
+    new DocFormsUpdateWidgetRequest([
+        'patch' => new WidgetPatch([]),
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$docId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$layerName:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$pageKey:** `string` — The page's address, `obj:N`: the page's indirect object number, the durable identity every `PageLayout.ref` carries. Mirrors `annotKey` and `fieldKey`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$annotKey:** `string` — The annotation's address on the page: `obj:N`, its indirect object number, or `base:N` for an annotation the uploaded file stored inline (without an object number of its own), the position it was born at in the page's /Annots. The name the annotation's `ref` carries for life.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$documentPassword:** `?string` — Base64-encoded password for an encrypted document. Valid only with the API token (403 anywhere else). An encrypted document answers 422 DocPasswordRequired when the header is absent. Viewer doc JWTs use the SDK password-session flow instead.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$idempotencyKey:** `?string` — Names the change: 1 to 255 printable ASCII characters. A retry under the same key on the same layer answers with what the first request committed, and changes nothing.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$patch:** `WidgetPatch` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;doc-&gt;forms-&gt;reorderWidgets($docId, $layerName, $pageKey, $request) -> ?DocFormsReorderWidgets200Response</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->doc->forms->reorderWidgets(
+    'docId',
+    'layerName',
+    'pageKey',
+    new DocFormsReorderWidgetsRequest([
+        'widgets' => [
+            AnnotationRef::objectNumber(new AnnotationRefObjectNumber([
+                'page' => new PageRef([
+                    'kind' => PageRefKind::ObjectNumber->value,
+                    'objectNumber' => 1,
+                ]),
+                'objectNumber' => 1,
+            ])),
+        ],
+        'position' => AnnotationPositionZero::Start->value,
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$docId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$layerName:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$pageKey:** `string` — The page's address, `obj:N`: the page's indirect object number, the durable identity every `PageLayout.ref` carries. Mirrors `annotKey` and `fieldKey`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$documentPassword:** `?string` — Base64-encoded password for an encrypted document. Valid only with the API token (403 anywhere else). An encrypted document answers 422 DocPasswordRequired when the header is absent. Viewer doc JWTs use the SDK password-session flow instead.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$idempotencyKey:** `?string` — Names the change: 1 to 255 printable ASCII characters. A retry under the same key on the same layer answers with what the first request committed, and changes nothing.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$widgets:** `array` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$position:** `string|AnnotationPositionAfter` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Doc Metadata
-<details><summary><code>$client-&gt;doc-&gt;metadata-&gt;get($docId, $layerName, $request) -> ?DocMetadataGet200Response</code></summary>
+<details><summary><code>$client-&gt;doc-&gt;metadata-&gt;get($docId, $layerName, $request) -> ?DocumentMetadata</code></summary>
 <dl>
 <dd>
 
@@ -2946,7 +3500,7 @@ $client->doc->metadata->get(
 </details>
 
 ## Doc Pages
-<details><summary><code>$client-&gt;doc-&gt;pages-&gt;setScale($docId, $layerName, $pon, $request) -> ?DocPagesSetScale200Response</code></summary>
+<details><summary><code>$client-&gt;doc-&gt;pages-&gt;setScale($docId, $layerName, $pageKey, $request) -> ?DocPagesSetScale200Response</code></summary>
 <dl>
 <dd>
 
@@ -2962,7 +3516,7 @@ $client->doc->metadata->get(
 $client->doc->pages->setScale(
     'docId',
     'layerName',
-    1,
+    'pageKey',
     new DocPagesSetScaleRequest([]),
 );
 ```
@@ -2995,7 +3549,7 @@ $client->doc->pages->setScale(
 <dl>
 <dd>
 
-**$pon:** `int` 
+**$pageKey:** `string` — The page's address, `obj:N`: the page's indirect object number, the durable identity every `PageLayout.ref` carries. Mirrors `annotKey` and `fieldKey`.
     
 </dd>
 </dl>
@@ -3004,6 +3558,14 @@ $client->doc->pages->setScale(
 <dd>
 
 **$documentPassword:** `?string` — Base64-encoded password for an encrypted document. Valid only with the API token (403 anywhere else). An encrypted document answers 422 DocPasswordRequired when the header is absent. Viewer doc JWTs use the SDK password-session flow instead.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$idempotencyKey:** `?string` — Names the change: 1 to 255 printable ASCII characters. A retry under the same key on the same layer answers with what the first request committed, and changes nothing.
     
 </dd>
 </dl>
@@ -3023,7 +3585,7 @@ $client->doc->pages->setScale(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;doc-&gt;pages-&gt;viewports($docId, $layerName, $pon, $request) -> ?array</code></summary>
+<details><summary><code>$client-&gt;doc-&gt;pages-&gt;viewports($docId, $layerName, $pageKey, $request) -> ?DocPagesViewports200Response</code></summary>
 <dl>
 <dd>
 
@@ -3039,7 +3601,7 @@ $client->doc->pages->setScale(
 $client->doc->pages->viewports(
     'docId',
     'layerName',
-    1,
+    'pageKey',
     new ViewportsPagesRequest([]),
 );
 ```
@@ -3072,7 +3634,7 @@ $client->doc->pages->viewports(
 <dl>
 <dd>
 
-**$pon:** `int` 
+**$pageKey:** `string` — The page's address, `obj:N`: the page's indirect object number, the durable identity every `PageLayout.ref` carries. Mirrors `annotKey` and `fieldKey`.
     
 </dd>
 </dl>
@@ -3152,6 +3714,14 @@ $client->doc->pages->delete(
 <dl>
 <dd>
 
+**$idempotencyKey:** `?string` — Names the change: 1 to 255 printable ASCII characters. A retry under the same key on the same layer answers with what the first request committed, and changes nothing.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **$request:** `array` 
     
 </dd>
@@ -3176,7 +3746,7 @@ $client->doc->pages->delete(
 <dl>
 <dd>
 
-A read, not a mutation: the source document is untouched and no event is published. Body is `{"pageObjectNumbers": number[]}`; the response body is the new PDF.
+A read, not a mutation: the source document is untouched and no event is published. Body is `{"pages": PageRef[]}`; the response body is the new PDF.
 </dd>
 </dl>
 </dd>
@@ -3312,6 +3882,14 @@ $client->doc->pages->flatten(
 <dl>
 <dd>
 
+**$idempotencyKey:** `?string` — Names the change: 1 to 255 printable ASCII characters. A retry under the same key on the same layer answers with what the first request committed, and changes nothing.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **$request:** `array` 
     
 </dd>
@@ -3336,7 +3914,7 @@ $client->doc->pages->flatten(
 <dl>
 <dd>
 
-Multipart mutation envelope: a `body` field holding `{"destIndex"?: number}` (omitted → append) plus a `resource:source` file part carrying the standalone PDF whose pages are copied in. The inserted copies get fresh page object numbers, returned in insertion order.
+Multipart: a JSON `body` part `{"position"?: PagePosition, "resources": {"source": "<key>"}}` (position omitted → the end), and the standalone PDF whose pages are copied in as the part `resource:<key>`. The inserted copies get fresh page object numbers, returned in insertion order.
 </dd>
 </dl>
 </dd>
@@ -3392,6 +3970,14 @@ $client->doc->pages->insert(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**$idempotencyKey:** `?string` — Names the change: 1 to 255 printable ASCII characters. A retry under the same key on the same layer answers with what the first request committed, and changes nothing.
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -3412,7 +3998,7 @@ $client->doc->pages->insert(
 <dl>
 <dd>
 
-Body is `{"size": {"width", "height"}, "count"?, "destIndex"?}` — size in PDF points, count in [1, 100], destIndex omitted → append.
+Body is `{"size": {"width", "height"}, "count"?, "position"?}` — size in PDF points, count in [1, 100], `position` a `PagePosition` (omitted → the end).
 </dd>
 </dl>
 </dd>
@@ -3474,71 +4060,7 @@ $client->doc->pages->insertBlank(
 <dl>
 <dd>
 
-**$request:** `array` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>$client-&gt;doc-&gt;pages-&gt;move($docId, $layerName, $request) -> ?DocPagesMove200Response</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```php
-$client->doc->pages->move(
-    'docId',
-    'layerName',
-    new MovePagesRequest([
-        'body' => [
-            'key' => "value",
-        ],
-    ]),
-);
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$docId:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**$layerName:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**$documentPassword:** `?string` — Base64-encoded password for an encrypted document. Valid only with the API token (403 anywhere else). An encrypted document answers 422 DocPasswordRequired when the header is absent. Viewer doc JWTs use the SDK password-session flow instead.
+**$idempotencyKey:** `?string` — Names the change: 1 to 255 printable ASCII characters. A retry under the same key on the same layer answers with what the first request committed, and changes nothing.
     
 </dd>
 </dl>
@@ -3618,6 +4140,14 @@ $client->doc->pages->setName(
 <dl>
 <dd>
 
+**$idempotencyKey:** `?string` — Names the change: 1 to 255 printable ASCII characters. A retry under the same key on the same layer answers with what the first request committed, and changes nothing.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **$request:** `array` 
     
 </dd>
@@ -3690,7 +4220,107 @@ $client->doc->pages->removeName(
 <dl>
 <dd>
 
+**$idempotencyKey:** `?string` — Names the change: 1 to 255 printable ASCII characters. A retry under the same key on the same layer answers with what the first request committed, and changes nothing.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **$request:** `array` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;doc-&gt;pages-&gt;reorder($docId, $layerName, $request) -> ?DocPagesReorder200Response</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->doc->pages->reorder(
+    'docId',
+    'layerName',
+    new DocPagesReorderRequest([
+        'pages' => [
+            new PageRef([
+                'kind' => PageRefKind::ObjectNumber->value,
+                'objectNumber' => 1,
+            ]),
+        ],
+        'position' => PagePositionZero::Start->value,
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$docId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$layerName:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$documentPassword:** `?string` — Base64-encoded password for an encrypted document. Valid only with the API token (403 anywhere else). An encrypted document answers 422 DocPasswordRequired when the header is absent. Viewer doc JWTs use the SDK password-session flow instead.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$idempotencyKey:** `?string` — Names the change: 1 to 255 printable ASCII characters. A retry under the same key on the same layer answers with what the first request committed, and changes nothing.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$pages:** `array` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$position:** `string|PagePositionAfter` 
     
 </dd>
 </dl>
@@ -3762,6 +4392,14 @@ $client->doc->pages->rotate(
 <dl>
 <dd>
 
+**$idempotencyKey:** `?string` — Names the change: 1 to 255 printable ASCII characters. A retry under the same key on the same layer answers with what the first request committed, and changes nothing.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **$request:** `array` 
     
 </dd>
@@ -3791,11 +4429,7 @@ $client->doc->pages->rotate(
 $client->doc->redactions->apply(
     'docId',
     'layerName',
-    new ApplyRedactionsRequest([
-        'body' => [
-            'key' => "value",
-        ],
-    ]),
+    new DocRedactionsApplyRequest([]),
 );
 ```
 </dd>
@@ -3835,7 +4469,23 @@ $client->doc->redactions->apply(
 <dl>
 <dd>
 
-**$request:** `array` 
+**$idempotencyKey:** `?string` — Names the change: 1 to 255 printable ASCII characters. A retry under the same key on the same layer answers with what the first request committed, and changes nothing.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$pages:** `?array` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$annotations:** `?array` 
     
 </dd>
 </dl>
@@ -3922,7 +4572,7 @@ $client->doc->signatures->list(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;doc-&gt;signatures-&gt;abort($docId, $layerName, $signingId, $request) -> ?DocSignaturesAbort200Response</code></summary>
+<details><summary><code>$client-&gt;doc-&gt;signatures-&gt;cancel($docId, $layerName, $signingId, $request) -> ?DocSignaturesCancel200Response</code></summary>
 <dl>
 <dd>
 
@@ -3935,11 +4585,11 @@ $client->doc->signatures->list(
 <dd>
 
 ```php
-$client->doc->signatures->abort(
+$client->doc->signatures->cancel(
     'docId',
     'layerName',
     'signingId',
-    new AbortSignaturesRequest([]),
+    new CancelSignaturesRequest([]),
 );
 ```
 </dd>
@@ -4206,7 +4856,7 @@ $client->doc->signatures->analysis(
 <dl>
 <dd>
 
-The multipart envelope: a JSON `body` part (field, subFilter, digest, contentsSize, signer, certify, lock, appearance) and an optional `resource:<key>` PDF part the body's `appearance.resource` names. A certification (`certify.permission`) additionally requires `doc.sign.certify`. The layer is read-only until the signing completes, is aborted, or expires (15 minutes). A layer behind the document head cannot sign (StaleBase).
+Multipart: a JSON `body` part (field, subFilter, digest, contentsSize, signer, certify, lock), naming the appearance PDF it may carry as `resources: { appearance: '<key>' }`, and that PDF as the part `resource:<key>`. A certification (`certify.permission`) additionally requires `doc.sign.certify`. The layer is read-only until the signing completes, is cancelled, or expires (15 minutes). A layer behind the document head cannot sign (StaleBase).
 </dd>
 </dl>
 </dd>
@@ -4795,6 +5445,67 @@ $client->doc->versions->signatureDigest(
 <dd>
 
 **$algorithm:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$documentPassword:** `?string` — Base64-encoded password for an encrypted document. Valid only with the API token (403 anywhere else). An encrypted document answers 422 DocPasswordRequired when the header is absent. Viewer doc JWTs use the SDK password-session flow instead.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Doc Metadata Custom
+<details><summary><code>$client-&gt;doc-&gt;metadata-&gt;custom-&gt;get($docId, $layerName, $request) -> ?array</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->doc->metadata->custom->get(
+    'docId',
+    'layerName',
+    new GetCustomRequest([]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$docId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$layerName:** `string` 
     
 </dd>
 </dl>

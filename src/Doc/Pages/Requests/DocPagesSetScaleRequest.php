@@ -14,6 +14,11 @@ class DocPagesSetScaleRequest extends JsonSerializableType
     public ?string $documentPassword;
 
     /**
+     * @var ?string $idempotencyKey Names the change: 1 to 255 printable ASCII characters. A retry under the same key on the same layer answers with what the first request committed, and changes nothing.
+     */
+    public ?string $idempotencyKey;
+
+    /**
      * @var ?DocPagesSetScaleRequestMeasure $measure
      */
     #[JsonProperty('measure')]
@@ -22,6 +27,7 @@ class DocPagesSetScaleRequest extends JsonSerializableType
     /**
      * @param array{
      *   documentPassword?: ?string,
+     *   idempotencyKey?: ?string,
      *   measure?: ?DocPagesSetScaleRequestMeasure,
      * } $values
      */
@@ -29,6 +35,7 @@ class DocPagesSetScaleRequest extends JsonSerializableType
         array $values = [],
     ) {
         $this->documentPassword = $values['documentPassword'] ?? null;
+        $this->idempotencyKey = $values['idempotencyKey'] ?? null;
         $this->measure = $values['measure'] ?? null;
     }
 }

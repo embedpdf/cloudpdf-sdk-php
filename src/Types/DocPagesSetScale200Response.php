@@ -8,27 +8,27 @@ use CloudPDF\Core\Json\JsonProperty;
 class DocPagesSetScale200Response extends JsonSerializableType
 {
     /**
-     * @var int $pageObjectNumber
+     * @var PageRef $page
      */
-    #[JsonProperty('pageObjectNumber')]
-    public int $pageObjectNumber;
+    #[JsonProperty('page')]
+    public PageRef $page;
 
     /**
-     * @var DocPagesSetScale200ResponseMeta $meta
+     * @var MutationMeta $meta
      */
     #[JsonProperty('meta')]
-    public DocPagesSetScale200ResponseMeta $meta;
+    public MutationMeta $meta;
 
     /**
      * @param array{
-     *   pageObjectNumber: int,
-     *   meta: DocPagesSetScale200ResponseMeta,
+     *   page: PageRef,
+     *   meta: MutationMeta,
      * } $values
      */
     public function __construct(
         array $values,
     ) {
-        $this->pageObjectNumber = $values['pageObjectNumber'];
+        $this->page = $values['page'];
         $this->meta = $values['meta'];
     }
 

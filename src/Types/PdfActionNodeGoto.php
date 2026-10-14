@@ -21,16 +21,16 @@ class PdfActionNodeGoto extends JsonSerializableType
     public array $next;
 
     /**
-     * @var PdfDestination $destination
+     * @var PageDestination $destination
      */
     #[JsonProperty('destination')]
-    public PdfDestination $destination;
+    public PageDestination $destination;
 
     /**
      * @param array{
      *   subtype: string,
      *   next: array<mixed>,
-     *   destination: PdfDestination,
+     *   destination: PageDestination,
      * } $values
      */
     public function __construct(
