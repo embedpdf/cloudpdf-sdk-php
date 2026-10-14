@@ -18,8 +18,6 @@ enum EngineErrorPayloadCode: string
     case NotFound = "NotFound";
     case WireFormat = "WireFormat";
     case RuntimeUnavailable = "RuntimeUnavailable";
-    case InvalidReference = "InvalidReference";
-    case WeakAnnotationSessionConflict = "WeakAnnotationSessionConflict";
     case LayerVersionConflict = "LayerVersionConflict";
     case NotImplemented = "NotImplemented";
     case MalformedPdf = "MalformedPdf";
@@ -29,4 +27,10 @@ enum EngineErrorPayloadCode: string
     case SignatureRefused = "SignatureRefused";
     case ProtectedDocument = "ProtectedDocument";
     case StaleBase = "StaleBase";
+    case PayloadTooLarge = "PayloadTooLarge";
+    case ObjectNumberUnavailable = "ObjectNumberUnavailable";
+    case LayerFull = "LayerFull";
+    case ChangeConflict = "ChangeConflict";
+    case UndoUnavailable = "UndoUnavailable";
+    case IdempotencyKeyReused = "IdempotencyKeyReused";
 }

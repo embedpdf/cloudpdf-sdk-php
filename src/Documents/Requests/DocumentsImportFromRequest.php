@@ -13,7 +13,7 @@ use CloudPDF\Documents\Types\DocumentsImportFromRequestMode;
 class DocumentsImportFromRequest extends JsonSerializableType
 {
     /**
-     * @var DocumentsImportFromRequestSource $source Where CloudPDF pulls the bytes from. The two shapes differ in WHO supplies the authority to read, not in which storage vendor holds the file.
+     * @var DocumentsImportFromRequestSource $source Where CloudPDF pulls the bytes from. The two shapes differ in who supplies the authority to read, not in which storage vendor holds the file.
      */
     #[JsonProperty('source')]
     public DocumentsImportFromRequestSource $source;

@@ -45,6 +45,12 @@ class DocManifest200Response extends JsonSerializableType
     public ?int $annotationsVersion;
 
     /**
+     * @var ?int $formsVersion
+     */
+    #[JsonProperty('formsVersion')]
+    public ?int $formsVersion;
+
+    /**
      * @var int $auditHead
      */
     #[JsonProperty('auditHead')]
@@ -81,6 +87,12 @@ class DocManifest200Response extends JsonSerializableType
     public ?DocManifest200ResponseScopes $scopes;
 
     /**
+     * @var ?DocManifest200ResponseProtection $protection
+     */
+    #[JsonProperty('protection')]
+    public ?DocManifest200ResponseProtection $protection;
+
+    /**
      * @var array<DocManifest200ResponsePagesItem> $pages
      */
     #[JsonProperty('pages'), ArrayType([DocManifest200ResponsePagesItem::class])]
@@ -97,10 +109,12 @@ class DocManifest200Response extends JsonSerializableType
      *   actionsVersion?: ?int,
      *   attachmentsVersion?: ?int,
      *   annotationsVersion?: ?int,
+     *   formsVersion?: ?int,
      *   layerVersion?: ?int,
      *   working?: ?bool,
      *   baseByteLength?: ?int,
      *   scopes?: ?DocManifest200ResponseScopes,
+     *   protection?: ?DocManifest200ResponseProtection,
      * } $values
      */
     public function __construct(
@@ -112,12 +126,14 @@ class DocManifest200Response extends JsonSerializableType
         $this->actionsVersion = $values['actionsVersion'] ?? null;
         $this->attachmentsVersion = $values['attachmentsVersion'] ?? null;
         $this->annotationsVersion = $values['annotationsVersion'] ?? null;
+        $this->formsVersion = $values['formsVersion'] ?? null;
         $this->auditHead = $values['auditHead'];
         $this->baseSha = $values['baseSha'];
         $this->layerVersion = $values['layerVersion'] ?? null;
         $this->working = $values['working'] ?? null;
         $this->baseByteLength = $values['baseByteLength'] ?? null;
         $this->scopes = $values['scopes'] ?? null;
+        $this->protection = $values['protection'] ?? null;
         $this->pages = $values['pages'];
     }
 

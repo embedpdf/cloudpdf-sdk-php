@@ -21,10 +21,10 @@ class DocumentActionsSnapshot extends JsonSerializableType
     public ?PdfActionTree $openAction;
 
     /**
-     * @var ?PdfDestination $openDestination
+     * @var ?PageDestination $openDestination
      */
     #[JsonProperty('openDestination')]
-    public ?PdfDestination $openDestination;
+    public ?PageDestination $openDestination;
 
     /**
      * @var ?PdfActionTree $willClose
@@ -60,7 +60,7 @@ class DocumentActionsSnapshot extends JsonSerializableType
      * @param array{
      *   nameTreeScripts: array<DocumentActionsSnapshotNameTreeScriptsItem>,
      *   openAction?: ?PdfActionTree,
-     *   openDestination?: ?PdfDestination,
+     *   openDestination?: ?PageDestination,
      *   willClose?: ?PdfActionTree,
      *   willSave?: ?PdfActionTree,
      *   didSave?: ?PdfActionTree,

@@ -15,10 +15,10 @@ class DocSignaturesList200ResponseSignaturesItem extends JsonSerializableType
     public int $index;
 
     /**
-     * @var DocSignaturesList200ResponseSignaturesItemField $field
+     * @var FormFieldRef $field
      */
     #[JsonProperty('field')]
-    public DocSignaturesList200ResponseSignaturesItemField $field;
+    public FormFieldRef $field;
 
     /**
      * @var string $fieldName
@@ -27,10 +27,10 @@ class DocSignaturesList200ResponseSignaturesItem extends JsonSerializableType
     public string $fieldName;
 
     /**
-     * @var ?DocSignaturesList200ResponseSignaturesItemWidget $widget
+     * @var ?FormWidget $widget
      */
     #[JsonProperty('widget')]
-    public ?DocSignaturesList200ResponseSignaturesItemWidget $widget;
+    public ?FormWidget $widget;
 
     /**
      * @var bool $signed
@@ -119,14 +119,14 @@ class DocSignaturesList200ResponseSignaturesItem extends JsonSerializableType
     /**
      * @param array{
      *   index: int,
-     *   field: DocSignaturesList200ResponseSignaturesItemField,
+     *   field: FormFieldRef,
      *   fieldName: string,
      *   signed: bool,
      *   kind: value-of<DocSignaturesList200ResponseSignaturesItemKind>,
      *   contentsSize: int,
      *   signer: DocSignaturesList200ResponseSignaturesItemSigner,
      *   catalogCertification: bool,
-     *   widget?: ?DocSignaturesList200ResponseSignaturesItemWidget,
+     *   widget?: ?FormWidget,
      *   filter?: ?string,
      *   subFilter?: ?string,
      *   byteRange?: ?array<mixed>,

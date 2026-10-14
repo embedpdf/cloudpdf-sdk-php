@@ -8,19 +8,27 @@ use CloudPDF\Core\Json\JsonProperty;
 class DocPagesRotate200Response extends JsonSerializableType
 {
     /**
-     * @var DocPagesRotate200ResponseMeta $meta
+     * @var DocPagesRotate200ResponseLayout $layout
+     */
+    #[JsonProperty('layout')]
+    public DocPagesRotate200ResponseLayout $layout;
+
+    /**
+     * @var MutationMeta $meta
      */
     #[JsonProperty('meta')]
-    public DocPagesRotate200ResponseMeta $meta;
+    public MutationMeta $meta;
 
     /**
      * @param array{
-     *   meta: DocPagesRotate200ResponseMeta,
+     *   layout: DocPagesRotate200ResponseLayout,
+     *   meta: MutationMeta,
      * } $values
      */
     public function __construct(
         array $values,
     ) {
+        $this->layout = $values['layout'];
         $this->meta = $values['meta'];
     }
 

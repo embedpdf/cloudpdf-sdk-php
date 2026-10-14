@@ -8,19 +8,27 @@ use CloudPDF\Core\Json\JsonProperty;
 class DocPagesRemoveName200Response extends JsonSerializableType
 {
     /**
-     * @var DocPagesRemoveName200ResponseMeta $meta
+     * @var DocPagesRemoveName200ResponseLayout $layout
+     */
+    #[JsonProperty('layout')]
+    public DocPagesRemoveName200ResponseLayout $layout;
+
+    /**
+     * @var MutationMeta $meta
      */
     #[JsonProperty('meta')]
-    public DocPagesRemoveName200ResponseMeta $meta;
+    public MutationMeta $meta;
 
     /**
      * @param array{
-     *   meta: DocPagesRemoveName200ResponseMeta,
+     *   layout: DocPagesRemoveName200ResponseLayout,
+     *   meta: MutationMeta,
      * } $values
      */
     public function __construct(
         array $values,
     ) {
+        $this->layout = $values['layout'];
         $this->meta = $values['meta'];
     }
 

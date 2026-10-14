@@ -20,9 +20,16 @@ class DocManifest200ResponsePagesItemCache extends JsonSerializableType
     public int $annotationVersion;
 
     /**
+     * @var int $widgetVersion
+     */
+    #[JsonProperty('widgetVersion')]
+    public int $widgetVersion;
+
+    /**
      * @param array{
      *   contentVersion: int,
      *   annotationVersion: int,
+     *   widgetVersion: int,
      * } $values
      */
     public function __construct(
@@ -30,6 +37,7 @@ class DocManifest200ResponsePagesItemCache extends JsonSerializableType
     ) {
         $this->contentVersion = $values['contentVersion'];
         $this->annotationVersion = $values['annotationVersion'];
+        $this->widgetVersion = $values['widgetVersion'];
     }
 
     /**

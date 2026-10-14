@@ -12,8 +12,8 @@ use CloudPDF\Core\Json\JsonApiRequest;
 use CloudPDF\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
-use CloudPDF\Doc\Signatures\Requests\AbortSignaturesRequest;
-use CloudPDF\Types\DocSignaturesAbort200Response;
+use CloudPDF\Doc\Signatures\Requests\CancelSignaturesRequest;
+use CloudPDF\Types\DocSignaturesCancel200Response;
 use CloudPDF\Doc\Signatures\Requests\DocSignaturesCompleteRequest;
 use CloudPDF\Types\DocSignaturesComplete200Response;
 use CloudPDF\Doc\Signatures\Requests\AnalysisSignaturesRequest;
@@ -126,18 +126,18 @@ class SignaturesClient
     /**
      * Example:
      * ```php
-     * $client->doc->signatures->abort(
+     * $client->doc->signatures->cancel(
      *     'docId',
      *     'layerName',
      *     'signingId',
-     *     new AbortSignaturesRequest([]),
+     *     new CancelSignaturesRequest([]),
      * );
      * ```
      *
      * @param string $docId
      * @param string $layerName
      * @param string $signingId
-     * @param AbortSignaturesRequest $request
+     * @param CancelSignaturesRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -146,11 +146,11 @@ class SignaturesClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?DocSignaturesAbort200Response
+     * @return ?DocSignaturesCancel200Response
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function abort(string $docId, string $layerName, string $signingId, AbortSignaturesRequest $request = new AbortSignaturesRequest(), ?array $options = null): ?DocSignaturesAbort200Response
+    public function cancel(string $docId, string $layerName, string $signingId, CancelSignaturesRequest $request = new CancelSignaturesRequest(), ?array $options = null): ?DocSignaturesCancel200Response
     {
         $options = array_merge($this->options, $options ?? []);
         $headers = [];
@@ -173,7 +173,7 @@ class SignaturesClient
                 if (empty($json)) {
                     return null;
                 }
-                return DocSignaturesAbort200Response::fromJson($json);
+                return DocSignaturesCancel200Response::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -336,7 +336,7 @@ class SignaturesClient
     }
 
     /**
-     * The multipart envelope: a JSON `body` part (field, subFilter, digest, contentsSize, signer, certify, lock, appearance) and an optional `resource:<key>` PDF part the body's `appearance.resource` names. A certification (`certify.permission`) additionally requires `doc.sign.certify`. The layer is read-only until the signing completes, is aborted, or expires (15 minutes). A layer behind the document head cannot sign (StaleBase).
+     * Multipart: a JSON `body` part (field, subFilter, digest, contentsSize, signer, certify, lock), naming the appearance PDF it may carry as `resources: { appearance: '<key>' }`, and that PDF as the part `resource:<key>`. A certification (`certify.permission`) additionally requires `doc.sign.certify`. The layer is read-only until the signing completes, is cancelled, or expires (15 minutes). A layer behind the document head cannot sign (StaleBase).
      *
      * Example:
      * ```php

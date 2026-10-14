@@ -33,28 +33,10 @@ class TokensIssueRequestDoc extends JsonSerializableType
     public array $scope;
 
     /**
-     * @var ?string $userId
+     * @var ?TokensIssueRequestDocIdentity $identity
      */
-    #[JsonProperty('userId')]
-    public ?string $userId;
-
-    /**
-     * @var ?string $displayName
-     */
-    #[JsonProperty('displayName')]
-    public ?string $displayName;
-
-    /**
-     * @var ?string $groupId
-     */
-    #[JsonProperty('groupId')]
-    public ?string $groupId;
-
-    /**
-     * @var ?array<string> $groups
-     */
-    #[JsonProperty('groups'), ArrayType(['string'])]
-    public ?array $groups;
+    #[JsonProperty('identity')]
+    public ?TokensIssueRequestDocIdentity $identity;
 
     /**
      * @var ?array<string> $origins
@@ -75,10 +57,7 @@ class TokensIssueRequestDoc extends JsonSerializableType
      *   scope: array<string>,
      *   expiresIn: int,
      *   layerName?: ?string,
-     *   userId?: ?string,
-     *   displayName?: ?string,
-     *   groupId?: ?string,
-     *   groups?: ?array<string>,
+     *   identity?: ?TokensIssueRequestDocIdentity,
      *   origins?: ?array<string>,
      * } $values
      */
@@ -89,10 +68,7 @@ class TokensIssueRequestDoc extends JsonSerializableType
         $this->docId = $values['docId'];
         $this->layerName = $values['layerName'] ?? null;
         $this->scope = $values['scope'];
-        $this->userId = $values['userId'] ?? null;
-        $this->displayName = $values['displayName'] ?? null;
-        $this->groupId = $values['groupId'] ?? null;
-        $this->groups = $values['groups'] ?? null;
+        $this->identity = $values['identity'] ?? null;
         $this->origins = $values['origins'] ?? null;
         $this->expiresIn = $values['expiresIn'];
     }

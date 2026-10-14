@@ -8,19 +8,27 @@ use CloudPDF\Core\Json\JsonProperty;
 class DocAnnotationsCreate200Response extends JsonSerializableType
 {
     /**
-     * @var DocAnnotationsCreate200ResponseMeta $meta
+     * @var Annotation $annotation
+     */
+    #[JsonProperty('annotation')]
+    public Annotation $annotation;
+
+    /**
+     * @var AnnotationMutationMeta $meta
      */
     #[JsonProperty('meta')]
-    public DocAnnotationsCreate200ResponseMeta $meta;
+    public AnnotationMutationMeta $meta;
 
     /**
      * @param array{
-     *   meta: DocAnnotationsCreate200ResponseMeta,
+     *   annotation: Annotation,
+     *   meta: AnnotationMutationMeta,
      * } $values
      */
     public function __construct(
         array $values,
     ) {
+        $this->annotation = $values['annotation'];
         $this->meta = $values['meta'];
     }
 

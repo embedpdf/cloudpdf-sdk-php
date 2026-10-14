@@ -4,7 +4,7 @@ namespace CloudPDF\Doc\Redactions;
 
 use Psr\Http\Client\ClientInterface;
 use CloudPDF\Core\Client\RawClient;
-use CloudPDF\Doc\Redactions\Requests\ApplyRedactionsRequest;
+use CloudPDF\Doc\Redactions\Requests\DocRedactionsApplyRequest;
 use CloudPDF\Types\DocRedactionsApply200Response;
 use CloudPDF\Exceptions\CloudPDFException;
 use CloudPDF\Exceptions\CloudPDFApiException;
@@ -55,17 +55,13 @@ class RedactionsClient
      * $client->doc->redactions->apply(
      *     'docId',
      *     'layerName',
-     *     new ApplyRedactionsRequest([
-     *         'body' => [
-     *             'key' => "value",
-     *         ],
-     *     ]),
+     *     new DocRedactionsApplyRequest([]),
      * );
      * ```
      *
      * @param string $docId
      * @param string $layerName
-     * @param ApplyRedactionsRequest $request
+     * @param DocRedactionsApplyRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -78,12 +74,15 @@ class RedactionsClient
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function apply(string $docId, string $layerName, ApplyRedactionsRequest $request, ?array $options = null): ?DocRedactionsApply200Response
+    public function apply(string $docId, string $layerName, DocRedactionsApplyRequest $request = new DocRedactionsApplyRequest(), ?array $options = null): ?DocRedactionsApply200Response
     {
         $options = array_merge($this->options, $options ?? []);
         $headers = [];
         if ($request->documentPassword != null) {
             $headers['X-Document-Password'] = $request->documentPassword;
+        }
+        if ($request->idempotencyKey != null) {
+            $headers['Idempotency-Key'] = $request->idempotencyKey;
         }
         try {
             $response = $this->client->sendRequest(
@@ -92,7 +91,7 @@ class RedactionsClient
                     path: "v1/docs/{$docId}/layers/{$layerName}/redactions/apply",
                     method: HttpMethod::POST,
                     headers: $headers,
-                    body: $request->body,
+                    body: $request,
                 ),
                 $options,
             );

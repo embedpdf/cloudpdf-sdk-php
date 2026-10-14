@@ -8,19 +8,35 @@ use CloudPDF\Core\Json\JsonProperty;
 class DocAnnotationsUpdate200Response extends JsonSerializableType
 {
     /**
-     * @var DocAnnotationsUpdate200ResponseMeta $meta
+     * @var Annotation $annotation
+     */
+    #[JsonProperty('annotation')]
+    public Annotation $annotation;
+
+    /**
+     * @var DocAnnotationsUpdate200ResponseAppearance $appearance
+     */
+    #[JsonProperty('appearance')]
+    public DocAnnotationsUpdate200ResponseAppearance $appearance;
+
+    /**
+     * @var AnnotationMutationMeta $meta
      */
     #[JsonProperty('meta')]
-    public DocAnnotationsUpdate200ResponseMeta $meta;
+    public AnnotationMutationMeta $meta;
 
     /**
      * @param array{
-     *   meta: DocAnnotationsUpdate200ResponseMeta,
+     *   annotation: Annotation,
+     *   appearance: DocAnnotationsUpdate200ResponseAppearance,
+     *   meta: AnnotationMutationMeta,
      * } $values
      */
     public function __construct(
         array $values,
     ) {
+        $this->annotation = $values['annotation'];
+        $this->appearance = $values['appearance'];
         $this->meta = $values['meta'];
     }
 

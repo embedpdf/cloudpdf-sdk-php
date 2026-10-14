@@ -8,14 +8,14 @@ use CloudPDF\Core\Json\JsonProperty;
 class DocAnnotationsDelete200Response extends JsonSerializableType
 {
     /**
-     * @var DocAnnotationsDelete200ResponseMeta $meta
+     * @var AnnotationMutationMeta $meta
      */
     #[JsonProperty('meta')]
-    public DocAnnotationsDelete200ResponseMeta $meta;
+    public AnnotationMutationMeta $meta;
 
     /**
      * @param array{
-     *   meta: DocAnnotationsDelete200ResponseMeta,
+     *   meta: AnnotationMutationMeta,
      * } $values
      */
     public function __construct(

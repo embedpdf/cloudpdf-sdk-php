@@ -13,8 +13,7 @@ use CloudPDF\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
 use CloudPDF\Doc\Pages\Requests\ViewportsPagesRequest;
-use CloudPDF\Types\DocPagesViewports200ResponseItem;
-use CloudPDF\Core\Json\JsonDecoder;
+use CloudPDF\Types\DocPagesViewports200Response;
 use CloudPDF\Doc\Pages\Requests\DeletePagesRequest;
 use CloudPDF\Types\DocPagesDelete200Response;
 use CloudPDF\Doc\Pages\Requests\ExtractPagesRequest;
@@ -26,12 +25,12 @@ use CloudPDF\Core\Multipart\MultipartFormData;
 use CloudPDF\Core\Multipart\MultipartApiRequest;
 use CloudPDF\Doc\Pages\Requests\InsertBlankPagesRequest;
 use CloudPDF\Types\DocPagesInsertBlank200Response;
-use CloudPDF\Doc\Pages\Requests\MovePagesRequest;
-use CloudPDF\Types\DocPagesMove200Response;
 use CloudPDF\Doc\Pages\Requests\SetNamePagesRequest;
 use CloudPDF\Types\DocPagesSetName200Response;
 use CloudPDF\Doc\Pages\Requests\RemoveNamePagesRequest;
 use CloudPDF\Types\DocPagesRemoveName200Response;
+use CloudPDF\Doc\Pages\Requests\DocPagesReorderRequest;
+use CloudPDF\Types\DocPagesReorder200Response;
 use CloudPDF\Doc\Pages\Requests\RotatePagesRequest;
 use CloudPDF\Types\DocPagesRotate200Response;
 
@@ -77,14 +76,14 @@ class PagesClient
      * $client->doc->pages->setScale(
      *     'docId',
      *     'layerName',
-     *     1,
+     *     'pageKey',
      *     new DocPagesSetScaleRequest([]),
      * );
      * ```
      *
      * @param string $docId
      * @param string $layerName
-     * @param int $pon
+     * @param string $pageKey The page's address, `obj:N`: the page's indirect object number, the durable identity every `PageLayout.ref` carries. Mirrors `annotKey` and `fieldKey`.
      * @param DocPagesSetScaleRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -98,18 +97,21 @@ class PagesClient
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function setScale(string $docId, string $layerName, int $pon, DocPagesSetScaleRequest $request, ?array $options = null): ?DocPagesSetScale200Response
+    public function setScale(string $docId, string $layerName, string $pageKey, DocPagesSetScaleRequest $request, ?array $options = null): ?DocPagesSetScale200Response
     {
         $options = array_merge($this->options, $options ?? []);
         $headers = [];
         if ($request->documentPassword != null) {
             $headers['X-Document-Password'] = $request->documentPassword;
         }
+        if ($request->idempotencyKey != null) {
+            $headers['Idempotency-Key'] = $request->idempotencyKey;
+        }
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "v1/docs/{$docId}/layers/{$layerName}/pages/{$pon}/scale",
+                    path: "v1/docs/{$docId}/layers/{$layerName}/pages/{$pageKey}/scale",
                     method: HttpMethod::PUT,
                     headers: $headers,
                     body: $request,
@@ -142,14 +144,14 @@ class PagesClient
      * $client->doc->pages->viewports(
      *     'docId',
      *     'layerName',
-     *     1,
+     *     'pageKey',
      *     new ViewportsPagesRequest([]),
      * );
      * ```
      *
      * @param string $docId
      * @param string $layerName
-     * @param int $pon
+     * @param string $pageKey The page's address, `obj:N`: the page's indirect object number, the durable identity every `PageLayout.ref` carries. Mirrors `annotKey` and `fieldKey`.
      * @param ViewportsPagesRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -159,11 +161,11 @@ class PagesClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?array<DocPagesViewports200ResponseItem>
+     * @return ?DocPagesViewports200Response
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function viewports(string $docId, string $layerName, int $pon, ViewportsPagesRequest $request = new ViewportsPagesRequest(), ?array $options = null): ?array
+    public function viewports(string $docId, string $layerName, string $pageKey, ViewportsPagesRequest $request = new ViewportsPagesRequest(), ?array $options = null): ?DocPagesViewports200Response
     {
         $options = array_merge($this->options, $options ?? []);
         $headers = [];
@@ -174,7 +176,7 @@ class PagesClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "v1/docs/{$docId}/layers/{$layerName}/pages/{$pon}/viewports",
+                    path: "v1/docs/{$docId}/layers/{$layerName}/pages/{$pageKey}/viewports",
                     method: HttpMethod::GET,
                     headers: $headers,
                 ),
@@ -186,7 +188,7 @@ class PagesClient
                 if (empty($json)) {
                     return null;
                 }
-                return JsonDecoder::decodeArray($json, [DocPagesViewports200ResponseItem::class]); // @phpstan-ignore-line
+                return DocPagesViewports200Response::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -236,6 +238,9 @@ class PagesClient
         if ($request->documentPassword != null) {
             $headers['X-Document-Password'] = $request->documentPassword;
         }
+        if ($request->idempotencyKey != null) {
+            $headers['Idempotency-Key'] = $request->idempotencyKey;
+        }
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -268,7 +273,7 @@ class PagesClient
     }
 
     /**
-     * A read, not a mutation: the source document is untouched and no event is published. Body is `{"pageObjectNumbers": number[]}`; the response body is the new PDF.
+     * A read, not a mutation: the source document is untouched and no event is published. Body is `{"pages": PageRef[]}`; the response body is the new PDF.
      *
      * Example:
      * ```php
@@ -368,6 +373,9 @@ class PagesClient
         if ($request->documentPassword != null) {
             $headers['X-Document-Password'] = $request->documentPassword;
         }
+        if ($request->idempotencyKey != null) {
+            $headers['Idempotency-Key'] = $request->idempotencyKey;
+        }
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -400,7 +408,7 @@ class PagesClient
     }
 
     /**
-     * Multipart mutation envelope: a `body` field holding `{"destIndex"?: number}` (omitted → append) plus a `resource:source` file part carrying the standalone PDF whose pages are copied in. The inserted copies get fresh page object numbers, returned in insertion order.
+     * Multipart: a JSON `body` part `{"position"?: PagePosition, "resources": {"source": "<key>"}}` (position omitted → the end), and the standalone PDF whose pages are copied in as the part `resource:<key>`. The inserted copies get fresh page object numbers, returned in insertion order.
      *
      * Example:
      * ```php
@@ -433,6 +441,9 @@ class PagesClient
         $headers = [];
         if ($request->documentPassword != null) {
             $headers['X-Document-Password'] = $request->documentPassword;
+        }
+        if ($request->idempotencyKey != null) {
+            $headers['Idempotency-Key'] = $request->idempotencyKey;
         }
         $body = new MultipartFormData();
         $body->addPart($request->file->toMultipartFormDataPart('file'));
@@ -468,7 +479,7 @@ class PagesClient
     }
 
     /**
-     * Body is `{"size": {"width", "height"}, "count"?, "destIndex"?}` — size in PDF points, count in [1, 100], destIndex omitted → append.
+     * Body is `{"size": {"width", "height"}, "count"?, "position"?}` — size in PDF points, count in [1, 100], `position` a `PagePosition` (omitted → the end).
      *
      * Example:
      * ```php
@@ -505,6 +516,9 @@ class PagesClient
         if ($request->documentPassword != null) {
             $headers['X-Document-Password'] = $request->documentPassword;
         }
+        if ($request->idempotencyKey != null) {
+            $headers['Idempotency-Key'] = $request->idempotencyKey;
+        }
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -523,73 +537,6 @@ class PagesClient
                     return null;
                 }
                 return DocPagesInsertBlank200Response::fromJson($json);
-            }
-        } catch (JsonException $e) {
-            throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
-        } catch (ClientExceptionInterface $e) {
-            throw new CloudPDFException(message: $e->getMessage(), previous: $e);
-        }
-        throw new CloudPDFApiException(
-            message: 'API request failed',
-            statusCode: $statusCode,
-            body: $response->getBody()->getContents(),
-        );
-    }
-
-    /**
-     * Example:
-     * ```php
-     * $client->doc->pages->move(
-     *     'docId',
-     *     'layerName',
-     *     new MovePagesRequest([
-     *         'body' => [
-     *             'key' => "value",
-     *         ],
-     *     ]),
-     * );
-     * ```
-     *
-     * @param string $docId
-     * @param string $layerName
-     * @param MovePagesRequest $request
-     * @param ?array{
-     *   baseUrl?: string,
-     *   maxRetries?: int,
-     *   timeout?: float,
-     *   headers?: array<string, string>,
-     *   queryParameters?: array<string, mixed>,
-     *   bodyProperties?: array<string, mixed>,
-     * } $options
-     * @return ?DocPagesMove200Response
-     * @throws CloudPDFException
-     * @throws CloudPDFApiException
-     */
-    public function move(string $docId, string $layerName, MovePagesRequest $request, ?array $options = null): ?DocPagesMove200Response
-    {
-        $options = array_merge($this->options, $options ?? []);
-        $headers = [];
-        if ($request->documentPassword != null) {
-            $headers['X-Document-Password'] = $request->documentPassword;
-        }
-        try {
-            $response = $this->client->sendRequest(
-                new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "v1/docs/{$docId}/layers/{$layerName}/pages/move",
-                    method: HttpMethod::POST,
-                    headers: $headers,
-                    body: $request->body,
-                ),
-                $options,
-            );
-            $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
-                $json = $response->getBody()->getContents();
-                if (empty($json)) {
-                    return null;
-                }
-                return DocPagesMove200Response::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -638,6 +585,9 @@ class PagesClient
         $headers = [];
         if ($request->documentPassword != null) {
             $headers['X-Document-Password'] = $request->documentPassword;
+        }
+        if ($request->idempotencyKey != null) {
+            $headers['Idempotency-Key'] = $request->idempotencyKey;
         }
         try {
             $response = $this->client->sendRequest(
@@ -706,6 +656,9 @@ class PagesClient
         if ($request->documentPassword != null) {
             $headers['X-Document-Password'] = $request->documentPassword;
         }
+        if ($request->idempotencyKey != null) {
+            $headers['Idempotency-Key'] = $request->idempotencyKey;
+        }
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -724,6 +677,80 @@ class PagesClient
                     return null;
                 }
                 return DocPagesRemoveName200Response::fromJson($json);
+            }
+        } catch (JsonException $e) {
+            throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (ClientExceptionInterface $e) {
+            throw new CloudPDFException(message: $e->getMessage(), previous: $e);
+        }
+        throw new CloudPDFApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * Example:
+     * ```php
+     * $client->doc->pages->reorder(
+     *     'docId',
+     *     'layerName',
+     *     new DocPagesReorderRequest([
+     *         'pages' => [
+     *             new PageRef([
+     *                 'kind' => PageRefKind::ObjectNumber->value,
+     *                 'objectNumber' => 1,
+     *             ]),
+     *         ],
+     *         'position' => PagePositionZero::Start->value,
+     *     ]),
+     * );
+     * ```
+     *
+     * @param string $docId
+     * @param string $layerName
+     * @param DocPagesReorderRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return ?DocPagesReorder200Response
+     * @throws CloudPDFException
+     * @throws CloudPDFApiException
+     */
+    public function reorder(string $docId, string $layerName, DocPagesReorderRequest $request, ?array $options = null): ?DocPagesReorder200Response
+    {
+        $options = array_merge($this->options, $options ?? []);
+        $headers = [];
+        if ($request->documentPassword != null) {
+            $headers['X-Document-Password'] = $request->documentPassword;
+        }
+        if ($request->idempotencyKey != null) {
+            $headers['Idempotency-Key'] = $request->idempotencyKey;
+        }
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "v1/docs/{$docId}/layers/{$layerName}/pages/reorder",
+                    method: HttpMethod::POST,
+                    headers: $headers,
+                    body: $request,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
+                return DocPagesReorder200Response::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -772,6 +799,9 @@ class PagesClient
         $headers = [];
         if ($request->documentPassword != null) {
             $headers['X-Document-Password'] = $request->documentPassword;
+        }
+        if ($request->idempotencyKey != null) {
+            $headers['Idempotency-Key'] = $request->idempotencyKey;
         }
         try {
             $response = $this->client->sendRequest(
