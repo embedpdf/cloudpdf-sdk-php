@@ -51,6 +51,12 @@ class CacheDelta extends JsonSerializableType
     public ?int $attachmentsVersion;
 
     /**
+     * @var ?int $outlineVersion
+     */
+    #[JsonProperty('outlineVersion')]
+    public ?int $outlineVersion;
+
+    /**
      * @var ?int $layerVersion
      */
     #[JsonProperty('layerVersion')]
@@ -78,6 +84,7 @@ class CacheDelta extends JsonSerializableType
      *   layoutVersion?: ?int,
      *   metadataVersion?: ?int,
      *   attachmentsVersion?: ?int,
+     *   outlineVersion?: ?int,
      *   layerVersion?: ?int,
      *   working?: ?bool,
      * } $values
@@ -92,6 +99,7 @@ class CacheDelta extends JsonSerializableType
         $this->layoutVersion = $values['layoutVersion'] ?? null;
         $this->metadataVersion = $values['metadataVersion'] ?? null;
         $this->attachmentsVersion = $values['attachmentsVersion'] ?? null;
+        $this->outlineVersion = $values['outlineVersion'] ?? null;
         $this->layerVersion = $values['layerVersion'] ?? null;
         $this->working = $values['working'] ?? null;
         $this->pages = $values['pages'];

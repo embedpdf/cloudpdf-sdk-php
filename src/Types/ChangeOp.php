@@ -29,6 +29,17 @@ class ChangeOp extends JsonSerializableType
      *   |'forms.setSignatureAppearance'
      *   |'metadata.update'
      *   |'metadata.updateCustom'
+     *   |'outline.create'
+     *   |'outline.update'
+     *   |'outline.move'
+     *   |'outline.delete'
+     *   |'pages.rotate'
+     *   |'pages.reorder'
+     *   |'pages.delete'
+     *   |'pages.insertBlank'
+     *   |'pages.insert'
+     *   |'attachments.create'
+     *   |'attachments.delete'
      *   |'_unknown'
      * ) $type
      */
@@ -56,6 +67,17 @@ class ChangeOp extends JsonSerializableType
      *   |ChangeOpFormsSetSignatureAppearance
      *   |ChangeOpMetadataUpdate
      *   |ChangeOpMetadataUpdateCustom
+     *   |ChangeOpOutlineCreate
+     *   |ChangeOpOutlineUpdate
+     *   |ChangeOpOutlineMove
+     *   |ChangeOpOutlineDelete
+     *   |ChangeOpPagesRotate
+     *   |ChangeOpPagesReorder
+     *   |ChangeOpPagesDelete
+     *   |ChangeOpPagesInsertBlank
+     *   |ChangeOpPagesInsert
+     *   |ChangeOpAttachmentsCreate
+     *   |ChangeOpAttachmentsDelete
      *   |mixed
      * ) $value
      */
@@ -84,6 +106,17 @@ class ChangeOp extends JsonSerializableType
      *   |'forms.setSignatureAppearance'
      *   |'metadata.update'
      *   |'metadata.updateCustom'
+     *   |'outline.create'
+     *   |'outline.update'
+     *   |'outline.move'
+     *   |'outline.delete'
+     *   |'pages.rotate'
+     *   |'pages.reorder'
+     *   |'pages.delete'
+     *   |'pages.insertBlank'
+     *   |'pages.insert'
+     *   |'attachments.create'
+     *   |'attachments.delete'
      *   |'_unknown'
      * ),
      *   value: (
@@ -107,6 +140,17 @@ class ChangeOp extends JsonSerializableType
      *   |ChangeOpFormsSetSignatureAppearance
      *   |ChangeOpMetadataUpdate
      *   |ChangeOpMetadataUpdateCustom
+     *   |ChangeOpOutlineCreate
+     *   |ChangeOpOutlineUpdate
+     *   |ChangeOpOutlineMove
+     *   |ChangeOpOutlineDelete
+     *   |ChangeOpPagesRotate
+     *   |ChangeOpPagesReorder
+     *   |ChangeOpPagesDelete
+     *   |ChangeOpPagesInsertBlank
+     *   |ChangeOpPagesInsert
+     *   |ChangeOpAttachmentsCreate
+     *   |ChangeOpAttachmentsDelete
      *   |mixed
      * ),
      * } $values
@@ -355,6 +399,138 @@ class ChangeOp extends JsonSerializableType
         return new ChangeOp([
             'type' => 'metadata.updateCustom',
             'value' => $metadataUpdateCustom,
+        ]);
+    }
+
+    /**
+     * @param ChangeOpOutlineCreate $outlineCreate
+     * @return ChangeOp
+     */
+    public static function outlineCreate(ChangeOpOutlineCreate $outlineCreate): ChangeOp
+    {
+        return new ChangeOp([
+            'type' => 'outline.create',
+            'value' => $outlineCreate,
+        ]);
+    }
+
+    /**
+     * @param ChangeOpOutlineUpdate $outlineUpdate
+     * @return ChangeOp
+     */
+    public static function outlineUpdate(ChangeOpOutlineUpdate $outlineUpdate): ChangeOp
+    {
+        return new ChangeOp([
+            'type' => 'outline.update',
+            'value' => $outlineUpdate,
+        ]);
+    }
+
+    /**
+     * @param ChangeOpOutlineMove $outlineMove
+     * @return ChangeOp
+     */
+    public static function outlineMove(ChangeOpOutlineMove $outlineMove): ChangeOp
+    {
+        return new ChangeOp([
+            'type' => 'outline.move',
+            'value' => $outlineMove,
+        ]);
+    }
+
+    /**
+     * @param ChangeOpOutlineDelete $outlineDelete
+     * @return ChangeOp
+     */
+    public static function outlineDelete(ChangeOpOutlineDelete $outlineDelete): ChangeOp
+    {
+        return new ChangeOp([
+            'type' => 'outline.delete',
+            'value' => $outlineDelete,
+        ]);
+    }
+
+    /**
+     * @param ChangeOpPagesRotate $pagesRotate
+     * @return ChangeOp
+     */
+    public static function pagesRotate(ChangeOpPagesRotate $pagesRotate): ChangeOp
+    {
+        return new ChangeOp([
+            'type' => 'pages.rotate',
+            'value' => $pagesRotate,
+        ]);
+    }
+
+    /**
+     * @param ChangeOpPagesReorder $pagesReorder
+     * @return ChangeOp
+     */
+    public static function pagesReorder(ChangeOpPagesReorder $pagesReorder): ChangeOp
+    {
+        return new ChangeOp([
+            'type' => 'pages.reorder',
+            'value' => $pagesReorder,
+        ]);
+    }
+
+    /**
+     * @param ChangeOpPagesDelete $pagesDelete
+     * @return ChangeOp
+     */
+    public static function pagesDelete(ChangeOpPagesDelete $pagesDelete): ChangeOp
+    {
+        return new ChangeOp([
+            'type' => 'pages.delete',
+            'value' => $pagesDelete,
+        ]);
+    }
+
+    /**
+     * @param ChangeOpPagesInsertBlank $pagesInsertBlank
+     * @return ChangeOp
+     */
+    public static function pagesInsertBlank(ChangeOpPagesInsertBlank $pagesInsertBlank): ChangeOp
+    {
+        return new ChangeOp([
+            'type' => 'pages.insertBlank',
+            'value' => $pagesInsertBlank,
+        ]);
+    }
+
+    /**
+     * @param ChangeOpPagesInsert $pagesInsert
+     * @return ChangeOp
+     */
+    public static function pagesInsert(ChangeOpPagesInsert $pagesInsert): ChangeOp
+    {
+        return new ChangeOp([
+            'type' => 'pages.insert',
+            'value' => $pagesInsert,
+        ]);
+    }
+
+    /**
+     * @param ChangeOpAttachmentsCreate $attachmentsCreate
+     * @return ChangeOp
+     */
+    public static function attachmentsCreate(ChangeOpAttachmentsCreate $attachmentsCreate): ChangeOp
+    {
+        return new ChangeOp([
+            'type' => 'attachments.create',
+            'value' => $attachmentsCreate,
+        ]);
+    }
+
+    /**
+     * @param ChangeOpAttachmentsDelete $attachmentsDelete
+     * @return ChangeOp
+     */
+    public static function attachmentsDelete(ChangeOpAttachmentsDelete $attachmentsDelete): ChangeOp
+    {
+        return new ChangeOp([
+            'type' => 'attachments.delete',
+            'value' => $attachmentsDelete,
         ]);
     }
 
@@ -799,6 +975,248 @@ class ChangeOp extends JsonSerializableType
     }
 
     /**
+     * @return bool
+     */
+    public function isOutlineCreate(): bool
+    {
+        return $this->value instanceof ChangeOpOutlineCreate && $this->type === 'outline.create';
+    }
+
+    /**
+     * @return ChangeOpOutlineCreate
+     */
+    public function asOutlineCreate(): ChangeOpOutlineCreate
+    {
+        if (!($this->value instanceof ChangeOpOutlineCreate && $this->type === 'outline.create')) {
+            throw new Exception(
+                "Expected outline.create; got " . $this->type . " with value of type " . get_debug_type($this->value),
+            );
+        }
+
+        return $this->value;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isOutlineUpdate(): bool
+    {
+        return $this->value instanceof ChangeOpOutlineUpdate && $this->type === 'outline.update';
+    }
+
+    /**
+     * @return ChangeOpOutlineUpdate
+     */
+    public function asOutlineUpdate(): ChangeOpOutlineUpdate
+    {
+        if (!($this->value instanceof ChangeOpOutlineUpdate && $this->type === 'outline.update')) {
+            throw new Exception(
+                "Expected outline.update; got " . $this->type . " with value of type " . get_debug_type($this->value),
+            );
+        }
+
+        return $this->value;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isOutlineMove(): bool
+    {
+        return $this->value instanceof ChangeOpOutlineMove && $this->type === 'outline.move';
+    }
+
+    /**
+     * @return ChangeOpOutlineMove
+     */
+    public function asOutlineMove(): ChangeOpOutlineMove
+    {
+        if (!($this->value instanceof ChangeOpOutlineMove && $this->type === 'outline.move')) {
+            throw new Exception(
+                "Expected outline.move; got " . $this->type . " with value of type " . get_debug_type($this->value),
+            );
+        }
+
+        return $this->value;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isOutlineDelete(): bool
+    {
+        return $this->value instanceof ChangeOpOutlineDelete && $this->type === 'outline.delete';
+    }
+
+    /**
+     * @return ChangeOpOutlineDelete
+     */
+    public function asOutlineDelete(): ChangeOpOutlineDelete
+    {
+        if (!($this->value instanceof ChangeOpOutlineDelete && $this->type === 'outline.delete')) {
+            throw new Exception(
+                "Expected outline.delete; got " . $this->type . " with value of type " . get_debug_type($this->value),
+            );
+        }
+
+        return $this->value;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPagesRotate(): bool
+    {
+        return $this->value instanceof ChangeOpPagesRotate && $this->type === 'pages.rotate';
+    }
+
+    /**
+     * @return ChangeOpPagesRotate
+     */
+    public function asPagesRotate(): ChangeOpPagesRotate
+    {
+        if (!($this->value instanceof ChangeOpPagesRotate && $this->type === 'pages.rotate')) {
+            throw new Exception(
+                "Expected pages.rotate; got " . $this->type . " with value of type " . get_debug_type($this->value),
+            );
+        }
+
+        return $this->value;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPagesReorder(): bool
+    {
+        return $this->value instanceof ChangeOpPagesReorder && $this->type === 'pages.reorder';
+    }
+
+    /**
+     * @return ChangeOpPagesReorder
+     */
+    public function asPagesReorder(): ChangeOpPagesReorder
+    {
+        if (!($this->value instanceof ChangeOpPagesReorder && $this->type === 'pages.reorder')) {
+            throw new Exception(
+                "Expected pages.reorder; got " . $this->type . " with value of type " . get_debug_type($this->value),
+            );
+        }
+
+        return $this->value;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPagesDelete(): bool
+    {
+        return $this->value instanceof ChangeOpPagesDelete && $this->type === 'pages.delete';
+    }
+
+    /**
+     * @return ChangeOpPagesDelete
+     */
+    public function asPagesDelete(): ChangeOpPagesDelete
+    {
+        if (!($this->value instanceof ChangeOpPagesDelete && $this->type === 'pages.delete')) {
+            throw new Exception(
+                "Expected pages.delete; got " . $this->type . " with value of type " . get_debug_type($this->value),
+            );
+        }
+
+        return $this->value;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPagesInsertBlank(): bool
+    {
+        return $this->value instanceof ChangeOpPagesInsertBlank && $this->type === 'pages.insertBlank';
+    }
+
+    /**
+     * @return ChangeOpPagesInsertBlank
+     */
+    public function asPagesInsertBlank(): ChangeOpPagesInsertBlank
+    {
+        if (!($this->value instanceof ChangeOpPagesInsertBlank && $this->type === 'pages.insertBlank')) {
+            throw new Exception(
+                "Expected pages.insertBlank; got " . $this->type . " with value of type " . get_debug_type($this->value),
+            );
+        }
+
+        return $this->value;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPagesInsert(): bool
+    {
+        return $this->value instanceof ChangeOpPagesInsert && $this->type === 'pages.insert';
+    }
+
+    /**
+     * @return ChangeOpPagesInsert
+     */
+    public function asPagesInsert(): ChangeOpPagesInsert
+    {
+        if (!($this->value instanceof ChangeOpPagesInsert && $this->type === 'pages.insert')) {
+            throw new Exception(
+                "Expected pages.insert; got " . $this->type . " with value of type " . get_debug_type($this->value),
+            );
+        }
+
+        return $this->value;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAttachmentsCreate(): bool
+    {
+        return $this->value instanceof ChangeOpAttachmentsCreate && $this->type === 'attachments.create';
+    }
+
+    /**
+     * @return ChangeOpAttachmentsCreate
+     */
+    public function asAttachmentsCreate(): ChangeOpAttachmentsCreate
+    {
+        if (!($this->value instanceof ChangeOpAttachmentsCreate && $this->type === 'attachments.create')) {
+            throw new Exception(
+                "Expected attachments.create; got " . $this->type . " with value of type " . get_debug_type($this->value),
+            );
+        }
+
+        return $this->value;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAttachmentsDelete(): bool
+    {
+        return $this->value instanceof ChangeOpAttachmentsDelete && $this->type === 'attachments.delete';
+    }
+
+    /**
+     * @return ChangeOpAttachmentsDelete
+     */
+    public function asAttachmentsDelete(): ChangeOpAttachmentsDelete
+    {
+        if (!($this->value instanceof ChangeOpAttachmentsDelete && $this->type === 'attachments.delete')) {
+            throw new Exception(
+                "Expected attachments.delete; got " . $this->type . " with value of type " . get_debug_type($this->value),
+            );
+        }
+
+        return $this->value;
+    }
+
+    /**
      * @return string
      */
     public function __toString(): string
@@ -898,6 +1316,50 @@ class ChangeOp extends JsonSerializableType
                 $value = $this->asMetadataUpdateCustom()->jsonSerialize();
                 $result = array_merge($value, $result);
                 break;
+            case 'outline.create':
+                $value = $this->asOutlineCreate()->jsonSerialize();
+                $result = array_merge($value, $result);
+                break;
+            case 'outline.update':
+                $value = $this->asOutlineUpdate()->jsonSerialize();
+                $result = array_merge($value, $result);
+                break;
+            case 'outline.move':
+                $value = $this->asOutlineMove()->jsonSerialize();
+                $result = array_merge($value, $result);
+                break;
+            case 'outline.delete':
+                $value = $this->asOutlineDelete()->jsonSerialize();
+                $result = array_merge($value, $result);
+                break;
+            case 'pages.rotate':
+                $value = $this->asPagesRotate()->jsonSerialize();
+                $result = array_merge($value, $result);
+                break;
+            case 'pages.reorder':
+                $value = $this->asPagesReorder()->jsonSerialize();
+                $result = array_merge($value, $result);
+                break;
+            case 'pages.delete':
+                $value = $this->asPagesDelete()->jsonSerialize();
+                $result = array_merge($value, $result);
+                break;
+            case 'pages.insertBlank':
+                $value = $this->asPagesInsertBlank()->jsonSerialize();
+                $result = array_merge($value, $result);
+                break;
+            case 'pages.insert':
+                $value = $this->asPagesInsert()->jsonSerialize();
+                $result = array_merge($value, $result);
+                break;
+            case 'attachments.create':
+                $value = $this->asAttachmentsCreate()->jsonSerialize();
+                $result = array_merge($value, $result);
+                break;
+            case 'attachments.delete':
+                $value = $this->asAttachmentsDelete()->jsonSerialize();
+                $result = array_merge($value, $result);
+                break;
             case '_unknown':
             default:
                 if (is_null($this->value)) {
@@ -993,6 +1455,39 @@ class ChangeOp extends JsonSerializableType
                 break;
             case 'metadata.updateCustom':
                 $args['value'] = ChangeOpMetadataUpdateCustom::jsonDeserialize($data);
+                break;
+            case 'outline.create':
+                $args['value'] = ChangeOpOutlineCreate::jsonDeserialize($data);
+                break;
+            case 'outline.update':
+                $args['value'] = ChangeOpOutlineUpdate::jsonDeserialize($data);
+                break;
+            case 'outline.move':
+                $args['value'] = ChangeOpOutlineMove::jsonDeserialize($data);
+                break;
+            case 'outline.delete':
+                $args['value'] = ChangeOpOutlineDelete::jsonDeserialize($data);
+                break;
+            case 'pages.rotate':
+                $args['value'] = ChangeOpPagesRotate::jsonDeserialize($data);
+                break;
+            case 'pages.reorder':
+                $args['value'] = ChangeOpPagesReorder::jsonDeserialize($data);
+                break;
+            case 'pages.delete':
+                $args['value'] = ChangeOpPagesDelete::jsonDeserialize($data);
+                break;
+            case 'pages.insertBlank':
+                $args['value'] = ChangeOpPagesInsertBlank::jsonDeserialize($data);
+                break;
+            case 'pages.insert':
+                $args['value'] = ChangeOpPagesInsert::jsonDeserialize($data);
+                break;
+            case 'attachments.create':
+                $args['value'] = ChangeOpAttachmentsCreate::jsonDeserialize($data);
+                break;
+            case 'attachments.delete':
+                $args['value'] = ChangeOpAttachmentsDelete::jsonDeserialize($data);
                 break;
             case '_unknown':
             default:

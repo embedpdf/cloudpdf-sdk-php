@@ -20,6 +20,7 @@ use CloudPDF\Types\DocAnnotationsDelete200Response;
 use CloudPDF\Doc\Annotations\Requests\UpdateAnnotationsRequest;
 use CloudPDF\Types\DocAnnotationsUpdate200Response;
 use CloudPDF\Doc\Annotations\Requests\ReadAppearanceAnnotationsRequest;
+use CloudPDF\Doc\Annotations\Requests\ReadFileAnnotationsRequest;
 use CloudPDF\Doc\Annotations\Requests\ExportAppearanceAnnotationsRequest;
 use CloudPDF\Doc\Annotations\Requests\FlattenAnnotationsRequest;
 use CloudPDF\Types\DocAnnotationsFlatten200Response;
@@ -448,6 +449,68 @@ class AnnotationsClient
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "v1/docs/{$docId}/layers/{$layerName}/annotations/pages/{$pageKey}/items/{$annotKey}/resources/appearance",
+                    method: HttpMethod::GET,
+                    headers: $headers,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                return $response->getBody()->getContents();
+            }
+        } catch (ClientExceptionInterface $e) {
+            throw new CloudPDFException(message: $e->getMessage(), previous: $e);
+        }
+        throw new CloudPDFApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * A file that decodes past the server's limit is refused (PayloadTooLarge).
+     *
+     * Example:
+     * ```php
+     * $client->doc->annotations->readFile(
+     *     'docId',
+     *     'layerName',
+     *     'pageKey',
+     *     'annotKey',
+     *     new ReadFileAnnotationsRequest([]),
+     * );
+     * ```
+     *
+     * @param string $docId
+     * @param string $layerName
+     * @param string $pageKey The page's address, `obj:N`: the page's indirect object number, the durable identity every `PageLayout.ref` carries. Mirrors `annotKey` and `fieldKey`.
+     * @param string $annotKey The annotation's address on the page: `obj:N`, its indirect object number, or `base:N` for an annotation the uploaded file stored inline (without an object number of its own), the position it was born at in the page's /Annots. The name the annotation's `ref` carries for life.
+     * @param ReadFileAnnotationsRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return string
+     * @throws CloudPDFException
+     * @throws CloudPDFApiException
+     */
+    public function readFile(string $docId, string $layerName, string $pageKey, string $annotKey, ReadFileAnnotationsRequest $request = new ReadFileAnnotationsRequest(), ?array $options = null): string
+    {
+        $options = array_merge($this->options, $options ?? []);
+        $headers = [];
+        if ($request->documentPassword != null) {
+            $headers['X-Document-Password'] = $request->documentPassword;
+        }
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "v1/docs/{$docId}/layers/{$layerName}/annotations/pages/{$pageKey}/items/{$annotKey}/resources/file",
                     method: HttpMethod::GET,
                     headers: $headers,
                 ),

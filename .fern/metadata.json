@@ -11,10 +11,10 @@
       "homepage": "https://www.cloudpdf.com"
     }
   },
-  "originGitCommit": "c6f87eecf9636e7ef367946a7fd7f3729401ce90",
+  "originGitCommit": "7ded7de29f4cc0dc9da18042fca6afd5c9557bfc",
   "originGitCommitIsDirty": false,
   "invokedBy": "ci",
-  "requestedVersion": "3.0.0-alpha.15",
+  "requestedVersion": "3.0.0-alpha.16",
   "ciProvider": "github",
-  "sdkVersion": "3.0.0-alpha.15"
+  "sdkVersion": "3.0.0-alpha.16"
 }
