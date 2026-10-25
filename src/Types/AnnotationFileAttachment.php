@@ -208,10 +208,10 @@ class AnnotationFileAttachment extends JsonSerializableType
     public string $icon;
 
     /**
-     * @var ?AnnotationFileAttachmentFile $file
+     * @var ?AttachmentFileInfo $file
      */
     #[JsonProperty('file')]
-    public ?AnnotationFileAttachmentFile $file;
+    public ?AttachmentFileInfo $file;
 
     /**
      * @param array{
@@ -248,7 +248,7 @@ class AnnotationFileAttachment extends JsonSerializableType
      *   modifiedBy?: ?string,
      *   importedBy?: ?string,
      *   actions?: ?PdfAnnotationActions,
-     *   file?: ?AnnotationFileAttachmentFile,
+     *   file?: ?AttachmentFileInfo,
      * } $values
      */
     public function __construct(

@@ -3,8 +3,10 @@
 namespace CloudPDF\Doc;
 
 use CloudPDF\Doc\Annotations\AnnotationsClient;
+use CloudPDF\Doc\Attachments\AttachmentsClient;
 use CloudPDF\Doc\Forms\FormsClient;
 use CloudPDF\Doc\Metadata\MetadataClient;
+use CloudPDF\Doc\Outline\OutlineClient;
 use CloudPDF\Doc\Pages\PagesClient;
 use CloudPDF\Doc\Redactions\RedactionsClient;
 use CloudPDF\Doc\Signatures\SignaturesClient;
@@ -36,6 +38,11 @@ class DocClient
     public AnnotationsClient $annotations;
 
     /**
+     * @var AttachmentsClient $attachments
+     */
+    public AttachmentsClient $attachments;
+
+    /**
      * @var FormsClient $forms
      */
     public FormsClient $forms;
@@ -44,6 +51,11 @@ class DocClient
      * @var MetadataClient $metadata
      */
     public MetadataClient $metadata;
+
+    /**
+     * @var OutlineClient $outline
+     */
+    public OutlineClient $outline;
 
     /**
      * @var PagesClient $pages
@@ -98,8 +110,10 @@ class DocClient
         $this->client = $client;
         $this->options = $options ?? [];
         $this->annotations = new AnnotationsClient($this->client, $this->options);
+        $this->attachments = new AttachmentsClient($this->client, $this->options);
         $this->forms = new FormsClient($this->client, $this->options);
         $this->metadata = new MetadataClient($this->client, $this->options);
+        $this->outline = new OutlineClient($this->client, $this->options);
         $this->pages = new PagesClient($this->client, $this->options);
         $this->redactions = new RedactionsClient($this->client, $this->options);
         $this->signatures = new SignaturesClient($this->client, $this->options);
@@ -167,7 +181,7 @@ class DocClient
     }
 
     /**
-     * Each change stands on its own and names itself by `opId`: a refused change rolls back alone, and the answer lists every change in order, applied with its result or refused with its error. Asked again under its `opId`, a change gets the same answer, refusals included; a different change under an answered `opId` is refused (IdempotencyKeyReused). `{ opId, undoOf }` undoes an earlier change of the caller, here or in an earlier request; an undo leaves alone what was changed since, and the undo of an undo redoes. A redaction, a flatten, a form repair or a completed signature ends undo for the changes before it (UndoUnavailable). Each op is checked against its own capability: annotation ops need `doc.annotate.modify`, form values `doc.forms.fill`, form structure `doc.forms.modify`, metadata `doc.metadata.modify`. Bytes (a stamp's drawing, an attached file, a signature's artwork) travel as multipart: a JSON `body` part, each op naming its files by role as `resources: { <role>: '<key>' }`, and each file as the part `resource:<key>`. At most 64 changes per request and 512 ops per change.
+     * Each change stands on its own and names itself by `opId`: a refused change rolls back alone, and the answer lists every change in order, applied with its result or refused with its error. Asked again under its `opId`, a change gets the same answer, refusals included; a different change under an answered `opId` is refused (IdempotencyKeyReused). `{ opId, undoOf }` undoes an earlier change of the caller, here or in an earlier request; an undo leaves alone what was changed since, and the undo of an undo redoes. A redaction, a flatten, a form repair or a completed signature ends undo for the changes before it (UndoUnavailable). Each op is checked against its own capability: annotation ops need `doc.annotate.modify`, form values `doc.forms.fill`, form structure `doc.forms.modify`, metadata `doc.metadata.modify`, outline `doc.outline.modify`, pages `doc.pages.assemble`, embedded files `doc.attachments.modify`. Bytes (a stamp's drawing, an attached file, a signature's artwork, a PDF whose pages come in) travel as multipart: a JSON `body` part, each op naming its files by role as `resources: { <role>: '<key>' }`, and each file as the part `resource:<key>`. At most 64 changes per request and 512 ops per change.
      *
      * Example:
      * ```php

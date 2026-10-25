@@ -51,6 +51,12 @@ class DocManifest200Response extends JsonSerializableType
     public ?int $formsVersion;
 
     /**
+     * @var ?int $outlineVersion
+     */
+    #[JsonProperty('outlineVersion')]
+    public ?int $outlineVersion;
+
+    /**
      * @var int $auditHead
      */
     #[JsonProperty('auditHead')]
@@ -110,6 +116,7 @@ class DocManifest200Response extends JsonSerializableType
      *   attachmentsVersion?: ?int,
      *   annotationsVersion?: ?int,
      *   formsVersion?: ?int,
+     *   outlineVersion?: ?int,
      *   layerVersion?: ?int,
      *   working?: ?bool,
      *   baseByteLength?: ?int,
@@ -127,6 +134,7 @@ class DocManifest200Response extends JsonSerializableType
         $this->attachmentsVersion = $values['attachmentsVersion'] ?? null;
         $this->annotationsVersion = $values['annotationsVersion'] ?? null;
         $this->formsVersion = $values['formsVersion'] ?? null;
+        $this->outlineVersion = $values['outlineVersion'] ?? null;
         $this->auditHead = $values['auditHead'];
         $this->baseSha = $values['baseSha'];
         $this->layerVersion = $values['layerVersion'] ?? null;

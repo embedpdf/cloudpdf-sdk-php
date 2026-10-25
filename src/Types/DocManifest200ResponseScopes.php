@@ -50,6 +50,12 @@ class DocManifest200ResponseScopes extends JsonSerializableType
     public string $actions;
 
     /**
+     * @var value-of<DocManifest200ResponseScopesOutline> $outline
+     */
+    #[JsonProperty('outline')]
+    public string $outline;
+
+    /**
      * @param array{
      *   content: value-of<DocManifest200ResponseScopesContent>,
      *   annotations: value-of<DocManifest200ResponseScopesAnnotations>,
@@ -58,6 +64,7 @@ class DocManifest200ResponseScopes extends JsonSerializableType
      *   attachments: value-of<DocManifest200ResponseScopesAttachments>,
      *   metadata: value-of<DocManifest200ResponseScopesMetadata>,
      *   actions: value-of<DocManifest200ResponseScopesActions>,
+     *   outline: value-of<DocManifest200ResponseScopesOutline>,
      * } $values
      */
     public function __construct(
@@ -70,6 +77,7 @@ class DocManifest200ResponseScopes extends JsonSerializableType
         $this->attachments = $values['attachments'];
         $this->metadata = $values['metadata'];
         $this->actions = $values['actions'];
+        $this->outline = $values['outline'];
     }
 
     /**
