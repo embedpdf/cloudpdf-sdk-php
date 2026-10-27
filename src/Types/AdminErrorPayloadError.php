@@ -4,6 +4,7 @@ namespace CloudPDF\Types;
 
 use CloudPDF\Core\Json\JsonSerializableType;
 use CloudPDF\Core\Json\JsonProperty;
+use CloudPDF\Core\Types\ArrayType;
 
 class AdminErrorPayloadError extends JsonSerializableType
 {
@@ -20,9 +21,16 @@ class AdminErrorPayloadError extends JsonSerializableType
     public string $message;
 
     /**
+     * @var ?array<string, mixed> $details
+     */
+    #[JsonProperty('details'), ArrayType(['string' => 'mixed'])]
+    public ?array $details;
+
+    /**
      * @param array{
      *   code: string,
      *   message: string,
+     *   details?: ?array<string, mixed>,
      * } $values
      */
     public function __construct(
@@ -30,6 +38,7 @@ class AdminErrorPayloadError extends JsonSerializableType
     ) {
         $this->code = $values['code'];
         $this->message = $values['message'];
+        $this->details = $values['details'] ?? null;
     }
 
     /**

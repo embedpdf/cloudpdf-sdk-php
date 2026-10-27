@@ -2,6 +2,7 @@
 
 namespace CloudPDF\Documents;
 
+use CloudPDF\Documents\Layers\LayersClient;
 use Psr\Http\Client\ClientInterface;
 use CloudPDF\Core\Client\RawClient;
 use CloudPDF\Documents\Requests\ListDocumentsRequest;
@@ -26,6 +27,11 @@ use CloudPDF\Types\DocumentsInit200Response;
 
 class DocumentsClient
 {
+    /**
+     * @var LayersClient $layers
+     */
+    public LayersClient $layers;
+
     /**
      * @var array{
      *   baseUrl?: string,
@@ -58,6 +64,7 @@ class DocumentsClient
     ) {
         $this->client = $client;
         $this->options = $options ?? [];
+        $this->layers = new LayersClient($this->client, $this->options);
     }
 
     /**

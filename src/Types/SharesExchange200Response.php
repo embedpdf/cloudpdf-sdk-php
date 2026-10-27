@@ -26,6 +26,18 @@ class SharesExchange200Response extends JsonSerializableType
     public string $layerName;
 
     /**
+     * @var value-of<SharesExchange200ResponseLayerMode> $layerMode
+     */
+    #[JsonProperty('layerMode')]
+    public string $layerMode;
+
+    /**
+     * @var SharesExchange200ResponseVisitor $visitor
+     */
+    #[JsonProperty('visitor')]
+    public SharesExchange200ResponseVisitor $visitor;
+
+    /**
      * @var float $expiresAt
      */
     #[JsonProperty('expiresAt')]
@@ -36,6 +48,8 @@ class SharesExchange200Response extends JsonSerializableType
      *   token: string,
      *   docId: string,
      *   layerName: string,
+     *   layerMode: value-of<SharesExchange200ResponseLayerMode>,
+     *   visitor: SharesExchange200ResponseVisitor,
      *   expiresAt: float,
      * } $values
      */
@@ -45,6 +59,8 @@ class SharesExchange200Response extends JsonSerializableType
         $this->token = $values['token'];
         $this->docId = $values['docId'];
         $this->layerName = $values['layerName'];
+        $this->layerMode = $values['layerMode'];
+        $this->visitor = $values['visitor'];
         $this->expiresAt = $values['expiresAt'];
     }
 

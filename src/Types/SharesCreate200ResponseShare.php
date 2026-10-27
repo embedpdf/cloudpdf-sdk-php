@@ -27,10 +27,34 @@ class SharesCreate200ResponseShare extends JsonSerializableType
     public string $docId;
 
     /**
-     * @var string $layerName
+     * @var value-of<SharesCreate200ResponseShareLayerMode> $layerMode
+     */
+    #[JsonProperty('layerMode')]
+    public string $layerMode;
+
+    /**
+     * @var ?string $layerName
      */
     #[JsonProperty('layerName')]
-    public string $layerName;
+    public ?string $layerName;
+
+    /**
+     * @var bool $keepVisitorLayers
+     */
+    #[JsonProperty('keepVisitorLayers')]
+    public bool $keepVisitorLayers;
+
+    /**
+     * @var ?float $visitorIdleSeconds
+     */
+    #[JsonProperty('visitorIdleSeconds')]
+    public ?float $visitorIdleSeconds;
+
+    /**
+     * @var ?SharesCreate200ResponseShareVisitorIdentity $visitorIdentity
+     */
+    #[JsonProperty('visitorIdentity')]
+    public ?SharesCreate200ResponseShareVisitorIdentity $visitorIdentity;
 
     /**
      * @var array<string> $scope
@@ -61,6 +85,12 @@ class SharesCreate200ResponseShare extends JsonSerializableType
      */
     #[JsonProperty('disabled')]
     public bool $disabled;
+
+    /**
+     * @var ?float $archivedAt
+     */
+    #[JsonProperty('archivedAt')]
+    public ?float $archivedAt;
 
     /**
      * @var ?float $expiresAt
@@ -103,7 +133,8 @@ class SharesCreate200ResponseShare extends JsonSerializableType
      *   id: string,
      *   tenantId: string,
      *   docId: string,
-     *   layerName: string,
+     *   layerMode: value-of<SharesCreate200ResponseShareLayerMode>,
+     *   keepVisitorLayers: bool,
      *   scope: array<string>,
      *   passwordProtected: bool,
      *   sessionTtlSeconds: float,
@@ -112,7 +143,11 @@ class SharesCreate200ResponseShare extends JsonSerializableType
      *   createdBy: string,
      *   createdAt: float,
      *   updatedAt: float,
+     *   layerName?: ?string,
+     *   visitorIdleSeconds?: ?float,
+     *   visitorIdentity?: ?SharesCreate200ResponseShareVisitorIdentity,
      *   origins?: ?array<string>,
+     *   archivedAt?: ?float,
      *   expiresAt?: ?float,
      *   lastExchangedAt?: ?float,
      * } $values
@@ -123,12 +158,17 @@ class SharesCreate200ResponseShare extends JsonSerializableType
         $this->id = $values['id'];
         $this->tenantId = $values['tenantId'];
         $this->docId = $values['docId'];
-        $this->layerName = $values['layerName'];
+        $this->layerMode = $values['layerMode'];
+        $this->layerName = $values['layerName'] ?? null;
+        $this->keepVisitorLayers = $values['keepVisitorLayers'];
+        $this->visitorIdleSeconds = $values['visitorIdleSeconds'] ?? null;
+        $this->visitorIdentity = $values['visitorIdentity'] ?? null;
         $this->scope = $values['scope'];
         $this->origins = $values['origins'] ?? null;
         $this->passwordProtected = $values['passwordProtected'];
         $this->sessionTtlSeconds = $values['sessionTtlSeconds'];
         $this->disabled = $values['disabled'];
+        $this->archivedAt = $values['archivedAt'] ?? null;
         $this->expiresAt = $values['expiresAt'] ?? null;
         $this->exchangeCount = $values['exchangeCount'];
         $this->lastExchangedAt = $values['lastExchangedAt'] ?? null;
