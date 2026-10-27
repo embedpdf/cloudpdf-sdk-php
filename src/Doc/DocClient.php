@@ -24,6 +24,8 @@ use Psr\Http\Client\ClientExceptionInterface;
 use CloudPDF\Doc\Requests\DocChangesRequest;
 use CloudPDF\Types\DocChanges200Response;
 use CloudPDF\Doc\Requests\DownloadDocRequest;
+use CloudPDF\Doc\Requests\DocDownloadLinkRequest;
+use CloudPDF\Types\DocDownloadLink200Response;
 use CloudPDF\Doc\Requests\ManifestDocRequest;
 use CloudPDF\Types\DocManifest200Response;
 use CloudPDF\Doc\Requests\RenderDocRequest;
@@ -297,6 +299,71 @@ class DocClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 return $response->getBody()->getContents();
             }
+        } catch (ClientExceptionInterface $e) {
+            throw new CloudPDFException(message: $e->getMessage(), previous: $e);
+        }
+        throw new CloudPDFApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * The link opens the layer as it is when created: once the layer changes, it answers 404, so create it right before handing it over. It downloads that one file and nothing else, and a password-protected document is checked when the link is created. Deployments that verify tokens with their own keys (JWKS) mint links on their backend: a doc token with `layer_name`, a `download: { docVersion, mode: "incremental" }` claim and a short `exp`, passed as `link` on the versioned download URL.
+     *
+     * Example:
+     * ```php
+     * $client->doc->downloadLink(
+     *     'docId',
+     *     'layerName',
+     *     new DocDownloadLinkRequest([]),
+     * );
+     * ```
+     *
+     * @param string $docId
+     * @param string $layerName
+     * @param DocDownloadLinkRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return ?DocDownloadLink200Response
+     * @throws CloudPDFException
+     * @throws CloudPDFApiException
+     */
+    public function downloadLink(string $docId, string $layerName, DocDownloadLinkRequest $request = new DocDownloadLinkRequest(), ?array $options = null): ?DocDownloadLink200Response
+    {
+        $options = array_merge($this->options, $options ?? []);
+        $headers = [];
+        if ($request->documentPassword != null) {
+            $headers['X-Document-Password'] = $request->documentPassword;
+        }
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "v1/docs/{$docId}/layers/{$layerName}/download-link",
+                    method: HttpMethod::POST,
+                    headers: $headers,
+                    body: $request,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
+                return DocDownloadLink200Response::fromJson($json);
+            }
+        } catch (JsonException $e) {
+            throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
             throw new CloudPDFException(message: $e->getMessage(), previous: $e);
         }

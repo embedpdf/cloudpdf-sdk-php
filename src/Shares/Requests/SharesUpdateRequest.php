@@ -3,11 +3,43 @@
 namespace CloudPDF\Shares\Requests;
 
 use CloudPDF\Core\Json\JsonSerializableType;
+use CloudPDF\Shares\Types\SharesUpdateRequestLayerMode;
 use CloudPDF\Core\Json\JsonProperty;
+use CloudPDF\Shares\Types\SharesUpdateRequestVisitorIdentity;
 use CloudPDF\Core\Types\ArrayType;
 
 class SharesUpdateRequest extends JsonSerializableType
 {
+    /**
+     * @var ?value-of<SharesUpdateRequestLayerMode> $layerMode
+     */
+    #[JsonProperty('layerMode')]
+    public ?string $layerMode;
+
+    /**
+     * @var ?string $layerName
+     */
+    #[JsonProperty('layerName')]
+    public ?string $layerName;
+
+    /**
+     * @var ?bool $keepVisitorLayers
+     */
+    #[JsonProperty('keepVisitorLayers')]
+    public ?bool $keepVisitorLayers;
+
+    /**
+     * @var ?int $visitorIdleSeconds
+     */
+    #[JsonProperty('visitorIdleSeconds')]
+    public ?int $visitorIdleSeconds;
+
+    /**
+     * @var ?SharesUpdateRequestVisitorIdentity $visitorIdentity
+     */
+    #[JsonProperty('visitorIdentity')]
+    public ?SharesUpdateRequestVisitorIdentity $visitorIdentity;
+
     /**
      * @var ?array<string> $scope
      */
@@ -46,6 +78,11 @@ class SharesUpdateRequest extends JsonSerializableType
 
     /**
      * @param array{
+     *   layerMode?: ?value-of<SharesUpdateRequestLayerMode>,
+     *   layerName?: ?string,
+     *   keepVisitorLayers?: ?bool,
+     *   visitorIdleSeconds?: ?int,
+     *   visitorIdentity?: ?SharesUpdateRequestVisitorIdentity,
      *   scope?: ?array<string>,
      *   origins?: ?array<string>,
      *   password?: ?string,
@@ -57,6 +94,11 @@ class SharesUpdateRequest extends JsonSerializableType
     public function __construct(
         array $values = [],
     ) {
+        $this->layerMode = $values['layerMode'] ?? null;
+        $this->layerName = $values['layerName'] ?? null;
+        $this->keepVisitorLayers = $values['keepVisitorLayers'] ?? null;
+        $this->visitorIdleSeconds = $values['visitorIdleSeconds'] ?? null;
+        $this->visitorIdentity = $values['visitorIdentity'] ?? null;
         $this->scope = $values['scope'] ?? null;
         $this->origins = $values['origins'] ?? null;
         $this->password = $values['password'] ?? null;

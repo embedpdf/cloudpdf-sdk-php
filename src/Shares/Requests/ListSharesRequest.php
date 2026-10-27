@@ -22,10 +22,16 @@ class ListSharesRequest extends JsonSerializableType
     public ?string $docId;
 
     /**
+     * @var ?bool $archived
+     */
+    public ?bool $archived;
+
+    /**
      * @param array{
      *   limit?: ?int,
      *   cursor?: ?string,
      *   docId?: ?string,
+     *   archived?: ?bool,
      * } $values
      */
     public function __construct(
@@ -34,5 +40,6 @@ class ListSharesRequest extends JsonSerializableType
         $this->limit = $values['limit'] ?? null;
         $this->cursor = $values['cursor'] ?? null;
         $this->docId = $values['docId'] ?? null;
+        $this->archived = $values['archived'] ?? null;
     }
 }

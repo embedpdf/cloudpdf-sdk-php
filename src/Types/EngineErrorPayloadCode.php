@@ -33,4 +33,6 @@ enum EngineErrorPayloadCode: string
     case ChangeConflict = "ChangeConflict";
     case UndoUnavailable = "UndoUnavailable";
     case IdempotencyKeyReused = "IdempotencyKeyReused";
+    case LayerDeleted = "LayerDeleted";
+    case VisitorIdentityRequired = "VisitorIdentityRequired";
 }

@@ -2,6 +2,7 @@
 
 namespace CloudPDF\Shares;
 
+use CloudPDF\Shares\Visitors\VisitorsClient;
 use Psr\Http\Client\ClientInterface;
 use CloudPDF\Core\Client\RawClient;
 use CloudPDF\Shares\Requests\SharesExchangeRequest;
@@ -19,9 +20,15 @@ use CloudPDF\Types\SharesCreate200Response;
 use CloudPDF\Types\SharesGet200Response;
 use CloudPDF\Shares\Requests\SharesUpdateRequest;
 use CloudPDF\Types\SharesUpdate200Response;
+use CloudPDF\Types\SharesArchive200Response;
 
 class SharesClient
 {
+    /**
+     * @var VisitorsClient $visitors
+     */
+    public VisitorsClient $visitors;
+
     /**
      * @var array{
      *   baseUrl?: string,
@@ -54,10 +61,11 @@ class SharesClient
     ) {
         $this->client = $client;
         $this->options = $options ?? [];
+        $this->visitors = new VisitorsClient($this->client, $this->options);
     }
 
     /**
-     * Unauthenticated, but requires a browser Origin header, checked against the grant allowlist. Unknown, revoked, and disabled tokens are indistinguishable (404). Passphrase-protected grants return 422 SharePasswordRequired until `password` is supplied. Mounted only when the deployment can sign (HS256 mode).
+     * Unauthenticated, but requires a browser Origin header, checked against the grant allowlist. Unknown, revoked, and disabled tokens are indistinguishable (404). Passphrase-protected grants return 422 SharePasswordRequired until `password` is supplied. A link that asks its visitors who they are on open returns 422 VisitorIdentityRequired until the required answers are given; `error.details` carries `fields` (what the link asks), `missing`, `invalid`, `purpose` and `privacyUrl`. A link that asks before the first change issues the session at once with `visitor.identityRequest`, and writes answer 403 VisitorIdentityRequired with the same details until the visitor exchanges again with their answers. Answers that can not be taken answer 422 on any link. Mounted only when the deployment can sign (HS256 mode).
      *
      * Example:
      * ```php
@@ -149,6 +157,9 @@ class SharesClient
         }
         if ($request->docId != null) {
             $query['docId'] = $request->docId;
+        }
+        if ($request->archived != null) {
+            $query['archived'] = $request->archived;
         }
         try {
             $response = $this->client->sendRequest(
@@ -391,6 +402,63 @@ class SharesClient
                     return null;
                 }
                 return SharesUpdate200Response::fromJson($json);
+            }
+        } catch (JsonException $e) {
+            throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (ClientExceptionInterface $e) {
+            throw new CloudPDFException(message: $e->getMessage(), previous: $e);
+        }
+        throw new CloudPDFApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * Archiving is final: an archived link never exchanges again, and to share again you create a new link. Pausing (`disabled`) is the reversible stop. An archived link no longer counts as using its shared layer, so that layer can be deleted.
+     *
+     * Example:
+     * ```php
+     * $client->shares->archive(
+     *     'tenantId',
+     *     'shareId',
+     * );
+     * ```
+     *
+     * @param string $tenantId
+     * @param string $shareId
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return ?SharesArchive200Response
+     * @throws CloudPDFException
+     * @throws CloudPDFApiException
+     */
+    public function archive(string $tenantId, string $shareId, ?array $options = null): ?SharesArchive200Response
+    {
+        $options = array_merge($this->options, $options ?? []);
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "v1/tenants/{$tenantId}/shares/{$shareId}/archive",
+                    method: HttpMethod::POST,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
+                return SharesArchive200Response::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);

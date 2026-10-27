@@ -4,6 +4,8 @@ namespace CloudPDF\Shares\Requests;
 
 use CloudPDF\Core\Json\JsonSerializableType;
 use CloudPDF\Core\Json\JsonProperty;
+use CloudPDF\Shares\Types\SharesCreateRequestLayerMode;
+use CloudPDF\Shares\Types\SharesCreateRequestVisitorIdentity;
 use CloudPDF\Core\Types\ArrayType;
 
 class SharesCreateRequest extends JsonSerializableType
@@ -15,10 +17,34 @@ class SharesCreateRequest extends JsonSerializableType
     public string $docId;
 
     /**
+     * @var ?value-of<SharesCreateRequestLayerMode> $layerMode
+     */
+    #[JsonProperty('layerMode')]
+    public ?string $layerMode;
+
+    /**
      * @var ?string $layerName
      */
     #[JsonProperty('layerName')]
     public ?string $layerName;
+
+    /**
+     * @var ?bool $keepVisitorLayers
+     */
+    #[JsonProperty('keepVisitorLayers')]
+    public ?bool $keepVisitorLayers;
+
+    /**
+     * @var ?int $visitorIdleSeconds
+     */
+    #[JsonProperty('visitorIdleSeconds')]
+    public ?int $visitorIdleSeconds;
+
+    /**
+     * @var ?SharesCreateRequestVisitorIdentity $visitorIdentity
+     */
+    #[JsonProperty('visitorIdentity')]
+    public ?SharesCreateRequestVisitorIdentity $visitorIdentity;
 
     /**
      * @var array<string> $scope
@@ -54,7 +80,11 @@ class SharesCreateRequest extends JsonSerializableType
      * @param array{
      *   docId: string,
      *   scope: array<string>,
+     *   layerMode?: ?value-of<SharesCreateRequestLayerMode>,
      *   layerName?: ?string,
+     *   keepVisitorLayers?: ?bool,
+     *   visitorIdleSeconds?: ?int,
+     *   visitorIdentity?: ?SharesCreateRequestVisitorIdentity,
      *   origins?: ?array<string>,
      *   password?: ?string,
      *   sessionTtlSeconds?: ?int,
@@ -65,7 +95,11 @@ class SharesCreateRequest extends JsonSerializableType
         array $values,
     ) {
         $this->docId = $values['docId'];
+        $this->layerMode = $values['layerMode'] ?? null;
         $this->layerName = $values['layerName'] ?? null;
+        $this->keepVisitorLayers = $values['keepVisitorLayers'] ?? null;
+        $this->visitorIdleSeconds = $values['visitorIdleSeconds'] ?? null;
+        $this->visitorIdentity = $values['visitorIdentity'] ?? null;
         $this->scope = $values['scope'];
         $this->origins = $values['origins'] ?? null;
         $this->password = $values['password'] ?? null;
