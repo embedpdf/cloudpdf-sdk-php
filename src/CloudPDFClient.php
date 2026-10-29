@@ -7,6 +7,7 @@ use CloudPDF\Doc\DocClient;
 use CloudPDF\Shares\SharesClient;
 use CloudPDF\Tenants\TenantsClient;
 use CloudPDF\Documents\DocumentsClient;
+use CloudPDF\Folders\FoldersClient;
 use CloudPDF\Tokens\TokensClient;
 use Psr\Http\Client\ClientInterface;
 use CloudPDF\Core\Client\RawClient;
@@ -37,6 +38,11 @@ class CloudPDFClient
      * @var DocumentsClient $documents
      */
     public DocumentsClient $documents;
+
+    /**
+     * @var FoldersClient $folders
+     */
+    public FoldersClient $folders;
 
     /**
      * @var TokensClient $tokens
@@ -76,8 +82,8 @@ class CloudPDFClient
         $defaultHeaders = [
             'X-Fern-Language' => 'PHP',
             'X-Fern-SDK-Name' => 'CloudPDF',
-            'X-Fern-SDK-Version' => '3.0.0-alpha.17',
-            'User-Agent' => 'cloudpdf/sdk/3.0.0-alpha.17',
+            'X-Fern-SDK-Version' => '3.0.0-alpha.18',
+            'User-Agent' => 'cloudpdf/sdk/3.0.0-alpha.18',
         ];
         if ($token != null) {
             $defaultHeaders['Authorization'] = "Bearer $token";
@@ -99,6 +105,7 @@ class CloudPDFClient
         $this->shares = new SharesClient($this->client, $this->options);
         $this->tenants = new TenantsClient($this->client, $this->options);
         $this->documents = new DocumentsClient($this->client, $this->options);
+        $this->folders = new FoldersClient($this->client, $this->options);
         $this->tokens = new TokensClient($this->client, $this->options);
     }
 }

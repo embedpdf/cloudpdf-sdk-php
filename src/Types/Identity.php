@@ -5,7 +5,7 @@ namespace CloudPDF\Types;
 use CloudPDF\Core\Json\JsonSerializableType;
 use CloudPDF\Core\Json\JsonProperty;
 
-class TokensIssueRequestDocIdentity extends JsonSerializableType
+class Identity extends JsonSerializableType
 {
     /**
      * @var ?string $userId

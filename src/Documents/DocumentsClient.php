@@ -14,6 +14,8 @@ use CloudPDF\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
 use CloudPDF\Types\DocumentsGet200Response;
+use CloudPDF\Documents\Requests\DocumentsUpdateRequest;
+use CloudPDF\Types\DocumentsUpdate200Response;
 use CloudPDF\Documents\Requests\DocumentsCommitRequest;
 use CloudPDF\Types\DocumentsCommit200Response;
 use CloudPDF\Documents\Requests\UploadProxyDocumentsRequest;
@@ -102,6 +104,18 @@ class DocumentsClient
         }
         if ($request->state != null) {
             $query['state'] = $request->state;
+        }
+        if ($request->q != null) {
+            $query['q'] = $request->q;
+        }
+        if ($request->folderId != null) {
+            $query['folderId'] = $request->folderId;
+        }
+        if ($request->sort != null) {
+            $query['sort'] = $request->sort;
+        }
+        if ($request->order != null) {
+            $query['order'] = $request->order;
         }
         try {
             $response = $this->client->sendRequest(
@@ -226,6 +240,68 @@ class DocumentsClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 return;
             }
+        } catch (ClientExceptionInterface $e) {
+            throw new CloudPDFException(message: $e->getMessage(), previous: $e);
+        }
+        throw new CloudPDFApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * A document that is being deleted answers 404.
+     *
+     * Example:
+     * ```php
+     * $client->documents->update(
+     *     'tenantId',
+     *     'id',
+     *     new DocumentsUpdateRequest([
+     *         'name' => 'name',
+     *     ]),
+     * );
+     * ```
+     *
+     * @param string $tenantId
+     * @param string $id
+     * @param DocumentsUpdateRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return ?DocumentsUpdate200Response
+     * @throws CloudPDFException
+     * @throws CloudPDFApiException
+     */
+    public function update(string $tenantId, string $id, DocumentsUpdateRequest $request, ?array $options = null): ?DocumentsUpdate200Response
+    {
+        $options = array_merge($this->options, $options ?? []);
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "v1/tenants/{$tenantId}/documents/{$id}",
+                    method: HttpMethod::PATCH,
+                    body: $request,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
+                return DocumentsUpdate200Response::fromJson($json);
+            }
+        } catch (JsonException $e) {
+            throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
             throw new CloudPDFException(message: $e->getMessage(), previous: $e);
         }

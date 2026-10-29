@@ -23,6 +23,18 @@ class DocumentsInitRequest extends JsonSerializableType
     public string $contentSha256;
 
     /**
+     * @var ?string $name What people call the document: shown in dashboards, searched and sorted by. 1 to 255 characters, no control characters, no leading or trailing whitespace. Names need not be unique.
+     */
+    #[JsonProperty('name')]
+    public ?string $name;
+
+    /**
+     * @var ?string $folderId A folder id, or root for the top level.
+     */
+    #[JsonProperty('folderId')]
+    public ?string $folderId;
+
+    /**
      * @var ?array<string, mixed> $metadata
      */
     #[JsonProperty('metadata'), ArrayType(['string' => 'mixed'])]
@@ -62,6 +74,8 @@ class DocumentsInitRequest extends JsonSerializableType
      * @param array{
      *   contentLength: float,
      *   contentSha256: string,
+     *   name?: ?string,
+     *   folderId?: ?string,
      *   metadata?: ?array<string, mixed>,
      *   idempotencyKey?: ?string,
      *   dedupMode?: ?value-of<DocumentsInitRequestDedupMode>,
@@ -75,6 +89,8 @@ class DocumentsInitRequest extends JsonSerializableType
     ) {
         $this->contentLength = $values['contentLength'];
         $this->contentSha256 = $values['contentSha256'];
+        $this->name = $values['name'] ?? null;
+        $this->folderId = $values['folderId'] ?? null;
         $this->metadata = $values['metadata'] ?? null;
         $this->idempotencyKey = $values['idempotencyKey'] ?? null;
         $this->dedupMode = $values['dedupMode'] ?? null;

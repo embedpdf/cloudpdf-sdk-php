@@ -59,17 +59,19 @@ class VersionsClient
     }
 
     /**
-     * Every completed signature publishes a new version. Never cached: the list grows.
+     * Every completed signature makes a new version of its layer; another layer's versions are never listed. Never cached: the list grows.
      *
      * Example:
      * ```php
      * $client->doc->versions->list(
      *     'docId',
+     *     'layerName',
      *     new ListVersionsRequest([]),
      * );
      * ```
      *
      * @param string $docId
+     * @param string $layerName
      * @param ListVersionsRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -83,7 +85,7 @@ class VersionsClient
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function list(string $docId, ListVersionsRequest $request = new ListVersionsRequest(), ?array $options = null): ?DocVersionsList200Response
+    public function list(string $docId, string $layerName, ListVersionsRequest $request = new ListVersionsRequest(), ?array $options = null): ?DocVersionsList200Response
     {
         $options = array_merge($this->options, $options ?? []);
         $headers = [];
@@ -94,7 +96,7 @@ class VersionsClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "v1/docs/{$docId}/versions",
+                    path: "v1/docs/{$docId}/layers/{$layerName}/versions",
                     method: HttpMethod::GET,
                     headers: $headers,
                 ),
@@ -121,18 +123,20 @@ class VersionsClient
     }
 
     /**
-     * Exactly one of `since.signature` / `since.revision`; `until=<revision>` defaults to the last. The same answer for every layer and every caller.
+     * Exactly one of `since.signature` / `since.revision`; `until=<revision>` defaults to the last. The same answer for every caller.
      *
      * Example:
      * ```php
      * $client->doc->versions->analysis(
      *     'docId',
+     *     'layerName',
      *     'sha',
      *     new AnalysisVersionsRequest([]),
      * );
      * ```
      *
      * @param string $docId
+     * @param string $layerName
      * @param string $sha
      * @param AnalysisVersionsRequest $request
      * @param ?array{
@@ -147,7 +151,7 @@ class VersionsClient
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function analysis(string $docId, string $sha, AnalysisVersionsRequest $request = new AnalysisVersionsRequest(), ?array $options = null): ?DocVersionsAnalysis200Response
+    public function analysis(string $docId, string $layerName, string $sha, AnalysisVersionsRequest $request = new AnalysisVersionsRequest(), ?array $options = null): ?DocVersionsAnalysis200Response
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -174,7 +178,7 @@ class VersionsClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "v1/docs/{$docId}/versions/analysis/{$sha}",
+                    path: "v1/docs/{$docId}/layers/{$layerName}/versions/analysis/{$sha}",
                     method: HttpMethod::GET,
                     headers: $headers,
                     query: $query,
@@ -206,12 +210,14 @@ class VersionsClient
      * ```php
      * $client->doc->versions->download(
      *     'docId',
+     *     'layerName',
      *     'sha',
      *     new DownloadVersionsRequest([]),
      * );
      * ```
      *
      * @param string $docId
+     * @param string $layerName
      * @param string $sha
      * @param DownloadVersionsRequest $request
      * @param ?array{
@@ -226,7 +232,7 @@ class VersionsClient
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function download(string $docId, string $sha, DownloadVersionsRequest $request = new DownloadVersionsRequest(), ?array $options = null): string
+    public function download(string $docId, string $layerName, string $sha, DownloadVersionsRequest $request = new DownloadVersionsRequest(), ?array $options = null): string
     {
         $options = array_merge($this->options, $options ?? []);
         $headers = [];
@@ -237,7 +243,7 @@ class VersionsClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "v1/docs/{$docId}/versions/download/{$sha}",
+                    path: "v1/docs/{$docId}/layers/{$layerName}/versions/download/{$sha}",
                     method: HttpMethod::GET,
                     headers: $headers,
                 ),
@@ -262,6 +268,7 @@ class VersionsClient
      * ```php
      * $client->doc->versions->revision(
      *     'docId',
+     *     'layerName',
      *     'sha',
      *     1,
      *     new RevisionVersionsRequest([]),
@@ -269,6 +276,7 @@ class VersionsClient
      * ```
      *
      * @param string $docId
+     * @param string $layerName
      * @param string $sha
      * @param int $index
      * @param RevisionVersionsRequest $request
@@ -284,7 +292,7 @@ class VersionsClient
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function revision(string $docId, string $sha, int $index, RevisionVersionsRequest $request = new RevisionVersionsRequest(), ?array $options = null): string
+    public function revision(string $docId, string $layerName, string $sha, int $index, RevisionVersionsRequest $request = new RevisionVersionsRequest(), ?array $options = null): string
     {
         $options = array_merge($this->options, $options ?? []);
         $headers = [];
@@ -295,7 +303,7 @@ class VersionsClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "v1/docs/{$docId}/versions/revisions/{$sha}/{$index}",
+                    path: "v1/docs/{$docId}/layers/{$layerName}/versions/revisions/{$sha}/{$index}",
                     method: HttpMethod::GET,
                     headers: $headers,
                 ),
@@ -320,12 +328,14 @@ class VersionsClient
      * ```php
      * $client->doc->versions->signatures(
      *     'docId',
+     *     'layerName',
      *     'sha',
      *     new SignaturesVersionsRequest([]),
      * );
      * ```
      *
      * @param string $docId
+     * @param string $layerName
      * @param string $sha
      * @param SignaturesVersionsRequest $request
      * @param ?array{
@@ -340,7 +350,7 @@ class VersionsClient
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function signatures(string $docId, string $sha, SignaturesVersionsRequest $request = new SignaturesVersionsRequest(), ?array $options = null): ?DocVersionsSignatures200Response
+    public function signatures(string $docId, string $layerName, string $sha, SignaturesVersionsRequest $request = new SignaturesVersionsRequest(), ?array $options = null): ?DocVersionsSignatures200Response
     {
         $options = array_merge($this->options, $options ?? []);
         $headers = [];
@@ -351,7 +361,7 @@ class VersionsClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "v1/docs/{$docId}/versions/signatures/{$sha}",
+                    path: "v1/docs/{$docId}/layers/{$layerName}/versions/signatures/{$sha}",
                     method: HttpMethod::GET,
                     headers: $headers,
                 ),
@@ -384,6 +394,7 @@ class VersionsClient
      * ```php
      * $client->doc->versions->signatureContents(
      *     'docId',
+     *     'layerName',
      *     'sha',
      *     'fieldKey',
      *     new SignatureContentsVersionsRequest([]),
@@ -391,6 +402,7 @@ class VersionsClient
      * ```
      *
      * @param string $docId
+     * @param string $layerName
      * @param string $sha
      * @param string $fieldKey
      * @param SignatureContentsVersionsRequest $request
@@ -406,7 +418,7 @@ class VersionsClient
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function signatureContents(string $docId, string $sha, string $fieldKey, SignatureContentsVersionsRequest $request = new SignatureContentsVersionsRequest(), ?array $options = null): string
+    public function signatureContents(string $docId, string $layerName, string $sha, string $fieldKey, SignatureContentsVersionsRequest $request = new SignatureContentsVersionsRequest(), ?array $options = null): string
     {
         $options = array_merge($this->options, $options ?? []);
         $headers = [];
@@ -417,7 +429,7 @@ class VersionsClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "v1/docs/{$docId}/versions/signatures/{$sha}/{$fieldKey}/contents",
+                    path: "v1/docs/{$docId}/layers/{$layerName}/versions/signatures/{$sha}/{$fieldKey}/contents",
                     method: HttpMethod::GET,
                     headers: $headers,
                 ),
@@ -444,6 +456,7 @@ class VersionsClient
      * ```php
      * $client->doc->versions->signatureDigest(
      *     'docId',
+     *     'layerName',
      *     'sha',
      *     'fieldKey',
      *     SignatureDigestVersionsRequestAlgorithm::Sha1->value,
@@ -452,6 +465,7 @@ class VersionsClient
      * ```
      *
      * @param string $docId
+     * @param string $layerName
      * @param string $sha
      * @param string $fieldKey
      * @param value-of<SignatureDigestVersionsRequestAlgorithm> $algorithm
@@ -468,7 +482,7 @@ class VersionsClient
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function signatureDigest(string $docId, string $sha, string $fieldKey, string $algorithm, SignatureDigestVersionsRequest $request = new SignatureDigestVersionsRequest(), ?array $options = null): string
+    public function signatureDigest(string $docId, string $layerName, string $sha, string $fieldKey, string $algorithm, SignatureDigestVersionsRequest $request = new SignatureDigestVersionsRequest(), ?array $options = null): string
     {
         $options = array_merge($this->options, $options ?? []);
         $headers = [];
@@ -479,7 +493,7 @@ class VersionsClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "v1/docs/{$docId}/versions/signatures/{$sha}/{$fieldKey}/digest/{$algorithm}",
+                    path: "v1/docs/{$docId}/layers/{$layerName}/versions/signatures/{$sha}/{$fieldKey}/digest/{$algorithm}",
                     method: HttpMethod::GET,
                     headers: $headers,
                 ),
