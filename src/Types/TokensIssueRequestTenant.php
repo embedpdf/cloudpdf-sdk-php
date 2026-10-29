@@ -15,10 +15,7 @@ class TokensIssueRequestTenant extends JsonSerializableType
     public string $sub;
 
     /**
-     * @var array<(
-     *    value-of<TokensIssueRequestTenantScopeItemZero>
-     *   |value-of<TokensIssueRequestTenantScopeItemOne>
-     * )> $scope
+     * @var array<string> $scope
      */
     #[JsonProperty('scope'), ArrayType(['string'])]
     public array $scope;
@@ -32,10 +29,7 @@ class TokensIssueRequestTenant extends JsonSerializableType
     /**
      * @param array{
      *   sub: string,
-     *   scope: array<(
-     *    value-of<TokensIssueRequestTenantScopeItemZero>
-     *   |value-of<TokensIssueRequestTenantScopeItemOne>
-     * )>,
+     *   scope: array<string>,
      *   expiresIn: int,
      * } $values
      */

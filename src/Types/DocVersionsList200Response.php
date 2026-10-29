@@ -9,10 +9,10 @@ use CloudPDF\Core\Types\ArrayType;
 class DocVersionsList200Response extends JsonSerializableType
 {
     /**
-     * @var string $head
+     * @var string $baseSha
      */
-    #[JsonProperty('head')]
-    public string $head;
+    #[JsonProperty('baseSha')]
+    public string $baseSha;
 
     /**
      * @var array<DocVersionsList200ResponseVersionsItem> $versions
@@ -22,14 +22,14 @@ class DocVersionsList200Response extends JsonSerializableType
 
     /**
      * @param array{
-     *   head: string,
+     *   baseSha: string,
      *   versions: array<DocVersionsList200ResponseVersionsItem>,
      * } $values
      */
     public function __construct(
         array $values,
     ) {
-        $this->head = $values['head'];
+        $this->baseSha = $values['baseSha'];
         $this->versions = $values['versions'];
     }
 

@@ -21,6 +21,18 @@ class DocumentsImportFrom202ResponseDocument extends JsonSerializableType
     public string $tenantId;
 
     /**
+     * @var string $name
+     */
+    #[JsonProperty('name')]
+    public string $name;
+
+    /**
+     * @var string $folderId The folder the document is in, or root.
+     */
+    #[JsonProperty('folderId')]
+    public string $folderId;
+
+    /**
      * @var value-of<DocumentsImportFrom202ResponseDocumentState> $state
      */
     #[JsonProperty('state')]
@@ -90,6 +102,8 @@ class DocumentsImportFrom202ResponseDocument extends JsonSerializableType
      * @param array{
      *   id: string,
      *   tenantId: string,
+     *   name: string,
+     *   folderId: string,
      *   state: value-of<DocumentsImportFrom202ResponseDocumentState>,
      *   createdAt: float,
      *   updatedAt: float,
@@ -108,6 +122,8 @@ class DocumentsImportFrom202ResponseDocument extends JsonSerializableType
     ) {
         $this->id = $values['id'];
         $this->tenantId = $values['tenantId'];
+        $this->name = $values['name'];
+        $this->folderId = $values['folderId'];
         $this->state = $values['state'];
         $this->baseSha = $values['baseSha'] ?? null;
         $this->storageSizeBytes = $values['storageSizeBytes'] ?? null;

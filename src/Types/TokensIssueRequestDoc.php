@@ -33,10 +33,10 @@ class TokensIssueRequestDoc extends JsonSerializableType
     public array $scope;
 
     /**
-     * @var ?TokensIssueRequestDocIdentity $identity
+     * @var ?Identity $identity
      */
     #[JsonProperty('identity')]
-    public ?TokensIssueRequestDocIdentity $identity;
+    public ?Identity $identity;
 
     /**
      * @var ?array<string> $origins
@@ -57,7 +57,7 @@ class TokensIssueRequestDoc extends JsonSerializableType
      *   scope: array<string>,
      *   expiresIn: int,
      *   layerName?: ?string,
-     *   identity?: ?TokensIssueRequestDocIdentity,
+     *   identity?: ?Identity,
      *   origins?: ?array<string>,
      * } $values
      */

@@ -25,6 +25,18 @@ class DocumentsImportFromRequest extends JsonSerializableType
     public ?DocumentsImportFromRequestExpected $expected;
 
     /**
+     * @var ?string $name What people call the document: shown in dashboards, searched and sorted by. 1 to 255 characters, no control characters, no leading or trailing whitespace. Names need not be unique.
+     */
+    #[JsonProperty('name')]
+    public ?string $name;
+
+    /**
+     * @var ?string $folderId A folder id, or root for the top level.
+     */
+    #[JsonProperty('folderId')]
+    public ?string $folderId;
+
+    /**
      * @var ?array<string, mixed> $metadata
      */
     #[JsonProperty('metadata'), ArrayType(['string' => 'mixed'])]
@@ -58,6 +70,8 @@ class DocumentsImportFromRequest extends JsonSerializableType
      * @param array{
      *   source: DocumentsImportFromRequestSource,
      *   expected?: ?DocumentsImportFromRequestExpected,
+     *   name?: ?string,
+     *   folderId?: ?string,
      *   metadata?: ?array<string, mixed>,
      *   idempotencyKey?: ?string,
      *   dedupMode?: ?value-of<DocumentsImportFromRequestDedupMode>,
@@ -70,6 +84,8 @@ class DocumentsImportFromRequest extends JsonSerializableType
     ) {
         $this->source = $values['source'];
         $this->expected = $values['expected'] ?? null;
+        $this->name = $values['name'] ?? null;
+        $this->folderId = $values['folderId'] ?? null;
         $this->metadata = $values['metadata'] ?? null;
         $this->idempotencyKey = $values['idempotencyKey'] ?? null;
         $this->dedupMode = $values['dedupMode'] ?? null;

@@ -26,7 +26,6 @@ enum EngineErrorPayloadCode: string
     case SigningVersionMismatch = "SigningVersionMismatch";
     case SignatureRefused = "SignatureRefused";
     case ProtectedDocument = "ProtectedDocument";
-    case StaleBase = "StaleBase";
     case PayloadTooLarge = "PayloadTooLarge";
     case ObjectNumberUnavailable = "ObjectNumberUnavailable";
     case LayerFull = "LayerFull";

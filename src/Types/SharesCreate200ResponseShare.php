@@ -57,6 +57,12 @@ class SharesCreate200ResponseShare extends JsonSerializableType
     public ?SharesCreate200ResponseShareVisitorIdentity $visitorIdentity;
 
     /**
+     * @var ?Identity $identity
+     */
+    #[JsonProperty('identity')]
+    public ?Identity $identity;
+
+    /**
      * @var array<string> $scope
      */
     #[JsonProperty('scope'), ArrayType(['string'])]
@@ -146,6 +152,7 @@ class SharesCreate200ResponseShare extends JsonSerializableType
      *   layerName?: ?string,
      *   visitorIdleSeconds?: ?float,
      *   visitorIdentity?: ?SharesCreate200ResponseShareVisitorIdentity,
+     *   identity?: ?Identity,
      *   origins?: ?array<string>,
      *   archivedAt?: ?float,
      *   expiresAt?: ?float,
@@ -163,6 +170,7 @@ class SharesCreate200ResponseShare extends JsonSerializableType
         $this->keepVisitorLayers = $values['keepVisitorLayers'];
         $this->visitorIdleSeconds = $values['visitorIdleSeconds'] ?? null;
         $this->visitorIdentity = $values['visitorIdentity'] ?? null;
+        $this->identity = $values['identity'] ?? null;
         $this->scope = $values['scope'];
         $this->origins = $values['origins'] ?? null;
         $this->passwordProtected = $values['passwordProtected'];

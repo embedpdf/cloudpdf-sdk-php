@@ -6,6 +6,7 @@ use CloudPDF\Core\Json\JsonSerializableType;
 use CloudPDF\Core\Json\JsonProperty;
 use CloudPDF\Shares\Types\SharesCreateRequestLayerMode;
 use CloudPDF\Shares\Types\SharesCreateRequestVisitorIdentity;
+use CloudPDF\Types\Identity;
 use CloudPDF\Core\Types\ArrayType;
 
 class SharesCreateRequest extends JsonSerializableType
@@ -47,6 +48,12 @@ class SharesCreateRequest extends JsonSerializableType
     public ?SharesCreateRequestVisitorIdentity $visitorIdentity;
 
     /**
+     * @var ?Identity $identity
+     */
+    #[JsonProperty('identity')]
+    public ?Identity $identity;
+
+    /**
      * @var array<string> $scope
      */
     #[JsonProperty('scope'), ArrayType(['string'])]
@@ -85,6 +92,7 @@ class SharesCreateRequest extends JsonSerializableType
      *   keepVisitorLayers?: ?bool,
      *   visitorIdleSeconds?: ?int,
      *   visitorIdentity?: ?SharesCreateRequestVisitorIdentity,
+     *   identity?: ?Identity,
      *   origins?: ?array<string>,
      *   password?: ?string,
      *   sessionTtlSeconds?: ?int,
@@ -100,6 +108,7 @@ class SharesCreateRequest extends JsonSerializableType
         $this->keepVisitorLayers = $values['keepVisitorLayers'] ?? null;
         $this->visitorIdleSeconds = $values['visitorIdleSeconds'] ?? null;
         $this->visitorIdentity = $values['visitorIdentity'] ?? null;
+        $this->identity = $values['identity'] ?? null;
         $this->scope = $values['scope'];
         $this->origins = $values['origins'] ?? null;
         $this->password = $values['password'] ?? null;
