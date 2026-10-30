@@ -20,10 +20,10 @@ class DocumentsLayersList200ResponseLayersItem extends JsonSerializableType
     public string $layerName;
 
     /**
-     * @var ?string $shareId
+     * @var ?string $grantId
      */
-    #[JsonProperty('shareId')]
-    public ?string $shareId;
+    #[JsonProperty('grantId')]
+    public ?string $grantId;
 
     /**
      * @var ?string $visitorId
@@ -61,7 +61,7 @@ class DocumentsLayersList200ResponseLayersItem extends JsonSerializableType
      *   layerName: string,
      *   createdAt: float,
      *   updatedAt: float,
-     *   shareId?: ?string,
+     *   grantId?: ?string,
      *   visitorId?: ?string,
      *   storageSizeBytes?: ?float,
      *   lastSeenAt?: ?float,
@@ -72,7 +72,7 @@ class DocumentsLayersList200ResponseLayersItem extends JsonSerializableType
     ) {
         $this->docId = $values['docId'];
         $this->layerName = $values['layerName'];
-        $this->shareId = $values['shareId'] ?? null;
+        $this->grantId = $values['grantId'] ?? null;
         $this->visitorId = $values['visitorId'] ?? null;
         $this->storageSizeBytes = $values['storageSizeBytes'] ?? null;
         $this->createdAt = $values['createdAt'];

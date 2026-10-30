@@ -371,7 +371,7 @@ class TenantsClient
     }
 
     /**
-     * Facts only — no limits or billing state. Views count share exchanges plus authorized /v1/access grants, deduplicated across the two.
+     * Facts only — no limits or billing state. Views count grant exchanges plus authorized /v1/access requests, deduplicated across the two.
      *
      * Example:
      * ```php

@@ -17,15 +17,15 @@ class ListLayersRequest extends JsonSerializableType
     public ?string $cursor;
 
     /**
-     * @var ?string $shareId
+     * @var ?string $grantId
      */
-    public ?string $shareId;
+    public ?string $grantId;
 
     /**
      * @param array{
      *   limit?: ?int,
      *   cursor?: ?string,
-     *   shareId?: ?string,
+     *   grantId?: ?string,
      * } $values
      */
     public function __construct(
@@ -33,6 +33,6 @@ class ListLayersRequest extends JsonSerializableType
     ) {
         $this->limit = $values['limit'] ?? null;
         $this->cursor = $values['cursor'] ?? null;
-        $this->shareId = $values['shareId'] ?? null;
+        $this->grantId = $values['grantId'] ?? null;
     }
 }
