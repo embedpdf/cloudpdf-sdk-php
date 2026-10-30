@@ -84,8 +84,8 @@ class LayersClient
         if ($request->cursor != null) {
             $query['cursor'] = $request->cursor;
         }
-        if ($request->shareId != null) {
-            $query['shareId'] = $request->shareId;
+        if ($request->grantId != null) {
+            $query['grantId'] = $request->grantId;
         }
         try {
             $response = $this->client->sendRequest(

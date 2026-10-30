@@ -4,7 +4,7 @@ namespace CloudPDF;
 
 use CloudPDF\Deployment\DeploymentClient;
 use CloudPDF\Doc\DocClient;
-use CloudPDF\Shares\SharesClient;
+use CloudPDF\Grants\GrantsClient;
 use CloudPDF\Tenants\TenantsClient;
 use CloudPDF\Documents\DocumentsClient;
 use CloudPDF\Folders\FoldersClient;
@@ -25,9 +25,9 @@ class CloudPDFClient
     public DocClient $doc;
 
     /**
-     * @var SharesClient $shares
+     * @var GrantsClient $grants
      */
-    public SharesClient $shares;
+    public GrantsClient $grants;
 
     /**
      * @var TenantsClient $tenants
@@ -82,8 +82,8 @@ class CloudPDFClient
         $defaultHeaders = [
             'X-Fern-Language' => 'PHP',
             'X-Fern-SDK-Name' => 'CloudPDF',
-            'X-Fern-SDK-Version' => '3.0.0-alpha.18',
-            'User-Agent' => 'cloudpdf/sdk/3.0.0-alpha.18',
+            'X-Fern-SDK-Version' => '3.0.0-alpha.19',
+            'User-Agent' => 'cloudpdf/sdk/3.0.0-alpha.19',
         ];
         if ($token != null) {
             $defaultHeaders['Authorization'] = "Bearer $token";
@@ -102,7 +102,7 @@ class CloudPDFClient
 
         $this->deployment = new DeploymentClient($this->client, $this->options);
         $this->doc = new DocClient($this->client, $this->options);
-        $this->shares = new SharesClient($this->client, $this->options);
+        $this->grants = new GrantsClient($this->client, $this->options);
         $this->tenants = new TenantsClient($this->client, $this->options);
         $this->documents = new DocumentsClient($this->client, $this->options);
         $this->folders = new FoldersClient($this->client, $this->options);
