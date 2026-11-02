@@ -9,6 +9,7 @@ use CloudPDF\Types\DocSignaturesList200Response;
 use CloudPDF\Exceptions\CloudPDFException;
 use CloudPDF\Exceptions\CloudPDFApiException;
 use CloudPDF\Core\Json\JsonApiRequest;
+use CloudPDF\Environments;
 use CloudPDF\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -96,7 +97,7 @@ class SignaturesClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
                     path: "v1/docs/{$docId}/layers/{$layerName}/signatures",
                     method: HttpMethod::GET,
                     headers: $headers,
@@ -160,7 +161,7 @@ class SignaturesClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
                     path: "v1/docs/{$docId}/layers/{$layerName}/signatures/{$signingId}",
                     method: HttpMethod::DELETE,
                     headers: $headers,
@@ -232,7 +233,7 @@ class SignaturesClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
                     path: "v1/docs/{$docId}/layers/{$layerName}/signatures/{$signingId}/complete",
                     method: HttpMethod::POST,
                     headers: $headers,
@@ -307,7 +308,7 @@ class SignaturesClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
                     path: "v1/docs/{$docId}/layers/{$layerName}/signatures/analysis",
                     method: HttpMethod::GET,
                     headers: $headers,
@@ -375,7 +376,7 @@ class SignaturesClient
         try {
             $response = $this->client->sendRequest(
                 new MultipartApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
                     path: "v1/docs/{$docId}/layers/{$layerName}/signatures/prepare",
                     method: HttpMethod::POST,
                     headers: $headers,

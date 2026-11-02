@@ -9,6 +9,7 @@ use CloudPDF\Types\DocFormsList200Response;
 use CloudPDF\Exceptions\CloudPDFException;
 use CloudPDF\Exceptions\CloudPDFApiException;
 use CloudPDF\Core\Json\JsonApiRequest;
+use CloudPDF\Environments;
 use CloudPDF\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -96,7 +97,7 @@ class FormsClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
                     path: "v1/docs/{$docId}/layers/{$layerName}/form",
                     method: HttpMethod::GET,
                     headers: $headers,
@@ -168,7 +169,7 @@ class FormsClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
                     path: "v1/docs/{$docId}/layers/{$layerName}/form/calculations/reorder",
                     method: HttpMethod::POST,
                     headers: $headers,
@@ -240,7 +241,7 @@ class FormsClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
                     path: "v1/docs/{$docId}/layers/{$layerName}/form/fields/{$fieldKey}/value",
                     method: HttpMethod::POST,
                     headers: $headers,
@@ -306,7 +307,7 @@ class FormsClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
                     path: "v1/docs/{$docId}/layers/{$layerName}/form/reset",
                     method: HttpMethod::POST,
                     headers: $headers,
@@ -376,7 +377,7 @@ class FormsClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
                     path: "v1/docs/{$docId}/layers/{$layerName}/form/widgets/{$pageKey}/{$annotKey}",
                     method: HttpMethod::DELETE,
                     headers: $headers,
@@ -447,7 +448,7 @@ class FormsClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
                     path: "v1/docs/{$docId}/layers/{$layerName}/form/widgets/{$pageKey}/{$annotKey}",
                     method: HttpMethod::PATCH,
                     headers: $headers,
@@ -526,7 +527,7 @@ class FormsClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
                     path: "v1/docs/{$docId}/layers/{$layerName}/form/widgets/{$pageKey}/reorder",
                     method: HttpMethod::POST,
                     headers: $headers,

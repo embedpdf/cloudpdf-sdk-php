@@ -33,6 +33,7 @@ enum ChangeItemSkippedOp: string
     case PagesDelete = "pages.delete";
     case PagesInsertBlank = "pages.insertBlank";
     case PagesInsert = "pages.insert";
+    case PagesCopy = "pages.copy";
     case AttachmentsCreate = "attachments.create";
     case AttachmentsDelete = "attachments.delete";
     case AnnotationsRestore = "annotations.restore";

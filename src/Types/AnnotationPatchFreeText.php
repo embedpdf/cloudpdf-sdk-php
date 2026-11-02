@@ -34,6 +34,12 @@ class AnnotationPatchFreeText extends JsonSerializableType
     public mixed $appearanceState;
 
     /**
+     * @var mixed $structurePosition
+     */
+    #[JsonProperty('structurePosition')]
+    public mixed $structurePosition;
+
+    /**
      * @var ?string $nm
      */
     #[JsonProperty('nm')]
@@ -309,6 +315,7 @@ class AnnotationPatchFreeText extends JsonSerializableType
      *   page?: mixed,
      *   hasAppearance?: mixed,
      *   appearanceState?: mixed,
+     *   structurePosition?: mixed,
      *   nm?: ?string,
      *   rect?: ?AnnotationPatchFreeTextRect,
      *   contents?: ?string,
@@ -368,6 +375,7 @@ class AnnotationPatchFreeText extends JsonSerializableType
         $this->page = $values['page'] ?? null;
         $this->hasAppearance = $values['hasAppearance'] ?? null;
         $this->appearanceState = $values['appearanceState'] ?? null;
+        $this->structurePosition = $values['structurePosition'] ?? null;
         $this->nm = $values['nm'] ?? null;
         $this->rect = $values['rect'] ?? null;
         $this->contents = $values['contents'] ?? null;

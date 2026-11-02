@@ -9,6 +9,7 @@ use CloudPDF\Types\AnnotationList;
 use CloudPDF\Exceptions\CloudPDFException;
 use CloudPDF\Exceptions\CloudPDFApiException;
 use CloudPDF\Core\Json\JsonApiRequest;
+use CloudPDF\Environments;
 use CloudPDF\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -100,7 +101,7 @@ class AnnotationsClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
                     path: "v1/docs/{$docId}/layers/{$layerName}/annotations/items",
                     method: HttpMethod::GET,
                     headers: $headers,
@@ -164,7 +165,7 @@ class AnnotationsClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
                     path: "v1/docs/{$docId}/layers/{$layerName}/annotations/pages/{$pageKey}/items",
                     method: HttpMethod::GET,
                     headers: $headers,
@@ -237,7 +238,7 @@ class AnnotationsClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
                     path: "v1/docs/{$docId}/layers/{$layerName}/annotations/pages/{$pageKey}/items",
                     method: HttpMethod::POST,
                     headers: $headers,
@@ -307,7 +308,7 @@ class AnnotationsClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
                     path: "v1/docs/{$docId}/layers/{$layerName}/annotations/pages/{$pageKey}/items/{$annotKey}",
                     method: HttpMethod::DELETE,
                     headers: $headers,
@@ -380,7 +381,7 @@ class AnnotationsClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
                     path: "v1/docs/{$docId}/layers/{$layerName}/annotations/pages/{$pageKey}/items/{$annotKey}",
                     method: HttpMethod::PATCH,
                     headers: $headers,
@@ -447,7 +448,7 @@ class AnnotationsClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
                     path: "v1/docs/{$docId}/layers/{$layerName}/annotations/pages/{$pageKey}/items/{$annotKey}/resources/appearance",
                     method: HttpMethod::GET,
                     headers: $headers,
@@ -509,7 +510,7 @@ class AnnotationsClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
                     path: "v1/docs/{$docId}/layers/{$layerName}/annotations/pages/{$pageKey}/items/{$annotKey}/resources/file",
                     method: HttpMethod::GET,
                     headers: $headers,
@@ -573,7 +574,7 @@ class AnnotationsClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
                     path: "v1/docs/{$docId}/layers/{$layerName}/annotations/pages/{$pageKey}/items/appearance",
                     method: HttpMethod::POST,
                     headers: $headers,
@@ -639,7 +640,7 @@ class AnnotationsClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
                     path: "v1/docs/{$docId}/layers/{$layerName}/annotations/pages/{$pageKey}/items/flatten",
                     method: HttpMethod::POST,
                     headers: $headers,
@@ -718,7 +719,7 @@ class AnnotationsClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
                     path: "v1/docs/{$docId}/layers/{$layerName}/annotations/pages/{$pageKey}/items/reorder",
                     method: HttpMethod::POST,
                     headers: $headers,

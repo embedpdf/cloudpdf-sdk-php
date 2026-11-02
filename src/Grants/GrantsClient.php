@@ -10,6 +10,7 @@ use CloudPDF\Types\GrantsExchange200Response;
 use CloudPDF\Exceptions\CloudPDFException;
 use CloudPDF\Exceptions\CloudPDFApiException;
 use CloudPDF\Core\Json\JsonApiRequest;
+use CloudPDF\Environments;
 use CloudPDF\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -95,7 +96,7 @@ class GrantsClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
                     path: "v1/grant-sessions",
                     method: HttpMethod::POST,
                     body: $request,
@@ -164,7 +165,7 @@ class GrantsClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
                     path: "v1/tenants/{$tenantId}/grants",
                     method: HttpMethod::GET,
                     query: $query,
@@ -192,7 +193,7 @@ class GrantsClient
     }
 
     /**
-     * The returned id is what a link page or an embed opens. Mounted only when the deployment can sign (HS256 mode) — exchange mints session JWTs, so grants exist only where minting does.
+     * The returned id is what a link page or an embed opens. Its scope gives only document permissions the caller holds itself, as tokens.issue does. Mounted only when the deployment can sign (HS256 mode) — exchange mints session JWTs, so grants exist only where minting does.
      *
      * Example:
      * ```php
@@ -227,7 +228,7 @@ class GrantsClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
                     path: "v1/tenants/{$tenantId}/grants",
                     method: HttpMethod::POST,
                     body: $request,
@@ -283,7 +284,7 @@ class GrantsClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
                     path: "v1/tenants/{$tenantId}/grants/{$grantId}",
                     method: HttpMethod::GET,
                 ),
@@ -337,7 +338,7 @@ class GrantsClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
                     path: "v1/tenants/{$tenantId}/grants/{$grantId}",
                     method: HttpMethod::DELETE,
                 ),
@@ -388,7 +389,7 @@ class GrantsClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
                     path: "v1/tenants/{$tenantId}/grants/{$grantId}",
                     method: HttpMethod::PATCH,
                     body: $request,
@@ -446,7 +447,7 @@ class GrantsClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
                     path: "v1/tenants/{$tenantId}/grants/{$grantId}/archive",
                     method: HttpMethod::POST,
                 ),

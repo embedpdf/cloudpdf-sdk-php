@@ -9,6 +9,7 @@ use CloudPDF\Types\GrantsVisitorsList200Response;
 use CloudPDF\Exceptions\CloudPDFException;
 use CloudPDF\Exceptions\CloudPDFApiException;
 use CloudPDF\Core\Json\JsonApiRequest;
+use CloudPDF\Environments;
 use CloudPDF\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -89,7 +90,7 @@ class VisitorsClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
                     path: "v1/tenants/{$tenantId}/grants/{$grantId}/visitors",
                     method: HttpMethod::GET,
                     query: $query,
@@ -148,7 +149,7 @@ class VisitorsClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
                     path: "v1/tenants/{$tenantId}/grants/{$grantId}/visitors/{$visitorId}",
                     method: HttpMethod::DELETE,
                 ),

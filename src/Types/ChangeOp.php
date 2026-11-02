@@ -38,6 +38,7 @@ class ChangeOp extends JsonSerializableType
      *   |'pages.delete'
      *   |'pages.insertBlank'
      *   |'pages.insert'
+     *   |'pages.copy'
      *   |'attachments.create'
      *   |'attachments.delete'
      *   |'_unknown'
@@ -76,6 +77,7 @@ class ChangeOp extends JsonSerializableType
      *   |ChangeOpPagesDelete
      *   |ChangeOpPagesInsertBlank
      *   |ChangeOpPagesInsert
+     *   |ChangeOpPagesCopy
      *   |ChangeOpAttachmentsCreate
      *   |ChangeOpAttachmentsDelete
      *   |mixed
@@ -115,6 +117,7 @@ class ChangeOp extends JsonSerializableType
      *   |'pages.delete'
      *   |'pages.insertBlank'
      *   |'pages.insert'
+     *   |'pages.copy'
      *   |'attachments.create'
      *   |'attachments.delete'
      *   |'_unknown'
@@ -149,6 +152,7 @@ class ChangeOp extends JsonSerializableType
      *   |ChangeOpPagesDelete
      *   |ChangeOpPagesInsertBlank
      *   |ChangeOpPagesInsert
+     *   |ChangeOpPagesCopy
      *   |ChangeOpAttachmentsCreate
      *   |ChangeOpAttachmentsDelete
      *   |mixed
@@ -507,6 +511,18 @@ class ChangeOp extends JsonSerializableType
         return new ChangeOp([
             'type' => 'pages.insert',
             'value' => $pagesInsert,
+        ]);
+    }
+
+    /**
+     * @param ChangeOpPagesCopy $pagesCopy
+     * @return ChangeOp
+     */
+    public static function pagesCopy(ChangeOpPagesCopy $pagesCopy): ChangeOp
+    {
+        return new ChangeOp([
+            'type' => 'pages.copy',
+            'value' => $pagesCopy,
         ]);
     }
 
@@ -1175,6 +1191,28 @@ class ChangeOp extends JsonSerializableType
     /**
      * @return bool
      */
+    public function isPagesCopy(): bool
+    {
+        return $this->value instanceof ChangeOpPagesCopy && $this->type === 'pages.copy';
+    }
+
+    /**
+     * @return ChangeOpPagesCopy
+     */
+    public function asPagesCopy(): ChangeOpPagesCopy
+    {
+        if (!($this->value instanceof ChangeOpPagesCopy && $this->type === 'pages.copy')) {
+            throw new Exception(
+                "Expected pages.copy; got " . $this->type . " with value of type " . get_debug_type($this->value),
+            );
+        }
+
+        return $this->value;
+    }
+
+    /**
+     * @return bool
+     */
     public function isAttachmentsCreate(): bool
     {
         return $this->value instanceof ChangeOpAttachmentsCreate && $this->type === 'attachments.create';
@@ -1352,6 +1390,10 @@ class ChangeOp extends JsonSerializableType
                 $value = $this->asPagesInsert()->jsonSerialize();
                 $result = array_merge($value, $result);
                 break;
+            case 'pages.copy':
+                $value = $this->asPagesCopy()->jsonSerialize();
+                $result = array_merge($value, $result);
+                break;
             case 'attachments.create':
                 $value = $this->asAttachmentsCreate()->jsonSerialize();
                 $result = array_merge($value, $result);
@@ -1482,6 +1524,9 @@ class ChangeOp extends JsonSerializableType
                 break;
             case 'pages.insert':
                 $args['value'] = ChangeOpPagesInsert::jsonDeserialize($data);
+                break;
+            case 'pages.copy':
+                $args['value'] = ChangeOpPagesCopy::jsonDeserialize($data);
                 break;
             case 'attachments.create':
                 $args['value'] = ChangeOpAttachmentsCreate::jsonDeserialize($data);

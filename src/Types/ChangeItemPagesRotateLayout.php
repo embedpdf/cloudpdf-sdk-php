@@ -21,6 +21,12 @@ class ChangeItemPagesRotateLayout extends JsonSerializableType
     public array $pages;
 
     /**
+     * @var array<ChangeItemPagesRotateLayoutLabelsItem> $labels
+     */
+    #[JsonProperty('labels'), ArrayType([ChangeItemPagesRotateLayoutLabelsItem::class])]
+    public array $labels;
+
+    /**
      * @var array<ChangeItemPagesRotateLayoutNamedPagesItem> $namedPages
      */
     #[JsonProperty('namedPages'), ArrayType([ChangeItemPagesRotateLayoutNamedPagesItem::class])]
@@ -30,6 +36,7 @@ class ChangeItemPagesRotateLayout extends JsonSerializableType
      * @param array{
      *   pageCount: int,
      *   pages: array<ChangeItemPagesRotateLayoutPagesItem>,
+     *   labels: array<ChangeItemPagesRotateLayoutLabelsItem>,
      *   namedPages: array<ChangeItemPagesRotateLayoutNamedPagesItem>,
      * } $values
      */
@@ -38,6 +45,7 @@ class ChangeItemPagesRotateLayout extends JsonSerializableType
     ) {
         $this->pageCount = $values['pageCount'];
         $this->pages = $values['pages'];
+        $this->labels = $values['labels'];
         $this->namedPages = $values['namedPages'];
     }
 

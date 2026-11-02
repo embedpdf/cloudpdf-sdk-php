@@ -11,6 +11,7 @@ class TokensIssueRequest extends JsonSerializableType
      * @var (
      *    'doc'
      *   |'tenant'
+     *   |'upload'
      *   |'_unknown'
      * ) $kind
      */
@@ -20,6 +21,7 @@ class TokensIssueRequest extends JsonSerializableType
      * @var (
      *    TokensIssueRequestDoc
      *   |TokensIssueRequestTenant
+     *   |TokensIssueRequestUpload
      *   |mixed
      * ) $value
      */
@@ -30,11 +32,13 @@ class TokensIssueRequest extends JsonSerializableType
      *   kind: (
      *    'doc'
      *   |'tenant'
+     *   |'upload'
      *   |'_unknown'
      * ),
      *   value: (
      *    TokensIssueRequestDoc
      *   |TokensIssueRequestTenant
+     *   |TokensIssueRequestUpload
      *   |mixed
      * ),
      * } $values
@@ -67,6 +71,18 @@ class TokensIssueRequest extends JsonSerializableType
         return new TokensIssueRequest([
             'kind' => 'tenant',
             'value' => $tenant,
+        ]);
+    }
+
+    /**
+     * @param TokensIssueRequestUpload $upload
+     * @return TokensIssueRequest
+     */
+    public static function upload(TokensIssueRequestUpload $upload): TokensIssueRequest
+    {
+        return new TokensIssueRequest([
+            'kind' => 'upload',
+            'value' => $upload,
         ]);
     }
 
@@ -115,6 +131,28 @@ class TokensIssueRequest extends JsonSerializableType
     }
 
     /**
+     * @return bool
+     */
+    public function isUpload(): bool
+    {
+        return $this->value instanceof TokensIssueRequestUpload && $this->kind === 'upload';
+    }
+
+    /**
+     * @return TokensIssueRequestUpload
+     */
+    public function asUpload(): TokensIssueRequestUpload
+    {
+        if (!($this->value instanceof TokensIssueRequestUpload && $this->kind === 'upload')) {
+            throw new Exception(
+                "Expected upload; got " . $this->kind . " with value of type " . get_debug_type($this->value),
+            );
+        }
+
+        return $this->value;
+    }
+
+    /**
      * @return string
      */
     public function __toString(): string
@@ -140,6 +178,10 @@ class TokensIssueRequest extends JsonSerializableType
                 break;
             case 'tenant':
                 $value = $this->asTenant()->jsonSerialize();
+                $result = array_merge($value, $result);
+                break;
+            case 'upload':
+                $value = $this->asUpload()->jsonSerialize();
                 $result = array_merge($value, $result);
                 break;
             case '_unknown':
@@ -183,6 +225,9 @@ class TokensIssueRequest extends JsonSerializableType
                 break;
             case 'tenant':
                 $args['value'] = TokensIssueRequestTenant::jsonDeserialize($data);
+                break;
+            case 'upload':
+                $args['value'] = TokensIssueRequestUpload::jsonDeserialize($data);
                 break;
             case '_unknown':
             default:

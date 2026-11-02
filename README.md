@@ -10,6 +10,7 @@ The official PHP SDK for the CloudPDF API.
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Environments](#environments)
 - [Exception Handling](#exception-handling)
 - [Advanced](#advanced)
   - [Custom Client](#custom-client)
@@ -55,6 +56,29 @@ $client->doc->changes(
     ]),
 );
 
+```
+
+## Environments
+
+This SDK allows you to configure different environments for API requests.
+
+```php
+The SDK defaults to the `Saas` environment. To use a different environment, pass it to the client constructor:
+
+```php
+use CloudPDF\CloudPDFClient;
+use CloudPDF\Environments;
+
+$client = new CloudPDFClient(
+    token: '<YOUR_TOKEN>',
+    options: [
+        'baseUrl' => Environments::Staging->value
+    ]
+);
+```
+
+Available environments:
+- `Environments::Saas`
 ```
 
 ## Exception Handling

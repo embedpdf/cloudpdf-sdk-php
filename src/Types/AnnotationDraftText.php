@@ -32,6 +32,12 @@ class AnnotationDraftText extends JsonSerializableType
     public mixed $appearanceState;
 
     /**
+     * @var mixed $structurePosition
+     */
+    #[JsonProperty('structurePosition')]
+    public mixed $structurePosition;
+
+    /**
      * @var ?string $nm
      */
     #[JsonProperty('nm')]
@@ -230,6 +236,7 @@ class AnnotationDraftText extends JsonSerializableType
      *   page?: mixed,
      *   hasAppearance?: mixed,
      *   appearanceState?: mixed,
+     *   structurePosition?: mixed,
      *   nm?: ?string,
      *   contents?: ?string,
      *   subject?: ?string,
@@ -270,6 +277,7 @@ class AnnotationDraftText extends JsonSerializableType
         $this->page = $values['page'] ?? null;
         $this->hasAppearance = $values['hasAppearance'] ?? null;
         $this->appearanceState = $values['appearanceState'] ?? null;
+        $this->structurePosition = $values['structurePosition'] ?? null;
         $this->nm = $values['nm'] ?? null;
         $this->rect = $values['rect'];
         $this->contents = $values['contents'] ?? null;

@@ -4,6 +4,7 @@ namespace CloudPDF\Doc;
 
 use CloudPDF\Doc\Annotations\AnnotationsClient;
 use CloudPDF\Doc\Attachments\AttachmentsClient;
+use CloudPDF\Doc\Fonts\FontsClient;
 use CloudPDF\Doc\Forms\FormsClient;
 use CloudPDF\Doc\Metadata\MetadataClient;
 use CloudPDF\Doc\Outline\OutlineClient;
@@ -18,6 +19,7 @@ use CloudPDF\Types\DocHead200Response;
 use CloudPDF\Exceptions\CloudPDFException;
 use CloudPDF\Exceptions\CloudPDFApiException;
 use CloudPDF\Core\Json\JsonApiRequest;
+use CloudPDF\Environments;
 use CloudPDF\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -43,6 +45,11 @@ class DocClient
      * @var AttachmentsClient $attachments
      */
     public AttachmentsClient $attachments;
+
+    /**
+     * @var FontsClient $fonts
+     */
+    public FontsClient $fonts;
 
     /**
      * @var FormsClient $forms
@@ -113,6 +120,7 @@ class DocClient
         $this->options = $options ?? [];
         $this->annotations = new AnnotationsClient($this->client, $this->options);
         $this->attachments = new AttachmentsClient($this->client, $this->options);
+        $this->fonts = new FontsClient($this->client, $this->options);
         $this->forms = new FormsClient($this->client, $this->options);
         $this->metadata = new MetadataClient($this->client, $this->options);
         $this->outline = new OutlineClient($this->client, $this->options);
@@ -155,7 +163,7 @@ class DocClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
                     path: "v1/docs/{$docId}/head",
                     method: HttpMethod::GET,
                     headers: $headers,
@@ -225,7 +233,7 @@ class DocClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
                     path: "v1/docs/{$docId}/layers/{$layerName}/changes",
                     method: HttpMethod::POST,
                     headers: $headers,
@@ -288,7 +296,7 @@ class DocClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
                     path: "v1/docs/{$docId}/layers/{$layerName}/download",
                     method: HttpMethod::GET,
                     headers: $headers,
@@ -346,7 +354,7 @@ class DocClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
                     path: "v1/docs/{$docId}/layers/{$layerName}/download-link",
                     method: HttpMethod::POST,
                     headers: $headers,
@@ -409,7 +417,7 @@ class DocClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
                     path: "v1/docs/{$docId}/layers/{$layerName}/manifest",
                     method: HttpMethod::GET,
                     headers: $headers,
@@ -475,7 +483,7 @@ class DocClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
                     path: "v1/docs/{$docId}/layers/{$layerName}/render/pages/{$pageKey}/data",
                     method: HttpMethod::GET,
                     headers: $headers,
@@ -533,7 +541,7 @@ class DocClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
                     path: "v1/docs/{$docId}/layers/{$layerName}/text/pages/{$pageKey}/data",
                     method: HttpMethod::GET,
                     headers: $headers,

@@ -43,6 +43,7 @@ class ChangeItem extends JsonSerializableType
      *   |'pages.delete'
      *   |'pages.insertBlank'
      *   |'pages.insert'
+     *   |'pages.copy'
      *   |'pages.restore'
      *   |'attachments.create'
      *   |'attachments.delete'
@@ -88,6 +89,7 @@ class ChangeItem extends JsonSerializableType
      *   |ChangeItemPagesDelete
      *   |ChangeItemPagesInsertBlank
      *   |ChangeItemPagesInsert
+     *   |ChangeItemPagesCopy
      *   |ChangeItemPagesRestore
      *   |ChangeItemAttachmentsCreate
      *   |ChangeItemAttachmentsDelete
@@ -134,6 +136,7 @@ class ChangeItem extends JsonSerializableType
      *   |'pages.delete'
      *   |'pages.insertBlank'
      *   |'pages.insert'
+     *   |'pages.copy'
      *   |'pages.restore'
      *   |'attachments.create'
      *   |'attachments.delete'
@@ -175,6 +178,7 @@ class ChangeItem extends JsonSerializableType
      *   |ChangeItemPagesDelete
      *   |ChangeItemPagesInsertBlank
      *   |ChangeItemPagesInsert
+     *   |ChangeItemPagesCopy
      *   |ChangeItemPagesRestore
      *   |ChangeItemAttachmentsCreate
      *   |ChangeItemAttachmentsDelete
@@ -595,6 +599,18 @@ class ChangeItem extends JsonSerializableType
         return new ChangeItem([
             'type' => 'pages.insert',
             'value' => $pagesInsert,
+        ]);
+    }
+
+    /**
+     * @param ChangeItemPagesCopy $pagesCopy
+     * @return ChangeItem
+     */
+    public static function pagesCopy(ChangeItemPagesCopy $pagesCopy): ChangeItem
+    {
+        return new ChangeItem([
+            'type' => 'pages.copy',
+            'value' => $pagesCopy,
         ]);
     }
 
@@ -1397,6 +1413,28 @@ class ChangeItem extends JsonSerializableType
     /**
      * @return bool
      */
+    public function isPagesCopy(): bool
+    {
+        return $this->value instanceof ChangeItemPagesCopy && $this->type === 'pages.copy';
+    }
+
+    /**
+     * @return ChangeItemPagesCopy
+     */
+    public function asPagesCopy(): ChangeItemPagesCopy
+    {
+        if (!($this->value instanceof ChangeItemPagesCopy && $this->type === 'pages.copy')) {
+            throw new Exception(
+                "Expected pages.copy; got " . $this->type . " with value of type " . get_debug_type($this->value),
+            );
+        }
+
+        return $this->value;
+    }
+
+    /**
+     * @return bool
+     */
     public function isPagesRestore(): bool
     {
         return $this->value instanceof ChangeItemPagesRestore && $this->type === 'pages.restore';
@@ -1638,6 +1676,10 @@ class ChangeItem extends JsonSerializableType
                 $value = $this->asPagesInsert()->jsonSerialize();
                 $result = array_merge($value, $result);
                 break;
+            case 'pages.copy':
+                $value = $this->asPagesCopy()->jsonSerialize();
+                $result = array_merge($value, $result);
+                break;
             case 'pages.restore':
                 $value = $this->asPagesRestore()->jsonSerialize();
                 $result = array_merge($value, $result);
@@ -1791,6 +1833,9 @@ class ChangeItem extends JsonSerializableType
                 break;
             case 'pages.insert':
                 $args['value'] = ChangeItemPagesInsert::jsonDeserialize($data);
+                break;
+            case 'pages.copy':
+                $args['value'] = ChangeItemPagesCopy::jsonDeserialize($data);
                 break;
             case 'pages.restore':
                 $args['value'] = ChangeItemPagesRestore::jsonDeserialize($data);
