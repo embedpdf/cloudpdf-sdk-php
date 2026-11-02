@@ -10,6 +10,7 @@ use CloudPDF\Types\DocumentsList200Response;
 use CloudPDF\Exceptions\CloudPDFException;
 use CloudPDF\Exceptions\CloudPDFApiException;
 use CloudPDF\Core\Json\JsonApiRequest;
+use CloudPDF\Environments;
 use CloudPDF\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -120,7 +121,7 @@ class DocumentsClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
                     path: "v1/tenants/{$tenantId}/documents",
                     method: HttpMethod::GET,
                     query: $query,
@@ -176,7 +177,7 @@ class DocumentsClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
                     path: "v1/tenants/{$tenantId}/documents/{$id}",
                     method: HttpMethod::GET,
                 ),
@@ -230,7 +231,7 @@ class DocumentsClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
                     path: "v1/tenants/{$tenantId}/documents/{$id}",
                     method: HttpMethod::DELETE,
                 ),
@@ -285,7 +286,7 @@ class DocumentsClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
                     path: "v1/tenants/{$tenantId}/documents/{$id}",
                     method: HttpMethod::PATCH,
                     body: $request,
@@ -313,6 +314,8 @@ class DocumentsClient
     }
 
     /**
+     * An upload token commits only the documents it started; any other document answers 404.
+     *
      * Example:
      * ```php
      * $client->documents->commit(
@@ -345,7 +348,7 @@ class DocumentsClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
                     path: "v1/tenants/{$tenantId}/documents/{$id}/commit",
                     method: HttpMethod::POST,
                     body: $request,
@@ -401,7 +404,7 @@ class DocumentsClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
                     path: "v1/tenants/{$tenantId}/documents/{$id}/download",
                     method: HttpMethod::GET,
                 ),
@@ -450,7 +453,7 @@ class DocumentsClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
                     path: "v1/tenants/{$tenantId}/documents/{$id}/thumbnail",
                     method: HttpMethod::GET,
                 ),
@@ -471,7 +474,7 @@ class DocumentsClient
     }
 
     /**
-     * This bounded origin-mediated fallback must only be used after documents.init returns upload.kind=proxy. Auto mode prefers a presigned object-store PUT whenever available.
+     * This bounded origin-mediated fallback must only be used after documents.init returns upload.kind=proxy. Auto mode prefers a presigned object-store PUT whenever available. An upload token sends files only to the documents it started.
      *
      * Example:
      * ```php
@@ -506,7 +509,7 @@ class DocumentsClient
         try {
             $response = $this->client->sendRequest(
                 new MultipartApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
                     path: "v1/tenants/{$tenantId}/documents/{$id}/upload-proxy",
                     method: HttpMethod::POST,
                     body: $body,
@@ -568,7 +571,7 @@ class DocumentsClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
                     path: "v1/tenants/{$tenantId}/documents/import",
                     method: HttpMethod::POST,
                     body: $request,
@@ -596,6 +599,8 @@ class DocumentsClient
     }
 
     /**
+     * With an upload token, the document goes into the token's folder with the token's metadata, whatever the request says; contentLength must be within the token's maxBytes, and the token makes at most maxFiles documents (403 after). docId, idempotencyKey and dedupMode reuse-existing are refused (400): each could reach a document the token didn't make.
+     *
      * Example:
      * ```php
      * $client->documents->init(
@@ -627,7 +632,7 @@ class DocumentsClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
                     path: "v1/tenants/{$tenantId}/documents/init",
                     method: HttpMethod::POST,
                     body: $request,

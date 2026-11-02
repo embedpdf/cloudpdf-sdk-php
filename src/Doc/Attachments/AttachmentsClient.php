@@ -8,6 +8,7 @@ use CloudPDF\Doc\Attachments\Requests\DownloadAttachmentsRequest;
 use CloudPDF\Exceptions\CloudPDFException;
 use CloudPDF\Exceptions\CloudPDFApiException;
 use CloudPDF\Core\Json\JsonApiRequest;
+use CloudPDF\Environments;
 use CloudPDF\Core\Client\HttpMethod;
 use Psr\Http\Client\ClientExceptionInterface;
 use CloudPDF\Doc\Attachments\Requests\ListAttachmentsRequest;
@@ -89,7 +90,7 @@ class AttachmentsClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
                     path: "v1/docs/{$docId}/layers/{$layerName}/attachment-files/{$fileKey}/data",
                     method: HttpMethod::GET,
                     headers: $headers,
@@ -147,7 +148,7 @@ class AttachmentsClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
                     path: "v1/docs/{$docId}/layers/{$layerName}/attachments",
                     method: HttpMethod::GET,
                     headers: $headers,

@@ -33,6 +33,12 @@ class OutlineMutationMeta extends JsonSerializableType
     public bool $undoable;
 
     /**
+     * @var ?array<string> $missingCharacters
+     */
+    #[JsonProperty('missingCharacters'), ArrayType(['string'])]
+    public ?array $missingCharacters;
+
+    /**
      * @var array<OutlineItemRef> $changed
      */
     #[JsonProperty('changed'), ArrayType([OutlineItemRef::class])]
@@ -45,6 +51,7 @@ class OutlineMutationMeta extends JsonSerializableType
      *   undoable: bool,
      *   changed: array<OutlineItemRef>,
      *   cacheDelta?: ?CacheDelta,
+     *   missingCharacters?: ?array<string>,
      * } $values
      */
     public function __construct(
@@ -54,6 +61,7 @@ class OutlineMutationMeta extends JsonSerializableType
         $this->cacheDelta = $values['cacheDelta'] ?? null;
         $this->opId = $values['opId'];
         $this->undoable = $values['undoable'];
+        $this->missingCharacters = $values['missingCharacters'] ?? null;
         $this->changed = $values['changed'];
     }
 

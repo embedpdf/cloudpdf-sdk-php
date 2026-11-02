@@ -33,11 +33,18 @@ class MutationMeta extends JsonSerializableType
     public bool $undoable;
 
     /**
+     * @var ?array<string> $missingCharacters
+     */
+    #[JsonProperty('missingCharacters'), ArrayType(['string'])]
+    public ?array $missingCharacters;
+
+    /**
      * @param array{
      *   affectedPages: array<PageRef>,
      *   opId: string,
      *   undoable: bool,
      *   cacheDelta?: ?CacheDelta,
+     *   missingCharacters?: ?array<string>,
      * } $values
      */
     public function __construct(
@@ -47,6 +54,7 @@ class MutationMeta extends JsonSerializableType
         $this->cacheDelta = $values['cacheDelta'] ?? null;
         $this->opId = $values['opId'];
         $this->undoable = $values['undoable'];
+        $this->missingCharacters = $values['missingCharacters'] ?? null;
     }
 
     /**

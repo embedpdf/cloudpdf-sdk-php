@@ -21,6 +21,12 @@ class DocPagesSetName200ResponseLayout extends JsonSerializableType
     public array $pages;
 
     /**
+     * @var array<DocPagesSetName200ResponseLayoutLabelsItem> $labels
+     */
+    #[JsonProperty('labels'), ArrayType([DocPagesSetName200ResponseLayoutLabelsItem::class])]
+    public array $labels;
+
+    /**
      * @var array<DocPagesSetName200ResponseLayoutNamedPagesItem> $namedPages
      */
     #[JsonProperty('namedPages'), ArrayType([DocPagesSetName200ResponseLayoutNamedPagesItem::class])]
@@ -30,6 +36,7 @@ class DocPagesSetName200ResponseLayout extends JsonSerializableType
      * @param array{
      *   pageCount: int,
      *   pages: array<DocPagesSetName200ResponseLayoutPagesItem>,
+     *   labels: array<DocPagesSetName200ResponseLayoutLabelsItem>,
      *   namedPages: array<DocPagesSetName200ResponseLayoutNamedPagesItem>,
      * } $values
      */
@@ -38,6 +45,7 @@ class DocPagesSetName200ResponseLayout extends JsonSerializableType
     ) {
         $this->pageCount = $values['pageCount'];
         $this->pages = $values['pages'];
+        $this->labels = $values['labels'];
         $this->namedPages = $values['namedPages'];
     }
 

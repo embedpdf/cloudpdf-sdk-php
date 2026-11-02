@@ -33,6 +33,12 @@ class FormMutationMeta extends JsonSerializableType
     public bool $undoable;
 
     /**
+     * @var ?array<string> $missingCharacters
+     */
+    #[JsonProperty('missingCharacters'), ArrayType(['string'])]
+    public ?array $missingCharacters;
+
+    /**
      * @var array<FormFieldRef> $changedFields
      */
     #[JsonProperty('changedFields'), ArrayType([FormFieldRef::class])]
@@ -59,6 +65,7 @@ class FormMutationMeta extends JsonSerializableType
      *   changedWidgets: array<FormWidget>,
      *   redrawnWidgets: array<FormWidget>,
      *   cacheDelta?: ?CacheDelta,
+     *   missingCharacters?: ?array<string>,
      * } $values
      */
     public function __construct(
@@ -68,6 +75,7 @@ class FormMutationMeta extends JsonSerializableType
         $this->cacheDelta = $values['cacheDelta'] ?? null;
         $this->opId = $values['opId'];
         $this->undoable = $values['undoable'];
+        $this->missingCharacters = $values['missingCharacters'] ?? null;
         $this->changedFields = $values['changedFields'];
         $this->changedWidgets = $values['changedWidgets'];
         $this->redrawnWidgets = $values['redrawnWidgets'];

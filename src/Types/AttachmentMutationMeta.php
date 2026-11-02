@@ -33,6 +33,12 @@ class AttachmentMutationMeta extends JsonSerializableType
     public bool $undoable;
 
     /**
+     * @var ?array<string> $missingCharacters
+     */
+    #[JsonProperty('missingCharacters'), ArrayType(['string'])]
+    public ?array $missingCharacters;
+
+    /**
      * @var array<AttachmentRef> $changed
      */
     #[JsonProperty('changed'), ArrayType([AttachmentRef::class])]
@@ -45,6 +51,7 @@ class AttachmentMutationMeta extends JsonSerializableType
      *   undoable: bool,
      *   changed: array<AttachmentRef>,
      *   cacheDelta?: ?CacheDelta,
+     *   missingCharacters?: ?array<string>,
      * } $values
      */
     public function __construct(
@@ -54,6 +61,7 @@ class AttachmentMutationMeta extends JsonSerializableType
         $this->cacheDelta = $values['cacheDelta'] ?? null;
         $this->opId = $values['opId'];
         $this->undoable = $values['undoable'];
+        $this->missingCharacters = $values['missingCharacters'] ?? null;
         $this->changed = $values['changed'];
     }
 

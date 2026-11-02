@@ -57,6 +57,18 @@ class DocManifest200Response extends JsonSerializableType
     public ?int $outlineVersion;
 
     /**
+     * @var ?int $fontsVersion
+     */
+    #[JsonProperty('fontsVersion')]
+    public ?int $fontsVersion;
+
+    /**
+     * @var string $serverFonts
+     */
+    #[JsonProperty('serverFonts')]
+    public string $serverFonts;
+
+    /**
      * @var int $auditHead
      */
     #[JsonProperty('auditHead')]
@@ -109,6 +121,7 @@ class DocManifest200Response extends JsonSerializableType
      *   docVersion: int,
      *   layoutVersion: int,
      *   metadataVersion: int,
+     *   serverFonts: string,
      *   auditHead: int,
      *   baseSha: string,
      *   pages: array<DocManifest200ResponsePagesItem>,
@@ -117,6 +130,7 @@ class DocManifest200Response extends JsonSerializableType
      *   annotationsVersion?: ?int,
      *   formsVersion?: ?int,
      *   outlineVersion?: ?int,
+     *   fontsVersion?: ?int,
      *   layerVersion?: ?int,
      *   working?: ?bool,
      *   baseByteLength?: ?int,
@@ -135,6 +149,8 @@ class DocManifest200Response extends JsonSerializableType
         $this->annotationsVersion = $values['annotationsVersion'] ?? null;
         $this->formsVersion = $values['formsVersion'] ?? null;
         $this->outlineVersion = $values['outlineVersion'] ?? null;
+        $this->fontsVersion = $values['fontsVersion'] ?? null;
+        $this->serverFonts = $values['serverFonts'];
         $this->auditHead = $values['auditHead'];
         $this->baseSha = $values['baseSha'];
         $this->layerVersion = $values['layerVersion'] ?? null;

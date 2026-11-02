@@ -33,6 +33,12 @@ class AnnotationMutationMeta extends JsonSerializableType
     public bool $undoable;
 
     /**
+     * @var ?array<string> $missingCharacters
+     */
+    #[JsonProperty('missingCharacters'), ArrayType(['string'])]
+    public ?array $missingCharacters;
+
+    /**
      * @var array<AnnotationRef> $changed
      */
     #[JsonProperty('changed'), ArrayType([AnnotationRef::class])]
@@ -45,6 +51,7 @@ class AnnotationMutationMeta extends JsonSerializableType
      *   undoable: bool,
      *   changed: array<AnnotationRef>,
      *   cacheDelta?: ?CacheDelta,
+     *   missingCharacters?: ?array<string>,
      * } $values
      */
     public function __construct(
@@ -54,6 +61,7 @@ class AnnotationMutationMeta extends JsonSerializableType
         $this->cacheDelta = $values['cacheDelta'] ?? null;
         $this->opId = $values['opId'];
         $this->undoable = $values['undoable'];
+        $this->missingCharacters = $values['missingCharacters'] ?? null;
         $this->changed = $values['changed'];
     }
 

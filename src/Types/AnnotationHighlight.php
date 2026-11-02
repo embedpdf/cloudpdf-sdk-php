@@ -4,9 +4,9 @@ namespace CloudPDF\Types;
 
 use CloudPDF\Core\Json\JsonSerializableType;
 use CloudPDF\Core\Json\JsonProperty;
+use CloudPDF\Core\Types\ArrayType;
 use DateTime;
 use CloudPDF\Core\Types\Date;
-use CloudPDF\Core\Types\ArrayType;
 
 class AnnotationHighlight extends JsonSerializableType
 {
@@ -33,6 +33,12 @@ class AnnotationHighlight extends JsonSerializableType
      */
     #[JsonProperty('appearanceState')]
     public ?string $appearanceState;
+
+    /**
+     * @var ?array<int> $structurePosition
+     */
+    #[JsonProperty('structurePosition'), ArrayType(['integer'])]
+    public ?array $structurePosition;
 
     /**
      * @var ?string $nm
@@ -229,6 +235,7 @@ class AnnotationHighlight extends JsonSerializableType
      *   opacity: float,
      *   quadPoints: array<AnnotationHighlightQuadPointsItem>,
      *   appearanceState?: ?string,
+     *   structurePosition?: ?array<int>,
      *   nm?: ?string,
      *   contents?: ?string,
      *   subject?: ?string,
@@ -252,6 +259,7 @@ class AnnotationHighlight extends JsonSerializableType
         $this->page = $values['page'];
         $this->hasAppearance = $values['hasAppearance'];
         $this->appearanceState = $values['appearanceState'] ?? null;
+        $this->structurePosition = $values['structurePosition'] ?? null;
         $this->nm = $values['nm'] ?? null;
         $this->rect = $values['rect'];
         $this->contents = $values['contents'] ?? null;
