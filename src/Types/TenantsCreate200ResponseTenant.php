@@ -4,6 +4,7 @@ namespace CloudPDF\Types;
 
 use CloudPDF\Core\Json\JsonSerializableType;
 use CloudPDF\Core\Json\JsonProperty;
+use CloudPDF\Core\Types\ArrayType;
 
 class TenantsCreate200ResponseTenant extends JsonSerializableType
 {
@@ -32,6 +33,12 @@ class TenantsCreate200ResponseTenant extends JsonSerializableType
     public ?string $status;
 
     /**
+     * @var ?array<TenantFeature> $features
+     */
+    #[JsonProperty('features'), ArrayType([TenantFeature::class])]
+    public ?array $features;
+
+    /**
      * @var float $createdAt
      */
     #[JsonProperty('createdAt')]
@@ -44,6 +51,7 @@ class TenantsCreate200ResponseTenant extends JsonSerializableType
      *   autoProvisioned: bool,
      *   createdAt: float,
      *   status?: ?value-of<TenantsCreate200ResponseTenantStatus>,
+     *   features?: ?array<TenantFeature>,
      * } $values
      */
     public function __construct(
@@ -53,6 +61,7 @@ class TenantsCreate200ResponseTenant extends JsonSerializableType
         $this->name = $values['name'];
         $this->autoProvisioned = $values['autoProvisioned'];
         $this->status = $values['status'] ?? null;
+        $this->features = $values['features'] ?? null;
         $this->createdAt = $values['createdAt'];
     }
 

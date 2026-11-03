@@ -1375,6 +1375,77 @@ $client->tenants->delete(
 </dl>
 </details>
 
+<details><summary><code>$client-&gt;tenants-&gt;update($tenantId, $request) -> ?TenantsUpdate200Response</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+A feature names an installed module; any other id is a 400. A module route answers a tenant without its feature 403 FeatureNotEnabled, and one whose feature is stopped 402 FeatureStopped (details.feature, details.stopped). Other replicas apply a change within 30 seconds.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->tenants->update(
+    'tenantId',
+    new TenantsUpdateRequest([
+        'features' => [
+            new TenantFeature([
+                'id' => 'id',
+            ]),
+        ],
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$tenantId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$features:** `array` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>$client-&gt;tenants-&gt;resume($tenantId)</code></summary>
 <dl>
 <dd>
