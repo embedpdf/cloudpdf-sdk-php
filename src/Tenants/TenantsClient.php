@@ -16,6 +16,8 @@ use Psr\Http\Client\ClientExceptionInterface;
 use CloudPDF\Tenants\Requests\TenantsCreateRequest;
 use CloudPDF\Types\TenantsCreate200Response;
 use CloudPDF\Types\TenantsGet200Response;
+use CloudPDF\Tenants\Requests\TenantsUpdateRequest;
+use CloudPDF\Types\TenantsUpdate200Response;
 use CloudPDF\Tenants\Requests\TenantsSuspendRequest;
 use CloudPDF\Tenants\Requests\UsageTenantsRequest;
 use CloudPDF\Types\TenantsUsage200Response;
@@ -264,6 +266,70 @@ class TenantsClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 return;
             }
+        } catch (ClientExceptionInterface $e) {
+            throw new CloudPDFException(message: $e->getMessage(), previous: $e);
+        }
+        throw new CloudPDFApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * A feature names an installed module; any other id is a 400. A module route answers a tenant without its feature 403 FeatureNotEnabled, and one whose feature is stopped 402 FeatureStopped (details.feature, details.stopped). Other replicas apply a change within 30 seconds.
+     *
+     * Example:
+     * ```php
+     * $client->tenants->update(
+     *     'tenantId',
+     *     new TenantsUpdateRequest([
+     *         'features' => [
+     *             new TenantFeature([
+     *                 'id' => 'id',
+     *             ]),
+     *         ],
+     *     ]),
+     * );
+     * ```
+     *
+     * @param string $tenantId
+     * @param TenantsUpdateRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return ?TenantsUpdate200Response
+     * @throws CloudPDFException
+     * @throws CloudPDFApiException
+     */
+    public function update(string $tenantId, TenantsUpdateRequest $request, ?array $options = null): ?TenantsUpdate200Response
+    {
+        $options = array_merge($this->options, $options ?? []);
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
+                    path: "v1/tenants/{$tenantId}",
+                    method: HttpMethod::PATCH,
+                    body: $request,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
+                return TenantsUpdate200Response::fromJson($json);
+            }
+        } catch (JsonException $e) {
+            throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (ClientExceptionInterface $e) {
             throw new CloudPDFException(message: $e->getMessage(), previous: $e);
         }
