@@ -197,6 +197,12 @@ class AnnotationStamp extends JsonSerializableType
     public ?PdfAnnotationActions $actions;
 
     /**
+     * @var ?RichTextDocument $richText
+     */
+    #[JsonProperty('richText')]
+    public ?RichTextDocument $richText;
+
+    /**
      * @var AnnotationStampBox $box
      */
     #[JsonProperty('box')]
@@ -261,6 +267,7 @@ class AnnotationStamp extends JsonSerializableType
      *   modifiedBy?: ?string,
      *   importedBy?: ?string,
      *   actions?: ?PdfAnnotationActions,
+     *   richText?: ?RichTextDocument,
      *   rotation?: ?float,
      *   name?: ?string,
      *   fit?: ?value-of<AnnotationStampFit>,
@@ -300,6 +307,7 @@ class AnnotationStamp extends JsonSerializableType
         $this->modifiedBy = $values['modifiedBy'] ?? null;
         $this->importedBy = $values['importedBy'] ?? null;
         $this->actions = $values['actions'] ?? null;
+        $this->richText = $values['richText'] ?? null;
         $this->box = $values['box'];
         $this->rotation = $values['rotation'] ?? null;
         $this->name = $values['name'] ?? null;

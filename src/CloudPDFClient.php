@@ -82,8 +82,8 @@ class CloudPDFClient
         $defaultHeaders = [
             'X-Fern-Language' => 'PHP',
             'X-Fern-SDK-Name' => 'CloudPDF',
-            'X-Fern-SDK-Version' => '3.0.0-alpha.21',
-            'User-Agent' => 'cloudpdf/sdk/3.0.0-alpha.21',
+            'X-Fern-SDK-Version' => '3.0.0-alpha.22',
+            'User-Agent' => 'cloudpdf/sdk/3.0.0-alpha.22',
         ];
         if ($token != null) {
             $defaultHeaders['Authorization'] = "Bearer $token";

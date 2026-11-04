@@ -195,6 +195,12 @@ class AnnotationDraftFreeText extends JsonSerializableType
     public mixed $actions;
 
     /**
+     * @var ?RichTextDocumentInput $richText
+     */
+    #[JsonProperty('richText')]
+    public ?RichTextDocumentInput $richText;
+
+    /**
      * @var ?AnnotationDraftFreeTextBox $box
      */
     #[JsonProperty('box')]
@@ -235,12 +241,6 @@ class AnnotationDraftFreeText extends JsonSerializableType
      */
     #[JsonProperty('verticalAlign')]
     public ?string $verticalAlign;
-
-    /**
-     * @var ?AnnotationDraftFreeTextRichText $richText
-     */
-    #[JsonProperty('richText')]
-    public ?AnnotationDraftFreeTextRichText $richText;
 
     /**
      * @var ?string $color
@@ -335,6 +335,7 @@ class AnnotationDraftFreeText extends JsonSerializableType
      *   modifiedBy?: mixed,
      *   importedBy?: mixed,
      *   actions?: mixed,
+     *   richText?: ?RichTextDocumentInput,
      *   box?: ?AnnotationDraftFreeTextBox,
      *   rotation?: ?float,
      *   intent?: ?value-of<AnnotationDraftFreeTextIntent>,
@@ -342,7 +343,6 @@ class AnnotationDraftFreeText extends JsonSerializableType
      *   fontSize?: ?float,
      *   textAlign?: ?value-of<AnnotationDraftFreeTextTextAlign>,
      *   verticalAlign?: ?value-of<AnnotationDraftFreeTextVerticalAlign>,
-     *   richText?: ?AnnotationDraftFreeTextRichText,
      *   color?: ?string,
      *   fontColor?: ?string,
      *   interiorColor?: ?string,
@@ -389,6 +389,7 @@ class AnnotationDraftFreeText extends JsonSerializableType
         $this->modifiedBy = $values['modifiedBy'] ?? null;
         $this->importedBy = $values['importedBy'] ?? null;
         $this->actions = $values['actions'] ?? null;
+        $this->richText = $values['richText'] ?? null;
         $this->box = $values['box'] ?? null;
         $this->rotation = $values['rotation'] ?? null;
         $this->intent = $values['intent'] ?? null;
@@ -396,7 +397,6 @@ class AnnotationDraftFreeText extends JsonSerializableType
         $this->fontSize = $values['fontSize'] ?? null;
         $this->textAlign = $values['textAlign'] ?? null;
         $this->verticalAlign = $values['verticalAlign'] ?? null;
-        $this->richText = $values['richText'] ?? null;
         $this->color = $values['color'] ?? null;
         $this->fontColor = $values['fontColor'] ?? null;
         $this->interiorColor = $values['interiorColor'] ?? null;

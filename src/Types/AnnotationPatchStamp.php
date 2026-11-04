@@ -194,6 +194,12 @@ class AnnotationPatchStamp extends JsonSerializableType
     public mixed $actions;
 
     /**
+     * @var ?RichTextDocumentInput $richText
+     */
+    #[JsonProperty('richText')]
+    public ?RichTextDocumentInput $richText;
+
+    /**
      * @var ?AnnotationPatchStampBox $box
      */
     #[JsonProperty('box')]
@@ -256,6 +262,7 @@ class AnnotationPatchStamp extends JsonSerializableType
      *   modifiedBy?: mixed,
      *   importedBy?: mixed,
      *   actions?: mixed,
+     *   richText?: ?RichTextDocumentInput,
      *   box?: ?AnnotationPatchStampBox,
      *   rotation?: ?float,
      *   name?: ?string,
@@ -297,6 +304,7 @@ class AnnotationPatchStamp extends JsonSerializableType
         $this->modifiedBy = $values['modifiedBy'] ?? null;
         $this->importedBy = $values['importedBy'] ?? null;
         $this->actions = $values['actions'] ?? null;
+        $this->richText = $values['richText'] ?? null;
         $this->box = $values['box'] ?? null;
         $this->rotation = $values['rotation'] ?? null;
         $this->name = $values['name'] ?? null;
