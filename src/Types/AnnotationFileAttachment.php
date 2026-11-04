@@ -197,6 +197,12 @@ class AnnotationFileAttachment extends JsonSerializableType
     public ?PdfAnnotationActions $actions;
 
     /**
+     * @var ?RichTextDocument $richText
+     */
+    #[JsonProperty('richText')]
+    public ?RichTextDocument $richText;
+
+    /**
      * @var string $color
      */
     #[JsonProperty('color')]
@@ -256,6 +262,7 @@ class AnnotationFileAttachment extends JsonSerializableType
      *   modifiedBy?: ?string,
      *   importedBy?: ?string,
      *   actions?: ?PdfAnnotationActions,
+     *   richText?: ?RichTextDocument,
      *   file?: ?AttachmentFileInfo,
      * } $values
      */
@@ -293,6 +300,7 @@ class AnnotationFileAttachment extends JsonSerializableType
         $this->modifiedBy = $values['modifiedBy'] ?? null;
         $this->importedBy = $values['importedBy'] ?? null;
         $this->actions = $values['actions'] ?? null;
+        $this->richText = $values['richText'] ?? null;
         $this->color = $values['color'];
         $this->opacity = $values['opacity'];
         $this->icon = $values['icon'];

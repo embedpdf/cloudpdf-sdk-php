@@ -197,6 +197,12 @@ class AnnotationCaret extends JsonSerializableType
     public ?PdfAnnotationActions $actions;
 
     /**
+     * @var ?RichTextDocument $richText
+     */
+    #[JsonProperty('richText')]
+    public ?RichTextDocument $richText;
+
+    /**
      * @var string $color
      */
     #[JsonProperty('color')]
@@ -262,6 +268,7 @@ class AnnotationCaret extends JsonSerializableType
      *   modifiedBy?: ?string,
      *   importedBy?: ?string,
      *   actions?: ?PdfAnnotationActions,
+     *   richText?: ?RichTextDocument,
      *   rotation?: ?float,
      *   intent?: ?value-of<AnnotationCaretIntent>,
      * } $values
@@ -300,6 +307,7 @@ class AnnotationCaret extends JsonSerializableType
         $this->modifiedBy = $values['modifiedBy'] ?? null;
         $this->importedBy = $values['importedBy'] ?? null;
         $this->actions = $values['actions'] ?? null;
+        $this->richText = $values['richText'] ?? null;
         $this->color = $values['color'];
         $this->opacity = $values['opacity'];
         $this->box = $values['box'];

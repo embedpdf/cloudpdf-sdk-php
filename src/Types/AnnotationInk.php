@@ -197,10 +197,16 @@ class AnnotationInk extends JsonSerializableType
     public ?PdfAnnotationActions $actions;
 
     /**
-     * @var string $color
+     * @var ?RichTextDocument $richText
+     */
+    #[JsonProperty('richText')]
+    public ?RichTextDocument $richText;
+
+    /**
+     * @var ?string $color
      */
     #[JsonProperty('color')]
-    public string $color;
+    public ?string $color;
 
     /**
      * @var float $opacity
@@ -261,7 +267,6 @@ class AnnotationInk extends JsonSerializableType
      *   locked: bool,
      *   toggleNoView: bool,
      *   lockedContents: bool,
-     *   color: string,
      *   opacity: float,
      *   strokeWidth: float,
      *   borderStyle: value-of<AnnotationInkBorderStyle>,
@@ -282,6 +287,8 @@ class AnnotationInk extends JsonSerializableType
      *   modifiedBy?: ?string,
      *   importedBy?: ?string,
      *   actions?: ?PdfAnnotationActions,
+     *   richText?: ?RichTextDocument,
+     *   color?: ?string,
      *   dashArray?: ?array<float>,
      *   intent?: ?value-of<AnnotationInkIntent>,
      *   rotation?: ?float,
@@ -321,7 +328,8 @@ class AnnotationInk extends JsonSerializableType
         $this->modifiedBy = $values['modifiedBy'] ?? null;
         $this->importedBy = $values['importedBy'] ?? null;
         $this->actions = $values['actions'] ?? null;
-        $this->color = $values['color'];
+        $this->richText = $values['richText'] ?? null;
+        $this->color = $values['color'] ?? null;
         $this->opacity = $values['opacity'];
         $this->strokeWidth = $values['strokeWidth'];
         $this->borderStyle = $values['borderStyle'];

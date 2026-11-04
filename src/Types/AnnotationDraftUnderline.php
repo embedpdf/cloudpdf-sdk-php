@@ -195,6 +195,12 @@ class AnnotationDraftUnderline extends JsonSerializableType
     public mixed $actions;
 
     /**
+     * @var ?RichTextDocumentInput $richText
+     */
+    #[JsonProperty('richText')]
+    public ?RichTextDocumentInput $richText;
+
+    /**
      * @var ?string $color
      */
     #[JsonProperty('color')]
@@ -246,6 +252,7 @@ class AnnotationDraftUnderline extends JsonSerializableType
      *   modifiedBy?: mixed,
      *   importedBy?: mixed,
      *   actions?: mixed,
+     *   richText?: ?RichTextDocumentInput,
      *   color?: ?string,
      *   opacity?: ?float,
      * } $values
@@ -284,6 +291,7 @@ class AnnotationDraftUnderline extends JsonSerializableType
         $this->modifiedBy = $values['modifiedBy'] ?? null;
         $this->importedBy = $values['importedBy'] ?? null;
         $this->actions = $values['actions'] ?? null;
+        $this->richText = $values['richText'] ?? null;
         $this->color = $values['color'] ?? null;
         $this->opacity = $values['opacity'] ?? null;
         $this->quadPoints = $values['quadPoints'];

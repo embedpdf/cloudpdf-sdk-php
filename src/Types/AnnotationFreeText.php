@@ -197,6 +197,12 @@ class AnnotationFreeText extends JsonSerializableType
     public ?PdfAnnotationActions $actions;
 
     /**
+     * @var RichTextDocument $richText
+     */
+    #[JsonProperty('richText')]
+    public RichTextDocument $richText;
+
+    /**
      * @var AnnotationFreeTextBox $box
      */
     #[JsonProperty('box')]
@@ -237,12 +243,6 @@ class AnnotationFreeText extends JsonSerializableType
      */
     #[JsonProperty('verticalAlign')]
     public string $verticalAlign;
-
-    /**
-     * @var AnnotationFreeTextRichText $richText
-     */
-    #[JsonProperty('richText')]
-    public AnnotationFreeTextRichText $richText;
 
     /**
      * @var string $color
@@ -321,13 +321,13 @@ class AnnotationFreeText extends JsonSerializableType
      *   locked: bool,
      *   toggleNoView: bool,
      *   lockedContents: bool,
+     *   richText: RichTextDocument,
      *   box: AnnotationFreeTextBox,
      *   intent: value-of<AnnotationFreeTextIntent>,
      *   fontFamily: string,
      *   fontSize: float,
      *   textAlign: value-of<AnnotationFreeTextTextAlign>,
      *   verticalAlign: value-of<AnnotationFreeTextVerticalAlign>,
-     *   richText: AnnotationFreeTextRichText,
      *   color: string,
      *   fontColor: string,
      *   opacity: float,
@@ -391,6 +391,7 @@ class AnnotationFreeText extends JsonSerializableType
         $this->modifiedBy = $values['modifiedBy'] ?? null;
         $this->importedBy = $values['importedBy'] ?? null;
         $this->actions = $values['actions'] ?? null;
+        $this->richText = $values['richText'];
         $this->box = $values['box'];
         $this->rotation = $values['rotation'] ?? null;
         $this->intent = $values['intent'];
@@ -398,7 +399,6 @@ class AnnotationFreeText extends JsonSerializableType
         $this->fontSize = $values['fontSize'];
         $this->textAlign = $values['textAlign'];
         $this->verticalAlign = $values['verticalAlign'];
-        $this->richText = $values['richText'];
         $this->color = $values['color'];
         $this->fontColor = $values['fontColor'];
         $this->interiorColor = $values['interiorColor'] ?? null;

@@ -469,6 +469,12 @@ class TenantsClient
         if ($request->period != null) {
             $query['period'] = $request->period;
         }
+        if ($request->from != null) {
+            $query['from'] = $request->from;
+        }
+        if ($request->to != null) {
+            $query['to'] = $request->to;
+        }
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(

@@ -197,6 +197,12 @@ class AnnotationHighlight extends JsonSerializableType
     public ?PdfAnnotationActions $actions;
 
     /**
+     * @var ?RichTextDocument $richText
+     */
+    #[JsonProperty('richText')]
+    public ?RichTextDocument $richText;
+
+    /**
      * @var string $color
      */
     #[JsonProperty('color')]
@@ -250,6 +256,7 @@ class AnnotationHighlight extends JsonSerializableType
      *   modifiedBy?: ?string,
      *   importedBy?: ?string,
      *   actions?: ?PdfAnnotationActions,
+     *   richText?: ?RichTextDocument,
      * } $values
      */
     public function __construct(
@@ -286,6 +293,7 @@ class AnnotationHighlight extends JsonSerializableType
         $this->modifiedBy = $values['modifiedBy'] ?? null;
         $this->importedBy = $values['importedBy'] ?? null;
         $this->actions = $values['actions'] ?? null;
+        $this->richText = $values['richText'] ?? null;
         $this->color = $values['color'];
         $this->opacity = $values['opacity'];
         $this->quadPoints = $values['quadPoints'];
