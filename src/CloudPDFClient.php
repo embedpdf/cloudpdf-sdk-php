@@ -67,6 +67,7 @@ class CloudPDFClient
 
     /**
      * @param ?string $token The token to use for authentication.
+     * @param ?string $embedPdfVersion
      * @param ?array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
@@ -77,16 +78,21 @@ class CloudPDFClient
      */
     public function __construct(
         ?string $token = null,
+        ?string $embedPdfVersion = null,
         ?array $options = null,
     ) {
         $defaultHeaders = [
+            'EmbedPDF-Version' => '3.0',
             'X-Fern-Language' => 'PHP',
             'X-Fern-SDK-Name' => 'CloudPDF',
-            'X-Fern-SDK-Version' => '3.0.0-alpha.22',
-            'User-Agent' => 'cloudpdf/sdk/3.0.0-alpha.22',
+            'X-Fern-SDK-Version' => '3.0.0-alpha.23',
+            'User-Agent' => 'cloudpdf/sdk/3.0.0-alpha.23',
         ];
         if ($token != null) {
             $defaultHeaders['Authorization'] = "Bearer $token";
+        }
+        if ($embedPdfVersion !== null) {
+            $defaultHeaders['EmbedPDF-Version'] = $embedPdfVersion;
         }
 
         $this->options = $options ?? [];

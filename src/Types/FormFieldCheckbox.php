@@ -59,16 +59,16 @@ class FormFieldCheckbox extends JsonSerializableType
     public ?string $mappingName;
 
     /**
-     * @var FormFieldCheckboxValueEntry $valueEntry
+     * @var FormValueEntry $valueEntry
      */
     #[JsonProperty('valueEntry')]
-    public FormFieldCheckboxValueEntry $valueEntry;
+    public FormValueEntry $valueEntry;
 
     /**
-     * @var FormFieldCheckboxDefaultValueEntry $defaultValueEntry
+     * @var FormValueEntry $defaultValueEntry
      */
     #[JsonProperty('defaultValueEntry')]
-    public FormFieldCheckboxDefaultValueEntry $defaultValueEntry;
+    public FormValueEntry $defaultValueEntry;
 
     /**
      * @var ?PdfFieldActions $actions
@@ -144,8 +144,8 @@ class FormFieldCheckbox extends JsonSerializableType
      *   readOnly: bool,
      *   required: bool,
      *   noExport: bool,
-     *   valueEntry: FormFieldCheckboxValueEntry,
-     *   defaultValueEntry: FormFieldCheckboxDefaultValueEntry,
+     *   valueEntry: FormValueEntry,
+     *   defaultValueEntry: FormValueEntry,
      *   widgets: array<FormFieldCheckboxWidgetsItem>,
      *   checked: bool,
      *   exportValue: string,

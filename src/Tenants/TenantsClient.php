@@ -5,7 +5,7 @@ namespace CloudPDF\Tenants;
 use Psr\Http\Client\ClientInterface;
 use CloudPDF\Core\Client\RawClient;
 use CloudPDF\Tenants\Requests\ListTenantsRequest;
-use CloudPDF\Types\TenantsList200Response;
+use CloudPDF\Types\TenantsListResponse;
 use CloudPDF\Exceptions\CloudPDFException;
 use CloudPDF\Exceptions\CloudPDFApiException;
 use CloudPDF\Core\Json\JsonApiRequest;
@@ -14,13 +14,13 @@ use CloudPDF\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
 use CloudPDF\Tenants\Requests\TenantsCreateRequest;
-use CloudPDF\Types\TenantsCreate200Response;
-use CloudPDF\Types\TenantsGet200Response;
+use CloudPDF\Types\TenantsCreateResponse;
+use CloudPDF\Types\TenantsGetResponse;
 use CloudPDF\Tenants\Requests\TenantsUpdateRequest;
-use CloudPDF\Types\TenantsUpdate200Response;
+use CloudPDF\Types\TenantsUpdateResponse;
 use CloudPDF\Tenants\Requests\TenantsSuspendRequest;
 use CloudPDF\Tenants\Requests\UsageTenantsRequest;
-use CloudPDF\Types\TenantsUsage200Response;
+use CloudPDF\Types\TenantsUsageResponse;
 
 class TenantsClient
 {
@@ -75,11 +75,11 @@ class TenantsClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?TenantsList200Response
+     * @return ?TenantsListResponse
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function list(ListTenantsRequest $request = new ListTenantsRequest(), ?array $options = null): ?TenantsList200Response
+    public function list(ListTenantsRequest $request = new ListTenantsRequest(), ?array $options = null): ?TenantsListResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -105,7 +105,7 @@ class TenantsClient
                 if (empty($json)) {
                     return null;
                 }
-                return TenantsList200Response::fromJson($json);
+                return TenantsListResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -138,11 +138,11 @@ class TenantsClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?TenantsCreate200Response
+     * @return ?TenantsCreateResponse
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function create(TenantsCreateRequest $request, ?array $options = null): ?TenantsCreate200Response
+    public function create(TenantsCreateRequest $request, ?array $options = null): ?TenantsCreateResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -161,7 +161,7 @@ class TenantsClient
                 if (empty($json)) {
                     return null;
                 }
-                return TenantsCreate200Response::fromJson($json);
+                return TenantsCreateResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -192,11 +192,11 @@ class TenantsClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?TenantsGet200Response
+     * @return ?TenantsGetResponse
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function get(string $tenantId, ?array $options = null): ?TenantsGet200Response
+    public function get(string $tenantId, ?array $options = null): ?TenantsGetResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -214,7 +214,7 @@ class TenantsClient
                 if (empty($json)) {
                     return null;
                 }
-                return TenantsGet200Response::fromJson($json);
+                return TenantsGetResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -303,11 +303,11 @@ class TenantsClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?TenantsUpdate200Response
+     * @return ?TenantsUpdateResponse
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function update(string $tenantId, TenantsUpdateRequest $request, ?array $options = null): ?TenantsUpdate200Response
+    public function update(string $tenantId, TenantsUpdateRequest $request, ?array $options = null): ?TenantsUpdateResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -326,7 +326,7 @@ class TenantsClient
                 if (empty($json)) {
                     return null;
                 }
-                return TenantsUpdate200Response::fromJson($json);
+                return TenantsUpdateResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -458,11 +458,11 @@ class TenantsClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?TenantsUsage200Response
+     * @return ?TenantsUsageResponse
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function usage(string $tenantId, UsageTenantsRequest $request = new UsageTenantsRequest(), ?array $options = null): ?TenantsUsage200Response
+    public function usage(string $tenantId, UsageTenantsRequest $request = new UsageTenantsRequest(), ?array $options = null): ?TenantsUsageResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -491,7 +491,7 @@ class TenantsClient
                 if (empty($json)) {
                     return null;
                 }
-                return TenantsUsage200Response::fromJson($json);
+                return TenantsUsageResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);

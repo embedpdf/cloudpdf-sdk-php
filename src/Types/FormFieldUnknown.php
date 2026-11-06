@@ -59,16 +59,16 @@ class FormFieldUnknown extends JsonSerializableType
     public ?string $mappingName;
 
     /**
-     * @var FormFieldUnknownValueEntry $valueEntry
+     * @var FormValueEntry $valueEntry
      */
     #[JsonProperty('valueEntry')]
-    public FormFieldUnknownValueEntry $valueEntry;
+    public FormValueEntry $valueEntry;
 
     /**
-     * @var FormFieldUnknownDefaultValueEntry $defaultValueEntry
+     * @var FormValueEntry $defaultValueEntry
      */
     #[JsonProperty('defaultValueEntry')]
-    public FormFieldUnknownDefaultValueEntry $defaultValueEntry;
+    public FormValueEntry $defaultValueEntry;
 
     /**
      * @var ?PdfFieldActions $actions
@@ -138,8 +138,8 @@ class FormFieldUnknown extends JsonSerializableType
      *   readOnly: bool,
      *   required: bool,
      *   noExport: bool,
-     *   valueEntry: FormFieldUnknownValueEntry,
-     *   defaultValueEntry: FormFieldUnknownDefaultValueEntry,
+     *   valueEntry: FormValueEntry,
+     *   defaultValueEntry: FormValueEntry,
      *   widgets: array<FormWidget>,
      *   rawValue: string,
      *   alternateName?: ?string,

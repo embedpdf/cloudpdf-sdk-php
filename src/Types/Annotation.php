@@ -5,6 +5,9 @@ namespace CloudPDF\Types;
 use CloudPDF\Core\Json\JsonSerializableType;
 use Exception;
 
+/**
+ * An annotation, by its `subtype`. A newer server can add subtypes: read one your client doesn't know as `unsupported`, keeping the fields every annotation has, with `rawSubtypeCode` 0 and `rawSubtypeName` null when the body has neither.
+ */
 class Annotation extends JsonSerializableType
 {
     /**

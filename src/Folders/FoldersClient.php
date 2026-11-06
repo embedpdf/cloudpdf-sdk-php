@@ -5,7 +5,7 @@ namespace CloudPDF\Folders;
 use Psr\Http\Client\ClientInterface;
 use CloudPDF\Core\Client\RawClient;
 use CloudPDF\Folders\Requests\ListFoldersRequest;
-use CloudPDF\Types\FoldersList200Response;
+use CloudPDF\Types\FoldersListResponse;
 use CloudPDF\Exceptions\CloudPDFException;
 use CloudPDF\Exceptions\CloudPDFApiException;
 use CloudPDF\Core\Json\JsonApiRequest;
@@ -14,11 +14,11 @@ use CloudPDF\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
 use CloudPDF\Folders\Requests\FoldersCreateRequest;
-use CloudPDF\Types\FoldersCreate200Response;
-use CloudPDF\Types\FoldersGet200Response;
+use CloudPDF\Types\FoldersCreateResponse;
+use CloudPDF\Types\FoldersGetResponse;
 use CloudPDF\Folders\Requests\DeleteFoldersRequest;
 use CloudPDF\Folders\Requests\FoldersUpdateRequest;
-use CloudPDF\Types\FoldersUpdate200Response;
+use CloudPDF\Types\FoldersUpdateResponse;
 use CloudPDF\Folders\Requests\FoldersMoveIntoRequest;
 
 class FoldersClient
@@ -76,11 +76,11 @@ class FoldersClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?FoldersList200Response
+     * @return ?FoldersListResponse
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function list(string $tenantId, ListFoldersRequest $request = new ListFoldersRequest(), ?array $options = null): ?FoldersList200Response
+    public function list(string $tenantId, ListFoldersRequest $request = new ListFoldersRequest(), ?array $options = null): ?FoldersListResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -109,7 +109,7 @@ class FoldersClient
                 if (empty($json)) {
                     return null;
                 }
-                return FoldersList200Response::fromJson($json);
+                return FoldersListResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -146,11 +146,11 @@ class FoldersClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?FoldersCreate200Response
+     * @return ?FoldersCreateResponse
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function create(string $tenantId, FoldersCreateRequest $request, ?array $options = null): ?FoldersCreate200Response
+    public function create(string $tenantId, FoldersCreateRequest $request, ?array $options = null): ?FoldersCreateResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -169,7 +169,7 @@ class FoldersClient
                 if (empty($json)) {
                     return null;
                 }
-                return FoldersCreate200Response::fromJson($json);
+                return FoldersCreateResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -202,11 +202,11 @@ class FoldersClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?FoldersGet200Response
+     * @return ?FoldersGetResponse
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function get(string $tenantId, string $folderId, ?array $options = null): ?FoldersGet200Response
+    public function get(string $tenantId, string $folderId, ?array $options = null): ?FoldersGetResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -224,7 +224,7 @@ class FoldersClient
                 if (empty($json)) {
                     return null;
                 }
-                return FoldersGet200Response::fromJson($json);
+                return FoldersGetResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -320,11 +320,11 @@ class FoldersClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?FoldersUpdate200Response
+     * @return ?FoldersUpdateResponse
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function update(string $tenantId, string $folderId, FoldersUpdateRequest $request, ?array $options = null): ?FoldersUpdate200Response
+    public function update(string $tenantId, string $folderId, FoldersUpdateRequest $request, ?array $options = null): ?FoldersUpdateResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -343,7 +343,7 @@ class FoldersClient
                 if (empty($json)) {
                     return null;
                 }
-                return FoldersUpdate200Response::fromJson($json);
+                return FoldersUpdateResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -358,7 +358,7 @@ class FoldersClient
     }
 
     /**
-     * Up to 1,000 ids in total. A folder moves with everything in it. 404 NotFound names the ids that do not exist or are being deleted in `details.documentIds` and `details.folderIds`. 409 Conflict carries `details.reason`: `cycle` (the destination is a moved folder or inside one; `details.folderId`), `too-deep` (the move would nest folders deeper than 100 levels; `details.maxDepth`) or `name-taken` (a moved folder's name is taken in the destination, ignoring case; `details.name`).
+     * Up to 1,000 ids in total. A folder moves with everything in it. 404 NotFound names the ids that do not exist or are being deleted in `details.docIds` and `details.folderIds`. 409 Conflict carries `details.reason`: `cycle` (the destination is a moved folder or inside one; `details.folderId`), `too-deep` (the move would nest folders deeper than 100 levels; `details.maxDepth`) or `name-taken` (a moved folder's name is taken in the destination, ignoring case; `details.name`).
      *
      * Example:
      * ```php

@@ -21,10 +21,70 @@ class PdfActionNodeSubmitFormPayload extends JsonSerializableType
     public ?array $fields;
 
     /**
-     * @var PdfActionNodeSubmitFormPayloadFlags $flags
+     * @var bool $exclude
      */
-    #[JsonProperty('flags')]
-    public PdfActionNodeSubmitFormPayloadFlags $flags;
+    #[JsonProperty('exclude')]
+    public bool $exclude;
+
+    /**
+     * @var bool $includeNoValueFields
+     */
+    #[JsonProperty('includeNoValueFields')]
+    public bool $includeNoValueFields;
+
+    /**
+     * @var value-of<PdfActionNodeSubmitFormPayloadFormat> $format
+     */
+    #[JsonProperty('format')]
+    public string $format;
+
+    /**
+     * @var value-of<PdfActionNodeSubmitFormPayloadMethod> $method
+     */
+    #[JsonProperty('method')]
+    public string $method;
+
+    /**
+     * @var bool $submitCoordinates
+     */
+    #[JsonProperty('submitCoordinates')]
+    public bool $submitCoordinates;
+
+    /**
+     * @var bool $includeAppendSaves
+     */
+    #[JsonProperty('includeAppendSaves')]
+    public bool $includeAppendSaves;
+
+    /**
+     * @var bool $includeAnnotations
+     */
+    #[JsonProperty('includeAnnotations')]
+    public bool $includeAnnotations;
+
+    /**
+     * @var bool $canonicalFormat
+     */
+    #[JsonProperty('canonicalFormat')]
+    public bool $canonicalFormat;
+
+    /**
+     * @var bool $exclNonUserAnnots
+     */
+    #[JsonProperty('exclNonUserAnnots')]
+    public bool $exclNonUserAnnots;
+
+    /**
+     * @var bool $exclFKey
+     */
+    #[JsonProperty('exclFKey')]
+    public bool $exclFKey;
+
+    /**
+     * @var bool $embedForm
+     */
+    #[JsonProperty('embedForm')]
+    public bool $embedForm;
 
     /**
      * @var ?string $charSet
@@ -35,7 +95,17 @@ class PdfActionNodeSubmitFormPayload extends JsonSerializableType
     /**
      * @param array{
      *   url: string,
-     *   flags: PdfActionNodeSubmitFormPayloadFlags,
+     *   exclude: bool,
+     *   includeNoValueFields: bool,
+     *   format: value-of<PdfActionNodeSubmitFormPayloadFormat>,
+     *   method: value-of<PdfActionNodeSubmitFormPayloadMethod>,
+     *   submitCoordinates: bool,
+     *   includeAppendSaves: bool,
+     *   includeAnnotations: bool,
+     *   canonicalFormat: bool,
+     *   exclNonUserAnnots: bool,
+     *   exclFKey: bool,
+     *   embedForm: bool,
      *   fields?: ?array<PdfActionTargetRef>,
      *   charSet?: ?string,
      * } $values
@@ -45,7 +115,17 @@ class PdfActionNodeSubmitFormPayload extends JsonSerializableType
     ) {
         $this->url = $values['url'];
         $this->fields = $values['fields'] ?? null;
-        $this->flags = $values['flags'];
+        $this->exclude = $values['exclude'];
+        $this->includeNoValueFields = $values['includeNoValueFields'];
+        $this->format = $values['format'];
+        $this->method = $values['method'];
+        $this->submitCoordinates = $values['submitCoordinates'];
+        $this->includeAppendSaves = $values['includeAppendSaves'];
+        $this->includeAnnotations = $values['includeAnnotations'];
+        $this->canonicalFormat = $values['canonicalFormat'];
+        $this->exclNonUserAnnots = $values['exclNonUserAnnots'];
+        $this->exclFKey = $values['exclFKey'];
+        $this->embedForm = $values['embedForm'];
         $this->charSet = $values['charSet'] ?? null;
     }
 

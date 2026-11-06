@@ -45,15 +45,15 @@ class TokensIssueRequestUpload extends JsonSerializableType
     public ?array $origins;
 
     /**
-     * @var int $expiresIn
+     * @var int $expiresInSeconds
      */
-    #[JsonProperty('expiresIn')]
-    public int $expiresIn;
+    #[JsonProperty('expiresInSeconds')]
+    public int $expiresInSeconds;
 
     /**
      * @param array{
      *   sub: string,
-     *   expiresIn: int,
+     *   expiresInSeconds: int,
      *   folderId?: ?string,
      *   metadata?: ?array<string, mixed>,
      *   maxFiles?: ?int,
@@ -70,7 +70,7 @@ class TokensIssueRequestUpload extends JsonSerializableType
         $this->maxFiles = $values['maxFiles'] ?? null;
         $this->maxBytes = $values['maxBytes'] ?? null;
         $this->origins = $values['origins'] ?? null;
-        $this->expiresIn = $values['expiresIn'];
+        $this->expiresInSeconds = $values['expiresInSeconds'];
     }
 
     /**

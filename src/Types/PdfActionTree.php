@@ -21,12 +21,6 @@ class PdfActionTree extends JsonSerializableType
     public bool $incomplete;
 
     /**
-     * @var int $warningFlags
-     */
-    #[JsonProperty('warningFlags')]
-    public int $warningFlags;
-
-    /**
      * @var array<value-of<PdfActionTreeWarningsItem>> $warnings
      */
     #[JsonProperty('warnings'), ArrayType(['string'])]
@@ -35,7 +29,6 @@ class PdfActionTree extends JsonSerializableType
     /**
      * @param array{
      *   incomplete: bool,
-     *   warningFlags: int,
      *   warnings: array<value-of<PdfActionTreeWarningsItem>>,
      *   root?: ?PdfActionNode,
      * } $values
@@ -45,7 +38,6 @@ class PdfActionTree extends JsonSerializableType
     ) {
         $this->root = $values['root'] ?? null;
         $this->incomplete = $values['incomplete'];
-        $this->warningFlags = $values['warningFlags'];
         $this->warnings = $values['warnings'];
     }
 

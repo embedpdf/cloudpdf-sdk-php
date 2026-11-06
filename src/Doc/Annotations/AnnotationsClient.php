@@ -15,18 +15,18 @@ use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
 use CloudPDF\Doc\Annotations\Requests\ListAnnotationsRequest;
 use CloudPDF\Doc\Annotations\Requests\CreateAnnotationsRequest;
-use CloudPDF\Types\DocAnnotationsCreate200Response;
+use CloudPDF\Types\DocAnnotationsCreateResponse;
 use CloudPDF\Doc\Annotations\Requests\DeleteAnnotationsRequest;
-use CloudPDF\Types\DocAnnotationsDelete200Response;
+use CloudPDF\Types\DocAnnotationsDeleteResponse;
 use CloudPDF\Doc\Annotations\Requests\UpdateAnnotationsRequest;
-use CloudPDF\Types\DocAnnotationsUpdate200Response;
+use CloudPDF\Types\DocAnnotationsUpdateResponse;
 use CloudPDF\Doc\Annotations\Requests\ReadAppearanceAnnotationsRequest;
 use CloudPDF\Doc\Annotations\Requests\ReadFileAnnotationsRequest;
 use CloudPDF\Doc\Annotations\Requests\ExportAppearanceAnnotationsRequest;
 use CloudPDF\Doc\Annotations\Requests\FlattenAnnotationsRequest;
-use CloudPDF\Types\DocAnnotationsFlatten200Response;
+use CloudPDF\Types\DocAnnotationsFlattenResponse;
 use CloudPDF\Doc\Annotations\Requests\DocAnnotationsReorderRequest;
-use CloudPDF\Types\DocAnnotationsReorder200Response;
+use CloudPDF\Types\DocAnnotationsReorderResponse;
 
 class AnnotationsClient
 {
@@ -141,7 +141,7 @@ class AnnotationsClient
      *
      * @param string $docId
      * @param string $layerName
-     * @param string $pageKey The page's address, `obj:N`: the page's indirect object number, the durable identity every `PageLayout.ref` carries. Mirrors `annotKey` and `fieldKey`.
+     * @param string $pageKey The page's address, `obj:N`: the page's indirect object number, the durable identity every `PageLayout.ref` carries. Mirrors `annotationKey` and `fieldKey`.
      * @param ListAnnotationsRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -211,7 +211,7 @@ class AnnotationsClient
      *
      * @param string $docId
      * @param string $layerName
-     * @param string $pageKey The page's address, `obj:N`: the page's indirect object number, the durable identity every `PageLayout.ref` carries. Mirrors `annotKey` and `fieldKey`.
+     * @param string $pageKey The page's address, `obj:N`: the page's indirect object number, the durable identity every `PageLayout.ref` carries. Mirrors `annotationKey` and `fieldKey`.
      * @param CreateAnnotationsRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -221,11 +221,11 @@ class AnnotationsClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?DocAnnotationsCreate200Response
+     * @return ?DocAnnotationsCreateResponse
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function create(string $docId, string $layerName, string $pageKey, CreateAnnotationsRequest $request, ?array $options = null): ?DocAnnotationsCreate200Response
+    public function create(string $docId, string $layerName, string $pageKey, CreateAnnotationsRequest $request, ?array $options = null): ?DocAnnotationsCreateResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $headers = [];
@@ -252,7 +252,7 @@ class AnnotationsClient
                 if (empty($json)) {
                     return null;
                 }
-                return DocAnnotationsCreate200Response::fromJson($json);
+                return DocAnnotationsCreateResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -273,15 +273,15 @@ class AnnotationsClient
      *     'docId',
      *     'layerName',
      *     'pageKey',
-     *     'annotKey',
+     *     'annotationKey',
      *     new DeleteAnnotationsRequest([]),
      * );
      * ```
      *
      * @param string $docId
      * @param string $layerName
-     * @param string $pageKey The page's address, `obj:N`: the page's indirect object number, the durable identity every `PageLayout.ref` carries. Mirrors `annotKey` and `fieldKey`.
-     * @param string $annotKey The annotation's address on the page: `obj:N`, its indirect object number, or `base:N` for an annotation the uploaded file stored inline (without an object number of its own), the position it was born at in the page's /Annots. The name the annotation's `ref` carries for life.
+     * @param string $pageKey The page's address, `obj:N`: the page's indirect object number, the durable identity every `PageLayout.ref` carries. Mirrors `annotationKey` and `fieldKey`.
+     * @param string $annotationKey The annotation's address on the page: `obj:N`, its indirect object number, or `base:N` for an annotation the uploaded file stored inline (without an object number of its own), the position it was born at in the page's /Annots. The name the annotation's `ref` carries for life.
      * @param DeleteAnnotationsRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -291,11 +291,11 @@ class AnnotationsClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?DocAnnotationsDelete200Response
+     * @return ?DocAnnotationsDeleteResponse
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function delete(string $docId, string $layerName, string $pageKey, string $annotKey, DeleteAnnotationsRequest $request = new DeleteAnnotationsRequest(), ?array $options = null): ?DocAnnotationsDelete200Response
+    public function delete(string $docId, string $layerName, string $pageKey, string $annotationKey, DeleteAnnotationsRequest $request = new DeleteAnnotationsRequest(), ?array $options = null): ?DocAnnotationsDeleteResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $headers = [];
@@ -309,7 +309,7 @@ class AnnotationsClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
-                    path: "v1/docs/{$docId}/layers/{$layerName}/annotations/pages/{$pageKey}/items/{$annotKey}",
+                    path: "v1/docs/{$docId}/layers/{$layerName}/annotations/pages/{$pageKey}/items/{$annotationKey}",
                     method: HttpMethod::DELETE,
                     headers: $headers,
                 ),
@@ -321,7 +321,7 @@ class AnnotationsClient
                 if (empty($json)) {
                     return null;
                 }
-                return DocAnnotationsDelete200Response::fromJson($json);
+                return DocAnnotationsDeleteResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -342,7 +342,7 @@ class AnnotationsClient
      *     'docId',
      *     'layerName',
      *     'pageKey',
-     *     'annotKey',
+     *     'annotationKey',
      *     new UpdateAnnotationsRequest([
      *         'body' => [
      *             'key' => "value",
@@ -353,8 +353,8 @@ class AnnotationsClient
      *
      * @param string $docId
      * @param string $layerName
-     * @param string $pageKey The page's address, `obj:N`: the page's indirect object number, the durable identity every `PageLayout.ref` carries. Mirrors `annotKey` and `fieldKey`.
-     * @param string $annotKey The annotation's address on the page: `obj:N`, its indirect object number, or `base:N` for an annotation the uploaded file stored inline (without an object number of its own), the position it was born at in the page's /Annots. The name the annotation's `ref` carries for life.
+     * @param string $pageKey The page's address, `obj:N`: the page's indirect object number, the durable identity every `PageLayout.ref` carries. Mirrors `annotationKey` and `fieldKey`.
+     * @param string $annotationKey The annotation's address on the page: `obj:N`, its indirect object number, or `base:N` for an annotation the uploaded file stored inline (without an object number of its own), the position it was born at in the page's /Annots. The name the annotation's `ref` carries for life.
      * @param UpdateAnnotationsRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -364,11 +364,11 @@ class AnnotationsClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?DocAnnotationsUpdate200Response
+     * @return ?DocAnnotationsUpdateResponse
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function update(string $docId, string $layerName, string $pageKey, string $annotKey, UpdateAnnotationsRequest $request, ?array $options = null): ?DocAnnotationsUpdate200Response
+    public function update(string $docId, string $layerName, string $pageKey, string $annotationKey, UpdateAnnotationsRequest $request, ?array $options = null): ?DocAnnotationsUpdateResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $headers = [];
@@ -382,7 +382,7 @@ class AnnotationsClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
-                    path: "v1/docs/{$docId}/layers/{$layerName}/annotations/pages/{$pageKey}/items/{$annotKey}",
+                    path: "v1/docs/{$docId}/layers/{$layerName}/annotations/pages/{$pageKey}/items/{$annotationKey}",
                     method: HttpMethod::PATCH,
                     headers: $headers,
                     body: $request->body,
@@ -395,7 +395,7 @@ class AnnotationsClient
                 if (empty($json)) {
                     return null;
                 }
-                return DocAnnotationsUpdate200Response::fromJson($json);
+                return DocAnnotationsUpdateResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -416,15 +416,15 @@ class AnnotationsClient
      *     'docId',
      *     'layerName',
      *     'pageKey',
-     *     'annotKey',
+     *     'annotationKey',
      *     new ReadAppearanceAnnotationsRequest([]),
      * );
      * ```
      *
      * @param string $docId
      * @param string $layerName
-     * @param string $pageKey The page's address, `obj:N`: the page's indirect object number, the durable identity every `PageLayout.ref` carries. Mirrors `annotKey` and `fieldKey`.
-     * @param string $annotKey The annotation's address on the page: `obj:N`, its indirect object number, or `base:N` for an annotation the uploaded file stored inline (without an object number of its own), the position it was born at in the page's /Annots. The name the annotation's `ref` carries for life.
+     * @param string $pageKey The page's address, `obj:N`: the page's indirect object number, the durable identity every `PageLayout.ref` carries. Mirrors `annotationKey` and `fieldKey`.
+     * @param string $annotationKey The annotation's address on the page: `obj:N`, its indirect object number, or `base:N` for an annotation the uploaded file stored inline (without an object number of its own), the position it was born at in the page's /Annots. The name the annotation's `ref` carries for life.
      * @param ReadAppearanceAnnotationsRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -438,7 +438,7 @@ class AnnotationsClient
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function readAppearance(string $docId, string $layerName, string $pageKey, string $annotKey, ReadAppearanceAnnotationsRequest $request = new ReadAppearanceAnnotationsRequest(), ?array $options = null): string
+    public function readAppearance(string $docId, string $layerName, string $pageKey, string $annotationKey, ReadAppearanceAnnotationsRequest $request = new ReadAppearanceAnnotationsRequest(), ?array $options = null): string
     {
         $options = array_merge($this->options, $options ?? []);
         $headers = [];
@@ -449,7 +449,7 @@ class AnnotationsClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
-                    path: "v1/docs/{$docId}/layers/{$layerName}/annotations/pages/{$pageKey}/items/{$annotKey}/resources/appearance",
+                    path: "v1/docs/{$docId}/layers/{$layerName}/annotations/pages/{$pageKey}/items/{$annotationKey}/resources/appearance",
                     method: HttpMethod::GET,
                     headers: $headers,
                 ),
@@ -478,15 +478,15 @@ class AnnotationsClient
      *     'docId',
      *     'layerName',
      *     'pageKey',
-     *     'annotKey',
+     *     'annotationKey',
      *     new ReadFileAnnotationsRequest([]),
      * );
      * ```
      *
      * @param string $docId
      * @param string $layerName
-     * @param string $pageKey The page's address, `obj:N`: the page's indirect object number, the durable identity every `PageLayout.ref` carries. Mirrors `annotKey` and `fieldKey`.
-     * @param string $annotKey The annotation's address on the page: `obj:N`, its indirect object number, or `base:N` for an annotation the uploaded file stored inline (without an object number of its own), the position it was born at in the page's /Annots. The name the annotation's `ref` carries for life.
+     * @param string $pageKey The page's address, `obj:N`: the page's indirect object number, the durable identity every `PageLayout.ref` carries. Mirrors `annotationKey` and `fieldKey`.
+     * @param string $annotationKey The annotation's address on the page: `obj:N`, its indirect object number, or `base:N` for an annotation the uploaded file stored inline (without an object number of its own), the position it was born at in the page's /Annots. The name the annotation's `ref` carries for life.
      * @param ReadFileAnnotationsRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -500,7 +500,7 @@ class AnnotationsClient
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function readFile(string $docId, string $layerName, string $pageKey, string $annotKey, ReadFileAnnotationsRequest $request = new ReadFileAnnotationsRequest(), ?array $options = null): string
+    public function readFile(string $docId, string $layerName, string $pageKey, string $annotationKey, ReadFileAnnotationsRequest $request = new ReadFileAnnotationsRequest(), ?array $options = null): string
     {
         $options = array_merge($this->options, $options ?? []);
         $headers = [];
@@ -511,7 +511,7 @@ class AnnotationsClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
-                    path: "v1/docs/{$docId}/layers/{$layerName}/annotations/pages/{$pageKey}/items/{$annotKey}/resources/file",
+                    path: "v1/docs/{$docId}/layers/{$layerName}/annotations/pages/{$pageKey}/items/{$annotationKey}/resources/file",
                     method: HttpMethod::GET,
                     headers: $headers,
                 ),
@@ -550,7 +550,7 @@ class AnnotationsClient
      *
      * @param string $docId
      * @param string $layerName
-     * @param string $pageKey The page's address, `obj:N`: the page's indirect object number, the durable identity every `PageLayout.ref` carries. Mirrors `annotKey` and `fieldKey`.
+     * @param string $pageKey The page's address, `obj:N`: the page's indirect object number, the durable identity every `PageLayout.ref` carries. Mirrors `annotationKey` and `fieldKey`.
      * @param ExportAppearanceAnnotationsRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -613,7 +613,7 @@ class AnnotationsClient
      *
      * @param string $docId
      * @param string $layerName
-     * @param string $pageKey The page's address, `obj:N`: the page's indirect object number, the durable identity every `PageLayout.ref` carries. Mirrors `annotKey` and `fieldKey`.
+     * @param string $pageKey The page's address, `obj:N`: the page's indirect object number, the durable identity every `PageLayout.ref` carries. Mirrors `annotationKey` and `fieldKey`.
      * @param FlattenAnnotationsRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -623,11 +623,11 @@ class AnnotationsClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?DocAnnotationsFlatten200Response
+     * @return ?DocAnnotationsFlattenResponse
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function flatten(string $docId, string $layerName, string $pageKey, FlattenAnnotationsRequest $request, ?array $options = null): ?DocAnnotationsFlatten200Response
+    public function flatten(string $docId, string $layerName, string $pageKey, FlattenAnnotationsRequest $request, ?array $options = null): ?DocAnnotationsFlattenResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $headers = [];
@@ -654,7 +654,7 @@ class AnnotationsClient
                 if (empty($json)) {
                     return null;
                 }
-                return DocAnnotationsFlatten200Response::fromJson($json);
+                return DocAnnotationsFlattenResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -692,7 +692,7 @@ class AnnotationsClient
      *
      * @param string $docId
      * @param string $layerName
-     * @param string $pageKey The page's address, `obj:N`: the page's indirect object number, the durable identity every `PageLayout.ref` carries. Mirrors `annotKey` and `fieldKey`.
+     * @param string $pageKey The page's address, `obj:N`: the page's indirect object number, the durable identity every `PageLayout.ref` carries. Mirrors `annotationKey` and `fieldKey`.
      * @param DocAnnotationsReorderRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -702,11 +702,11 @@ class AnnotationsClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?DocAnnotationsReorder200Response
+     * @return ?DocAnnotationsReorderResponse
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function reorder(string $docId, string $layerName, string $pageKey, DocAnnotationsReorderRequest $request, ?array $options = null): ?DocAnnotationsReorder200Response
+    public function reorder(string $docId, string $layerName, string $pageKey, DocAnnotationsReorderRequest $request, ?array $options = null): ?DocAnnotationsReorderResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $headers = [];
@@ -733,7 +733,7 @@ class AnnotationsClient
                 if (empty($json)) {
                     return null;
                 }
-                return DocAnnotationsReorder200Response::fromJson($json);
+                return DocAnnotationsReorderResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);

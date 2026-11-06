@@ -13,21 +13,21 @@ class DocDownloadLinkRequest extends JsonSerializableType
     public ?string $documentPassword;
 
     /**
-     * @var ?int $expiresIn
+     * @var ?int $expiresInSeconds
      */
-    #[JsonProperty('expiresIn')]
-    public ?int $expiresIn;
+    #[JsonProperty('expiresInSeconds')]
+    public ?int $expiresInSeconds;
 
     /**
      * @param array{
      *   documentPassword?: ?string,
-     *   expiresIn?: ?int,
+     *   expiresInSeconds?: ?int,
      * } $values
      */
     public function __construct(
         array $values = [],
     ) {
         $this->documentPassword = $values['documentPassword'] ?? null;
-        $this->expiresIn = $values['expiresIn'] ?? null;
+        $this->expiresInSeconds = $values['expiresInSeconds'] ?? null;
     }
 }

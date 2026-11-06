@@ -212,10 +212,10 @@ class WidgetPatch extends JsonSerializableType
     public ?WidgetPatchBox $box;
 
     /**
-     * @var ?float $rotation
+     * @var ?int $rotation
      */
     #[JsonProperty('rotation')]
-    public ?float $rotation;
+    public ?int $rotation;
 
     /**
      * @var ?string $color
@@ -290,10 +290,16 @@ class WidgetPatch extends JsonSerializableType
     public mixed $field;
 
     /**
-     * @var mixed $fieldFamily
+     * @var mixed $fieldKind
      */
-    #[JsonProperty('fieldFamily')]
-    public mixed $fieldFamily;
+    #[JsonProperty('fieldKind')]
+    public mixed $fieldKind;
+
+    /**
+     * @var mixed $hasMark
+     */
+    #[JsonProperty('hasMark')]
+    public mixed $hasMark;
 
     /**
      * @param array{
@@ -334,7 +340,7 @@ class WidgetPatch extends JsonSerializableType
      *   |null
      * ),
      *   box?: ?WidgetPatchBox,
-     *   rotation?: ?float,
+     *   rotation?: ?int,
      *   color?: ?string,
      *   interiorColor?: ?string,
      *   strokeWidth?: ?float,
@@ -347,7 +353,8 @@ class WidgetPatch extends JsonSerializableType
      *   caption?: ?string,
      *   checkStyle?: ?value-of<WidgetPatchCheckStyle>,
      *   field?: mixed,
-     *   fieldFamily?: mixed,
+     *   fieldKind?: mixed,
+     *   hasMark?: mixed,
      * } $values
      */
     public function __construct(
@@ -399,7 +406,8 @@ class WidgetPatch extends JsonSerializableType
         $this->caption = $values['caption'] ?? null;
         $this->checkStyle = $values['checkStyle'] ?? null;
         $this->field = $values['field'] ?? null;
-        $this->fieldFamily = $values['fieldFamily'] ?? null;
+        $this->fieldKind = $values['fieldKind'] ?? null;
+        $this->hasMark = $values['hasMark'] ?? null;
     }
 
     /**

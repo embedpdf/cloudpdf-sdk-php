@@ -9,10 +9,10 @@ use CloudPDF\Core\Types\ArrayType;
 class FoldersMoveIntoRequest extends JsonSerializableType
 {
     /**
-     * @var ?array<string> $documentIds
+     * @var ?array<string> $docIds
      */
-    #[JsonProperty('documentIds'), ArrayType(['string'])]
-    public ?array $documentIds;
+    #[JsonProperty('docIds'), ArrayType(['string'])]
+    public ?array $docIds;
 
     /**
      * @var ?array<string> $folderIds
@@ -22,14 +22,14 @@ class FoldersMoveIntoRequest extends JsonSerializableType
 
     /**
      * @param array{
-     *   documentIds?: ?array<string>,
+     *   docIds?: ?array<string>,
      *   folderIds?: ?array<string>,
      * } $values
      */
     public function __construct(
         array $values = [],
     ) {
-        $this->documentIds = $values['documentIds'] ?? null;
+        $this->docIds = $values['docIds'] ?? null;
         $this->folderIds = $values['folderIds'] ?? null;
     }
 }

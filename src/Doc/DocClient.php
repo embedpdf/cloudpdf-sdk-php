@@ -15,7 +15,7 @@ use CloudPDF\Doc\Versions\VersionsClient;
 use Psr\Http\Client\ClientInterface;
 use CloudPDF\Core\Client\RawClient;
 use CloudPDF\Doc\Requests\HeadDocRequest;
-use CloudPDF\Types\DocHead200Response;
+use CloudPDF\Types\DocHeadResponse;
 use CloudPDF\Exceptions\CloudPDFException;
 use CloudPDF\Exceptions\CloudPDFApiException;
 use CloudPDF\Core\Json\JsonApiRequest;
@@ -24,15 +24,15 @@ use CloudPDF\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
 use CloudPDF\Doc\Requests\DocChangesRequest;
-use CloudPDF\Types\DocChanges200Response;
+use CloudPDF\Types\DocChangesResponse;
 use CloudPDF\Doc\Requests\DownloadDocRequest;
 use CloudPDF\Doc\Requests\DocDownloadLinkRequest;
-use CloudPDF\Types\DocDownloadLink200Response;
+use CloudPDF\Types\DocDownloadLinkResponse;
 use CloudPDF\Doc\Requests\ManifestDocRequest;
-use CloudPDF\Types\DocManifest200Response;
+use CloudPDF\Types\DocManifestResponse;
 use CloudPDF\Doc\Requests\RenderDocRequest;
 use CloudPDF\Doc\Requests\TextDocRequest;
-use CloudPDF\Types\DocText200Response;
+use CloudPDF\Types\DocTextResponse;
 
 class DocClient
 {
@@ -149,11 +149,11 @@ class DocClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?DocHead200Response
+     * @return ?DocHeadResponse
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function head(string $docId, HeadDocRequest $request = new HeadDocRequest(), ?array $options = null): ?DocHead200Response
+    public function head(string $docId, HeadDocRequest $request = new HeadDocRequest(), ?array $options = null): ?DocHeadResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $headers = [];
@@ -176,7 +176,7 @@ class DocClient
                 if (empty($json)) {
                     return null;
                 }
-                return DocHead200Response::fromJson($json);
+                return DocHeadResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -219,11 +219,11 @@ class DocClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?DocChanges200Response
+     * @return ?DocChangesResponse
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function changes(string $docId, string $layerName, DocChangesRequest $request, ?array $options = null): ?DocChanges200Response
+    public function changes(string $docId, string $layerName, DocChangesRequest $request, ?array $options = null): ?DocChangesResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $headers = [];
@@ -247,7 +247,7 @@ class DocClient
                 if (empty($json)) {
                     return null;
                 }
-                return DocChanges200Response::fromJson($json);
+                return DocChangesResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -340,11 +340,11 @@ class DocClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?DocDownloadLink200Response
+     * @return ?DocDownloadLinkResponse
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function downloadLink(string $docId, string $layerName, DocDownloadLinkRequest $request = new DocDownloadLinkRequest(), ?array $options = null): ?DocDownloadLink200Response
+    public function downloadLink(string $docId, string $layerName, DocDownloadLinkRequest $request = new DocDownloadLinkRequest(), ?array $options = null): ?DocDownloadLinkResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $headers = [];
@@ -368,7 +368,7 @@ class DocClient
                 if (empty($json)) {
                     return null;
                 }
-                return DocDownloadLink200Response::fromJson($json);
+                return DocDownloadLinkResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -403,11 +403,11 @@ class DocClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?DocManifest200Response
+     * @return ?DocManifestResponse
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function manifest(string $docId, string $layerName, ManifestDocRequest $request = new ManifestDocRequest(), ?array $options = null): ?DocManifest200Response
+    public function manifest(string $docId, string $layerName, ManifestDocRequest $request = new ManifestDocRequest(), ?array $options = null): ?DocManifestResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $headers = [];
@@ -430,7 +430,7 @@ class DocClient
                 if (empty($json)) {
                     return null;
                 }
-                return DocManifest200Response::fromJson($json);
+                return DocManifestResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -459,7 +459,7 @@ class DocClient
      *
      * @param string $docId
      * @param string $layerName
-     * @param string $pageKey The page's address, `obj:N`: the page's indirect object number, the durable identity every `PageLayout.ref` carries. Mirrors `annotKey` and `fieldKey`.
+     * @param string $pageKey The page's address, `obj:N`: the page's indirect object number, the durable identity every `PageLayout.ref` carries. Mirrors `annotationKey` and `fieldKey`.
      * @param RenderDocRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -517,7 +517,7 @@ class DocClient
      *
      * @param string $docId
      * @param string $layerName
-     * @param string $pageKey The page's address, `obj:N`: the page's indirect object number, the durable identity every `PageLayout.ref` carries. Mirrors `annotKey` and `fieldKey`.
+     * @param string $pageKey The page's address, `obj:N`: the page's indirect object number, the durable identity every `PageLayout.ref` carries. Mirrors `annotationKey` and `fieldKey`.
      * @param TextDocRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -527,11 +527,11 @@ class DocClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?DocText200Response
+     * @return ?DocTextResponse
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function text(string $docId, string $layerName, string $pageKey, TextDocRequest $request = new TextDocRequest(), ?array $options = null): ?DocText200Response
+    public function text(string $docId, string $layerName, string $pageKey, TextDocRequest $request = new TextDocRequest(), ?array $options = null): ?DocTextResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $headers = [];
@@ -554,7 +554,7 @@ class DocClient
                 if (empty($json)) {
                     return null;
                 }
-                return DocText200Response::fromJson($json);
+                return DocTextResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);

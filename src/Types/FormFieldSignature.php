@@ -59,16 +59,16 @@ class FormFieldSignature extends JsonSerializableType
     public ?string $mappingName;
 
     /**
-     * @var FormFieldSignatureValueEntry $valueEntry
+     * @var FormValueEntry $valueEntry
      */
     #[JsonProperty('valueEntry')]
-    public FormFieldSignatureValueEntry $valueEntry;
+    public FormValueEntry $valueEntry;
 
     /**
-     * @var FormFieldSignatureDefaultValueEntry $defaultValueEntry
+     * @var FormValueEntry $defaultValueEntry
      */
     #[JsonProperty('defaultValueEntry')]
-    public FormFieldSignatureDefaultValueEntry $defaultValueEntry;
+    public FormValueEntry $defaultValueEntry;
 
     /**
      * @var ?PdfFieldActions $actions
@@ -132,8 +132,8 @@ class FormFieldSignature extends JsonSerializableType
      *   readOnly: bool,
      *   required: bool,
      *   noExport: bool,
-     *   valueEntry: FormFieldSignatureValueEntry,
-     *   defaultValueEntry: FormFieldSignatureDefaultValueEntry,
+     *   valueEntry: FormValueEntry,
+     *   defaultValueEntry: FormValueEntry,
      *   widgets: array<FormWidget>,
      *   alternateName?: ?string,
      *   mappingName?: ?string,

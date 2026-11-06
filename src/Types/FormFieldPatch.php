@@ -58,10 +58,10 @@ class FormFieldPatch extends JsonSerializableType
     public ?FieldActionsPatch $actions;
 
     /**
-     * @var ?value-of<FormFieldPatchFamily> $family
+     * @var ?value-of<FormFieldPatchKind> $kind
      */
-    #[JsonProperty('family')]
-    public ?string $family;
+    #[JsonProperty('kind')]
+    public ?string $kind;
 
     /**
      * @var (
@@ -136,7 +136,7 @@ class FormFieldPatch extends JsonSerializableType
      *   mappingName?: ?string,
      *   groupId?: ?string,
      *   actions?: ?FieldActionsPatch,
-     *   family?: ?value-of<FormFieldPatchFamily>,
+     *   kind?: ?value-of<FormFieldPatchKind>,
      *   defaultValue?: (
      *    string
      *   |array<string>
@@ -163,7 +163,7 @@ class FormFieldPatch extends JsonSerializableType
         $this->mappingName = $values['mappingName'] ?? null;
         $this->groupId = $values['groupId'] ?? null;
         $this->actions = $values['actions'] ?? null;
-        $this->family = $values['family'] ?? null;
+        $this->kind = $values['kind'] ?? null;
         $this->defaultValue = $values['defaultValue'] ?? null;
         $this->maxLength = $values['maxLength'] ?? null;
         $this->multiline = $values['multiline'] ?? null;

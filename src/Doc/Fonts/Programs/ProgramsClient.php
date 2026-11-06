@@ -59,14 +59,14 @@ class ProgramsClient
      * $client->doc->fonts->programs->download(
      *     'docId',
      *     'layerName',
-     *     'displayHash',
+     *     'displaySha256',
      *     new DownloadProgramsRequest([]),
      * );
      * ```
      *
      * @param string $docId
      * @param string $layerName
-     * @param string $displayHash
+     * @param string $displaySha256
      * @param DownloadProgramsRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -80,7 +80,7 @@ class ProgramsClient
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function download(string $docId, string $layerName, string $displayHash, DownloadProgramsRequest $request = new DownloadProgramsRequest(), ?array $options = null): string
+    public function download(string $docId, string $layerName, string $displaySha256, DownloadProgramsRequest $request = new DownloadProgramsRequest(), ?array $options = null): string
     {
         $options = array_merge($this->options, $options ?? []);
         $headers = [];
@@ -91,7 +91,7 @@ class ProgramsClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
-                    path: "v1/docs/{$docId}/layers/{$layerName}/font-program-files/{$displayHash}",
+                    path: "v1/docs/{$docId}/layers/{$layerName}/font-program-files/{$displaySha256}",
                     method: HttpMethod::GET,
                     headers: $headers,
                 ),
@@ -117,14 +117,14 @@ class ProgramsClient
      * $client->doc->fonts->programs->get(
      *     'docId',
      *     'layerName',
-     *     'displayHash',
+     *     'displaySha256',
      *     new GetProgramsRequest([]),
      * );
      * ```
      *
      * @param string $docId
      * @param string $layerName
-     * @param string $displayHash
+     * @param string $displaySha256
      * @param GetProgramsRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -138,7 +138,7 @@ class ProgramsClient
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function get(string $docId, string $layerName, string $displayHash, GetProgramsRequest $request = new GetProgramsRequest(), ?array $options = null): ?FontProgramInfo
+    public function get(string $docId, string $layerName, string $displaySha256, GetProgramsRequest $request = new GetProgramsRequest(), ?array $options = null): ?FontProgramInfo
     {
         $options = array_merge($this->options, $options ?? []);
         $headers = [];
@@ -149,7 +149,7 @@ class ProgramsClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
-                    path: "v1/docs/{$docId}/layers/{$layerName}/font-programs/{$displayHash}",
+                    path: "v1/docs/{$docId}/layers/{$layerName}/font-programs/{$displaySha256}",
                     method: HttpMethod::GET,
                     headers: $headers,
                 ),

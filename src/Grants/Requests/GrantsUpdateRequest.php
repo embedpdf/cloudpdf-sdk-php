@@ -8,6 +8,8 @@ use CloudPDF\Grants\Types\GrantsUpdateRequestLayerMode;
 use CloudPDF\Grants\Types\GrantsUpdateRequestVisitorIdentity;
 use CloudPDF\Types\Identity;
 use CloudPDF\Core\Types\ArrayType;
+use DateTime;
+use CloudPDF\Core\Types\Date;
 
 class GrantsUpdateRequest extends JsonSerializableType
 {
@@ -84,10 +86,10 @@ class GrantsUpdateRequest extends JsonSerializableType
     public ?bool $disabled;
 
     /**
-     * @var ?int $expiresAt
+     * @var ?DateTime $expiresAt
      */
-    #[JsonProperty('expiresAt')]
-    public ?int $expiresAt;
+    #[JsonProperty('expiresAt'), Date(Date::TYPE_DATETIME)]
+    public ?DateTime $expiresAt;
 
     /**
      * @param array{
@@ -103,7 +105,7 @@ class GrantsUpdateRequest extends JsonSerializableType
      *   passphrase?: ?string,
      *   sessionTtlSeconds?: ?int,
      *   disabled?: ?bool,
-     *   expiresAt?: ?int,
+     *   expiresAt?: ?DateTime,
      * } $values
      */
     public function __construct(

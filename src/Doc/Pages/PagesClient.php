@@ -5,7 +5,7 @@ namespace CloudPDF\Doc\Pages;
 use Psr\Http\Client\ClientInterface;
 use CloudPDF\Core\Client\RawClient;
 use CloudPDF\Doc\Pages\Requests\DocPagesSetScaleRequest;
-use CloudPDF\Types\DocPagesSetScale200Response;
+use CloudPDF\Types\DocPagesSetScaleResponse;
 use CloudPDF\Exceptions\CloudPDFException;
 use CloudPDF\Exceptions\CloudPDFApiException;
 use CloudPDF\Core\Json\JsonApiRequest;
@@ -14,14 +14,14 @@ use CloudPDF\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
 use CloudPDF\Doc\Pages\Requests\ViewportsPagesRequest;
-use CloudPDF\Types\DocPagesViewports200Response;
+use CloudPDF\Types\DocPagesViewportsResponse;
 use CloudPDF\Doc\Pages\Requests\ExtractPagesRequest;
 use CloudPDF\Doc\Pages\Requests\FlattenPagesRequest;
-use CloudPDF\Types\DocPagesFlatten200Response;
+use CloudPDF\Types\DocPagesFlattenResponse;
 use CloudPDF\Doc\Pages\Requests\SetNamePagesRequest;
-use CloudPDF\Types\DocPagesSetName200Response;
+use CloudPDF\Types\DocPagesSetNameResponse;
 use CloudPDF\Doc\Pages\Requests\RemoveNamePagesRequest;
-use CloudPDF\Types\DocPagesRemoveName200Response;
+use CloudPDF\Types\DocPagesRemoveNameResponse;
 
 class PagesClient
 {
@@ -72,7 +72,7 @@ class PagesClient
      *
      * @param string $docId
      * @param string $layerName
-     * @param string $pageKey The page's address, `obj:N`: the page's indirect object number, the durable identity every `PageLayout.ref` carries. Mirrors `annotKey` and `fieldKey`.
+     * @param string $pageKey The page's address, `obj:N`: the page's indirect object number, the durable identity every `PageLayout.ref` carries. Mirrors `annotationKey` and `fieldKey`.
      * @param DocPagesSetScaleRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -82,11 +82,11 @@ class PagesClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?DocPagesSetScale200Response
+     * @return ?DocPagesSetScaleResponse
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function setScale(string $docId, string $layerName, string $pageKey, DocPagesSetScaleRequest $request, ?array $options = null): ?DocPagesSetScale200Response
+    public function setScale(string $docId, string $layerName, string $pageKey, DocPagesSetScaleRequest $request, ?array $options = null): ?DocPagesSetScaleResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $headers = [];
@@ -113,7 +113,7 @@ class PagesClient
                 if (empty($json)) {
                     return null;
                 }
-                return DocPagesSetScale200Response::fromJson($json);
+                return DocPagesSetScaleResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -140,7 +140,7 @@ class PagesClient
      *
      * @param string $docId
      * @param string $layerName
-     * @param string $pageKey The page's address, `obj:N`: the page's indirect object number, the durable identity every `PageLayout.ref` carries. Mirrors `annotKey` and `fieldKey`.
+     * @param string $pageKey The page's address, `obj:N`: the page's indirect object number, the durable identity every `PageLayout.ref` carries. Mirrors `annotationKey` and `fieldKey`.
      * @param ViewportsPagesRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -150,11 +150,11 @@ class PagesClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?DocPagesViewports200Response
+     * @return ?DocPagesViewportsResponse
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function viewports(string $docId, string $layerName, string $pageKey, ViewportsPagesRequest $request = new ViewportsPagesRequest(), ?array $options = null): ?DocPagesViewports200Response
+    public function viewports(string $docId, string $layerName, string $pageKey, ViewportsPagesRequest $request = new ViewportsPagesRequest(), ?array $options = null): ?DocPagesViewportsResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $headers = [];
@@ -177,7 +177,7 @@ class PagesClient
                 if (empty($json)) {
                     return null;
                 }
-                return DocPagesViewports200Response::fromJson($json);
+                return DocPagesViewportsResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -281,11 +281,11 @@ class PagesClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?DocPagesFlatten200Response
+     * @return ?DocPagesFlattenResponse
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function flatten(string $docId, string $layerName, FlattenPagesRequest $request, ?array $options = null): ?DocPagesFlatten200Response
+    public function flatten(string $docId, string $layerName, FlattenPagesRequest $request, ?array $options = null): ?DocPagesFlattenResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $headers = [];
@@ -312,7 +312,7 @@ class PagesClient
                 if (empty($json)) {
                     return null;
                 }
-                return DocPagesFlatten200Response::fromJson($json);
+                return DocPagesFlattenResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -351,11 +351,11 @@ class PagesClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?DocPagesSetName200Response
+     * @return ?DocPagesSetNameResponse
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function setName(string $docId, string $layerName, SetNamePagesRequest $request, ?array $options = null): ?DocPagesSetName200Response
+    public function setName(string $docId, string $layerName, SetNamePagesRequest $request, ?array $options = null): ?DocPagesSetNameResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $headers = [];
@@ -382,7 +382,7 @@ class PagesClient
                 if (empty($json)) {
                     return null;
                 }
-                return DocPagesSetName200Response::fromJson($json);
+                return DocPagesSetNameResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -421,11 +421,11 @@ class PagesClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?DocPagesRemoveName200Response
+     * @return ?DocPagesRemoveNameResponse
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function removeName(string $docId, string $layerName, RemoveNamePagesRequest $request, ?array $options = null): ?DocPagesRemoveName200Response
+    public function removeName(string $docId, string $layerName, RemoveNamePagesRequest $request, ?array $options = null): ?DocPagesRemoveNameResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $headers = [];
@@ -452,7 +452,7 @@ class PagesClient
                 if (empty($json)) {
                     return null;
                 }
-                return DocPagesRemoveName200Response::fromJson($json);
+                return DocPagesRemoveNameResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);

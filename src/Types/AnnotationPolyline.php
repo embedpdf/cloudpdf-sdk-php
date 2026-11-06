@@ -269,10 +269,10 @@ class AnnotationPolyline extends JsonSerializableType
     public ?string $intent;
 
     /**
-     * @var ?AnnotationPolylineMeasure $measure
+     * @var ?PdfMeasurement $measure A measure, by its `subtype`. A newer server can add subtypes: read one your client doesn't know as `unknown`.
      */
     #[JsonProperty('measure')]
-    public ?AnnotationPolylineMeasure $measure;
+    public ?PdfMeasurement $measure;
 
     /**
      * @var AnnotationPolylineLineEndings $lineEndings
@@ -326,7 +326,7 @@ class AnnotationPolyline extends JsonSerializableType
      *   captionEnabled?: ?bool,
      *   captionCenter?: ?AnnotationPolylineCaptionCenter,
      *   intent?: ?value-of<AnnotationPolylineIntent>,
-     *   measure?: ?AnnotationPolylineMeasure,
+     *   measure?: ?PdfMeasurement,
      * } $values
      */
     public function __construct(

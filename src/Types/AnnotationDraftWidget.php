@@ -201,10 +201,10 @@ class AnnotationDraftWidget extends JsonSerializableType
     public ?AnnotationDraftWidgetBox $box;
 
     /**
-     * @var ?float $rotation
+     * @var ?int $rotation
      */
     #[JsonProperty('rotation')]
-    public ?float $rotation;
+    public ?int $rotation;
 
     /**
      * @var ?string $color
@@ -279,10 +279,16 @@ class AnnotationDraftWidget extends JsonSerializableType
     public mixed $field;
 
     /**
-     * @var mixed $fieldFamily
+     * @var mixed $fieldKind
      */
-    #[JsonProperty('fieldFamily')]
-    public mixed $fieldFamily;
+    #[JsonProperty('fieldKind')]
+    public mixed $fieldKind;
+
+    /**
+     * @var mixed $hasMark
+     */
+    #[JsonProperty('hasMark')]
+    public mixed $hasMark;
 
     /**
      * @param array{
@@ -318,7 +324,7 @@ class AnnotationDraftWidget extends JsonSerializableType
      *   importedBy?: mixed,
      *   actions?: ?WidgetActionsPatch,
      *   box?: ?AnnotationDraftWidgetBox,
-     *   rotation?: ?float,
+     *   rotation?: ?int,
      *   color?: ?string,
      *   interiorColor?: ?string,
      *   strokeWidth?: ?float,
@@ -331,7 +337,8 @@ class AnnotationDraftWidget extends JsonSerializableType
      *   caption?: ?string,
      *   checkStyle?: ?value-of<AnnotationDraftWidgetCheckStyle>,
      *   field?: mixed,
-     *   fieldFamily?: mixed,
+     *   fieldKind?: mixed,
+     *   hasMark?: mixed,
      * } $values
      */
     public function __construct(
@@ -382,7 +389,8 @@ class AnnotationDraftWidget extends JsonSerializableType
         $this->caption = $values['caption'] ?? null;
         $this->checkStyle = $values['checkStyle'] ?? null;
         $this->field = $values['field'] ?? null;
-        $this->fieldFamily = $values['fieldFamily'] ?? null;
+        $this->fieldKind = $values['fieldKind'] ?? null;
+        $this->hasMark = $values['hasMark'] ?? null;
     }
 
     /**

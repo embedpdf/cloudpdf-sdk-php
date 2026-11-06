@@ -209,10 +209,10 @@ class WidgetAnnotation extends JsonSerializableType
     public WidgetAnnotationBox $box;
 
     /**
-     * @var ?float $rotation
+     * @var ?int $rotation
      */
     #[JsonProperty('rotation')]
-    public ?float $rotation;
+    public ?int $rotation;
 
     /**
      * @var ?string $color
@@ -287,10 +287,16 @@ class WidgetAnnotation extends JsonSerializableType
     public ?FormFieldRef $field;
 
     /**
-     * @var value-of<WidgetAnnotationFieldFamily> $fieldFamily
+     * @var value-of<WidgetAnnotationFieldKind> $fieldKind Its field's family. A newer server can add families: read one your client doesn't know as `unknown`.
      */
-    #[JsonProperty('fieldFamily')]
-    public string $fieldFamily;
+    #[JsonProperty('fieldKind')]
+    public string $fieldKind;
+
+    /**
+     * @var bool $hasMark
+     */
+    #[JsonProperty('hasMark')]
+    public bool $hasMark;
 
     /**
      * @param array{
@@ -314,7 +320,8 @@ class WidgetAnnotation extends JsonSerializableType
      *   strokeWidth: float,
      *   borderStyle: value-of<WidgetAnnotationBorderStyle>,
      *   textAlign: value-of<WidgetAnnotationTextAlign>,
-     *   fieldFamily: value-of<WidgetAnnotationFieldFamily>,
+     *   fieldKind: value-of<WidgetAnnotationFieldKind>,
+     *   hasMark: bool,
      *   appearanceState?: ?string,
      *   structurePosition?: ?array<int>,
      *   nm?: ?string,
@@ -331,7 +338,7 @@ class WidgetAnnotation extends JsonSerializableType
      *   modifiedBy?: ?string,
      *   importedBy?: ?string,
      *   actions?: ?PdfAnnotationActions,
-     *   rotation?: ?float,
+     *   rotation?: ?int,
      *   color?: ?string,
      *   interiorColor?: ?string,
      *   dashArray?: ?array<float>,
@@ -392,7 +399,8 @@ class WidgetAnnotation extends JsonSerializableType
         $this->caption = $values['caption'] ?? null;
         $this->checkStyle = $values['checkStyle'] ?? null;
         $this->field = $values['field'] ?? null;
-        $this->fieldFamily = $values['fieldFamily'];
+        $this->fieldKind = $values['fieldKind'];
+        $this->hasMark = $values['hasMark'];
     }
 
     /**

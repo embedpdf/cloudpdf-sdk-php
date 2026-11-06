@@ -6,7 +6,7 @@ use CloudPDF\Grants\Visitors\VisitorsClient;
 use Psr\Http\Client\ClientInterface;
 use CloudPDF\Core\Client\RawClient;
 use CloudPDF\Grants\Requests\GrantsExchangeRequest;
-use CloudPDF\Types\GrantsExchange200Response;
+use CloudPDF\Types\GrantsExchangeResponse;
 use CloudPDF\Exceptions\CloudPDFException;
 use CloudPDF\Exceptions\CloudPDFApiException;
 use CloudPDF\Core\Json\JsonApiRequest;
@@ -15,13 +15,13 @@ use CloudPDF\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
 use CloudPDF\Grants\Requests\ListGrantsRequest;
-use CloudPDF\Types\GrantsList200Response;
+use CloudPDF\Types\GrantsListResponse;
 use CloudPDF\Grants\Requests\GrantsCreateRequest;
-use CloudPDF\Types\GrantsCreate200Response;
-use CloudPDF\Types\GrantsGet200Response;
+use CloudPDF\Types\GrantsCreateResponse;
+use CloudPDF\Types\GrantsGetResponse;
 use CloudPDF\Grants\Requests\GrantsUpdateRequest;
-use CloudPDF\Types\GrantsUpdate200Response;
-use CloudPDF\Types\GrantsArchive200Response;
+use CloudPDF\Types\GrantsUpdateResponse;
+use CloudPDF\Types\GrantsArchiveResponse;
 
 class GrantsClient
 {
@@ -86,11 +86,11 @@ class GrantsClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?GrantsExchange200Response
+     * @return ?GrantsExchangeResponse
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function exchange(GrantsExchangeRequest $request, ?array $options = null): ?GrantsExchange200Response
+    public function exchange(GrantsExchangeRequest $request, ?array $options = null): ?GrantsExchangeResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -109,7 +109,7 @@ class GrantsClient
                 if (empty($json)) {
                     return null;
                 }
-                return GrantsExchange200Response::fromJson($json);
+                return GrantsExchangeResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -142,11 +142,11 @@ class GrantsClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?GrantsList200Response
+     * @return ?GrantsListResponse
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function list(string $tenantId, ListGrantsRequest $request = new ListGrantsRequest(), ?array $options = null): ?GrantsList200Response
+    public function list(string $tenantId, ListGrantsRequest $request = new ListGrantsRequest(), ?array $options = null): ?GrantsListResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -178,7 +178,7 @@ class GrantsClient
                 if (empty($json)) {
                     return null;
                 }
-                return GrantsList200Response::fromJson($json);
+                return GrantsListResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -218,11 +218,11 @@ class GrantsClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?GrantsCreate200Response
+     * @return ?GrantsCreateResponse
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function create(string $tenantId, GrantsCreateRequest $request, ?array $options = null): ?GrantsCreate200Response
+    public function create(string $tenantId, GrantsCreateRequest $request, ?array $options = null): ?GrantsCreateResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -241,7 +241,7 @@ class GrantsClient
                 if (empty($json)) {
                     return null;
                 }
-                return GrantsCreate200Response::fromJson($json);
+                return GrantsCreateResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -274,11 +274,11 @@ class GrantsClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?GrantsGet200Response
+     * @return ?GrantsGetResponse
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function get(string $tenantId, string $grantId, ?array $options = null): ?GrantsGet200Response
+    public function get(string $tenantId, string $grantId, ?array $options = null): ?GrantsGetResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -296,7 +296,7 @@ class GrantsClient
                 if (empty($json)) {
                     return null;
                 }
-                return GrantsGet200Response::fromJson($json);
+                return GrantsGetResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -379,11 +379,11 @@ class GrantsClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?GrantsUpdate200Response
+     * @return ?GrantsUpdateResponse
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function update(string $tenantId, string $grantId, GrantsUpdateRequest $request = new GrantsUpdateRequest(), ?array $options = null): ?GrantsUpdate200Response
+    public function update(string $tenantId, string $grantId, GrantsUpdateRequest $request = new GrantsUpdateRequest(), ?array $options = null): ?GrantsUpdateResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -402,7 +402,7 @@ class GrantsClient
                 if (empty($json)) {
                     return null;
                 }
-                return GrantsUpdate200Response::fromJson($json);
+                return GrantsUpdateResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -437,11 +437,11 @@ class GrantsClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?GrantsArchive200Response
+     * @return ?GrantsArchiveResponse
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function archive(string $tenantId, string $grantId, ?array $options = null): ?GrantsArchive200Response
+    public function archive(string $tenantId, string $grantId, ?array $options = null): ?GrantsArchiveResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -459,7 +459,7 @@ class GrantsClient
                 if (empty($json)) {
                     return null;
                 }
-                return GrantsArchive200Response::fromJson($json);
+                return GrantsArchiveResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);

@@ -59,16 +59,16 @@ class FormFieldRadio extends JsonSerializableType
     public ?string $mappingName;
 
     /**
-     * @var FormFieldRadioValueEntry $valueEntry
+     * @var FormValueEntry $valueEntry
      */
     #[JsonProperty('valueEntry')]
-    public FormFieldRadioValueEntry $valueEntry;
+    public FormValueEntry $valueEntry;
 
     /**
-     * @var FormFieldRadioDefaultValueEntry $defaultValueEntry
+     * @var FormValueEntry $defaultValueEntry
      */
     #[JsonProperty('defaultValueEntry')]
-    public FormFieldRadioDefaultValueEntry $defaultValueEntry;
+    public FormValueEntry $defaultValueEntry;
 
     /**
      * @var ?PdfFieldActions $actions
@@ -150,8 +150,8 @@ class FormFieldRadio extends JsonSerializableType
      *   readOnly: bool,
      *   required: bool,
      *   noExport: bool,
-     *   valueEntry: FormFieldRadioValueEntry,
-     *   defaultValueEntry: FormFieldRadioDefaultValueEntry,
+     *   valueEntry: FormValueEntry,
+     *   defaultValueEntry: FormValueEntry,
      *   widgets: array<FormFieldRadioWidgetsItem>,
      *   value: string,
      *   radiosInUnison: bool,

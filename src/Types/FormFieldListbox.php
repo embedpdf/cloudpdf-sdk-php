@@ -59,16 +59,16 @@ class FormFieldListbox extends JsonSerializableType
     public ?string $mappingName;
 
     /**
-     * @var FormFieldListboxValueEntry $valueEntry
+     * @var FormValueEntry $valueEntry
      */
     #[JsonProperty('valueEntry')]
-    public FormFieldListboxValueEntry $valueEntry;
+    public FormValueEntry $valueEntry;
 
     /**
-     * @var FormFieldListboxDefaultValueEntry $defaultValueEntry
+     * @var FormValueEntry $defaultValueEntry
      */
     #[JsonProperty('defaultValueEntry')]
-    public FormFieldListboxDefaultValueEntry $defaultValueEntry;
+    public FormValueEntry $defaultValueEntry;
 
     /**
      * @var ?PdfFieldActions $actions
@@ -162,8 +162,8 @@ class FormFieldListbox extends JsonSerializableType
      *   readOnly: bool,
      *   required: bool,
      *   noExport: bool,
-     *   valueEntry: FormFieldListboxValueEntry,
-     *   defaultValueEntry: FormFieldListboxDefaultValueEntry,
+     *   valueEntry: FormValueEntry,
+     *   defaultValueEntry: FormValueEntry,
      *   widgets: array<FormWidget>,
      *   selectedValues: array<string>,
      *   defaultValue: array<string>,

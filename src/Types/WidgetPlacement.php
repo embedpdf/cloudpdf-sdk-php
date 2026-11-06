@@ -27,10 +27,10 @@ class WidgetPlacement extends JsonSerializableType
     public ?WidgetPlacementBox $box;
 
     /**
-     * @var ?float $rotation
+     * @var ?int $rotation
      */
     #[JsonProperty('rotation')]
-    public ?float $rotation;
+    public ?int $rotation;
 
     /**
      * @var ?string $exportValue
@@ -115,7 +115,7 @@ class WidgetPlacement extends JsonSerializableType
      *   page: PageRef,
      *   rect?: ?WidgetPlacementRect,
      *   box?: ?WidgetPlacementBox,
-     *   rotation?: ?float,
+     *   rotation?: ?int,
      *   exportValue?: ?string,
      *   actions?: ?WidgetActionsPatch,
      *   color?: ?string,

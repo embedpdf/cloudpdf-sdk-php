@@ -5,6 +5,8 @@ namespace CloudPDF\Types;
 use CloudPDF\Core\Json\JsonSerializableType;
 use CloudPDF\Core\Json\JsonProperty;
 use CloudPDF\Core\Types\ArrayType;
+use DateTime;
+use CloudPDF\Core\Types\Date;
 
 class DocumentsImportFrom202ResponseDocument extends JsonSerializableType
 {
@@ -39,16 +41,16 @@ class DocumentsImportFrom202ResponseDocument extends JsonSerializableType
     public string $state;
 
     /**
-     * @var ?string $baseSha
+     * @var ?string $baseSha256
      */
-    #[JsonProperty('baseSha')]
-    public ?string $baseSha;
+    #[JsonProperty('baseSha256')]
+    public ?string $baseSha256;
 
     /**
-     * @var ?float $storageSizeBytes
+     * @var ?int $sizeBytes
      */
-    #[JsonProperty('storageSizeBytes')]
-    public ?float $storageSizeBytes;
+    #[JsonProperty('sizeBytes')]
+    public ?int $sizeBytes;
 
     /**
      * @var ?array<string, mixed> $metadata
@@ -69,10 +71,10 @@ class DocumentsImportFrom202ResponseDocument extends JsonSerializableType
     public ?string $failureReason;
 
     /**
-     * @var ?value-of<DocumentsImportFrom202ResponseDocumentThumbnailState> $thumbnailState
+     * @var value-of<DocumentsImportFrom202ResponseDocumentThumbnailState> $thumbnailState
      */
     #[JsonProperty('thumbnailState')]
-    public ?string $thumbnailState;
+    public string $thumbnailState;
 
     /**
      * @var ?string $thumbnailUrl
@@ -81,16 +83,16 @@ class DocumentsImportFrom202ResponseDocument extends JsonSerializableType
     public ?string $thumbnailUrl;
 
     /**
-     * @var float $createdAt
+     * @var DateTime $createdAt
      */
-    #[JsonProperty('createdAt')]
-    public float $createdAt;
+    #[JsonProperty('createdAt'), Date(Date::TYPE_DATETIME)]
+    public DateTime $createdAt;
 
     /**
-     * @var float $updatedAt
+     * @var DateTime $updatedAt
      */
-    #[JsonProperty('updatedAt')]
-    public float $updatedAt;
+    #[JsonProperty('updatedAt'), Date(Date::TYPE_DATETIME)]
+    public DateTime $updatedAt;
 
     /**
      * @var ?string $createdBy
@@ -105,14 +107,14 @@ class DocumentsImportFrom202ResponseDocument extends JsonSerializableType
      *   name: string,
      *   folderId: string,
      *   state: value-of<DocumentsImportFrom202ResponseDocumentState>,
-     *   createdAt: float,
-     *   updatedAt: float,
-     *   baseSha?: ?string,
-     *   storageSizeBytes?: ?float,
+     *   thumbnailState: value-of<DocumentsImportFrom202ResponseDocumentThumbnailState>,
+     *   createdAt: DateTime,
+     *   updatedAt: DateTime,
+     *   baseSha256?: ?string,
+     *   sizeBytes?: ?int,
      *   metadata?: ?array<string, mixed>,
      *   idempotencyKey?: ?string,
      *   failureReason?: ?string,
-     *   thumbnailState?: ?value-of<DocumentsImportFrom202ResponseDocumentThumbnailState>,
      *   thumbnailUrl?: ?string,
      *   createdBy?: ?string,
      * } $values
@@ -125,12 +127,12 @@ class DocumentsImportFrom202ResponseDocument extends JsonSerializableType
         $this->name = $values['name'];
         $this->folderId = $values['folderId'];
         $this->state = $values['state'];
-        $this->baseSha = $values['baseSha'] ?? null;
-        $this->storageSizeBytes = $values['storageSizeBytes'] ?? null;
+        $this->baseSha256 = $values['baseSha256'] ?? null;
+        $this->sizeBytes = $values['sizeBytes'] ?? null;
         $this->metadata = $values['metadata'] ?? null;
         $this->idempotencyKey = $values['idempotencyKey'] ?? null;
         $this->failureReason = $values['failureReason'] ?? null;
-        $this->thumbnailState = $values['thumbnailState'] ?? null;
+        $this->thumbnailState = $values['thumbnailState'];
         $this->thumbnailUrl = $values['thumbnailUrl'] ?? null;
         $this->createdAt = $values['createdAt'];
         $this->updatedAt = $values['updatedAt'];

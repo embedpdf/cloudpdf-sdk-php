@@ -15,15 +15,15 @@ class ChangeOpPagesRotate extends JsonSerializableType
     public array $pages;
 
     /**
-     * @var float $rotation
+     * @var int $rotation
      */
     #[JsonProperty('rotation')]
-    public float $rotation;
+    public int $rotation;
 
     /**
      * @param array{
      *   pages: array<PageRef>,
-     *   rotation: float,
+     *   rotation: int,
      * } $values
      */
     public function __construct(
