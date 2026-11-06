@@ -85,8 +85,8 @@ class CloudPDFClient
             'EmbedPDF-Version' => '3.0',
             'X-Fern-Language' => 'PHP',
             'X-Fern-SDK-Name' => 'CloudPDF',
-            'X-Fern-SDK-Version' => '3.0.0-alpha.23',
-            'User-Agent' => 'cloudpdf/sdk/3.0.0-alpha.23',
+            'X-Fern-SDK-Version' => '3.0.0',
+            'User-Agent' => 'cloudpdf/sdk/3.0.0',
         ];
         if ($token != null) {
             $defaultHeaders['Authorization'] = "Bearer $token";

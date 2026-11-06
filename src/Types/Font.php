@@ -21,6 +21,12 @@ class Font extends JsonSerializableType
     public string $source;
 
     /**
+     * @var bool $builtIn
+     */
+    #[JsonProperty('builtIn')]
+    public bool $builtIn;
+
+    /**
      * @var string $familyName
      */
     #[JsonProperty('familyName')]
@@ -66,6 +72,7 @@ class Font extends JsonSerializableType
      * @param array{
      *   name: string,
      *   source: value-of<FontSource>,
+     *   builtIn: bool,
      *   familyName: string,
      *   weight: int,
      *   italic: bool,
@@ -80,6 +87,7 @@ class Font extends JsonSerializableType
     ) {
         $this->name = $values['name'];
         $this->source = $values['source'];
+        $this->builtIn = $values['builtIn'];
         $this->familyName = $values['familyName'];
         $this->weight = $values['weight'];
         $this->italic = $values['italic'];
