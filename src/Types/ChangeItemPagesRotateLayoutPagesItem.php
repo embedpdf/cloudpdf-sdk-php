@@ -32,10 +32,10 @@ class ChangeItemPagesRotateLayoutPagesItem extends JsonSerializableType
     public ChangeItemPagesRotateLayoutPagesItemSize $size;
 
     /**
-     * @var float $rotation
+     * @var int $rotation
      */
     #[JsonProperty('rotation')]
-    public float $rotation;
+    public int $rotation;
 
     /**
      * @var float $userUnit
@@ -72,7 +72,7 @@ class ChangeItemPagesRotateLayoutPagesItem extends JsonSerializableType
      *   index: int,
      *   ref: PageRef,
      *   size: ChangeItemPagesRotateLayoutPagesItemSize,
-     *   rotation: float,
+     *   rotation: int,
      *   userUnit: float,
      *   boxes: ChangeItemPagesRotateLayoutPagesItemBoxes,
      *   pdfCropBox: ChangeItemPagesRotateLayoutPagesItemPdfCropBox,

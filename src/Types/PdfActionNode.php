@@ -5,6 +5,9 @@ namespace CloudPDF\Types;
 use CloudPDF\Core\Json\JsonSerializableType;
 use Exception;
 
+/**
+ * An action, by its `type`. A newer server can add types: read one your client doesn't know as `unknown`, keeping its `subtype` and `next`.
+ */
 class PdfActionNode extends JsonSerializableType
 {
     /**

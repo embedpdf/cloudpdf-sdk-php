@@ -9,7 +9,7 @@ use CloudPDF\Core\Types\ArrayType;
 class ChangeItemFormsRestoreWidget extends JsonSerializableType
 {
     /**
-     * @var ?FormField $field
+     * @var ?FormField $field A form field, by its `family`. A newer server can add families: read one your client doesn't know as `unknown`, keeping the fields every field has, with `rawValue` an empty string when the body has none.
      */
     #[JsonProperty('field')]
     public ?FormField $field;

@@ -9,16 +9,16 @@ use CloudPDF\Core\Types\ArrayType;
 class FontProgramInfo extends JsonSerializableType
 {
     /**
-     * @var ?string $displayHash
+     * @var ?string $displaySha256
      */
-    #[JsonProperty('displayHash')]
-    public ?string $displayHash;
+    #[JsonProperty('displaySha256')]
+    public ?string $displaySha256;
 
     /**
-     * @var ?string $sourceHash
+     * @var ?string $sourceSha256
      */
-    #[JsonProperty('sourceHash')]
-    public ?string $sourceHash;
+    #[JsonProperty('sourceSha256')]
+    public ?string $sourceSha256;
 
     /**
      * @var value-of<FontProgramInfoEmbedded> $embedded
@@ -69,8 +69,8 @@ class FontProgramInfo extends JsonSerializableType
      *   covers: array<FontProgramInfoCoversItem>,
      *   ascent: float,
      *   descent: float,
-     *   displayHash?: ?string,
-     *   sourceHash?: ?string,
+     *   displaySha256?: ?string,
+     *   sourceSha256?: ?string,
      *   format?: ?value-of<FontProgramInfoFormat>,
      *   embeddingPermission?: ?value-of<FontProgramInfoEmbeddingPermission>,
      * } $values
@@ -78,8 +78,8 @@ class FontProgramInfo extends JsonSerializableType
     public function __construct(
         array $values,
     ) {
-        $this->displayHash = $values['displayHash'] ?? null;
-        $this->sourceHash = $values['sourceHash'] ?? null;
+        $this->displaySha256 = $values['displaySha256'] ?? null;
+        $this->sourceSha256 = $values['sourceSha256'] ?? null;
         $this->embedded = $values['embedded'];
         $this->format = $values['format'] ?? null;
         $this->embeddingPermission = $values['embeddingPermission'] ?? null;

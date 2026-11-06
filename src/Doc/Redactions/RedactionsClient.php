@@ -5,7 +5,7 @@ namespace CloudPDF\Doc\Redactions;
 use Psr\Http\Client\ClientInterface;
 use CloudPDF\Core\Client\RawClient;
 use CloudPDF\Doc\Redactions\Requests\DocRedactionsApplyRequest;
-use CloudPDF\Types\DocRedactionsApply200Response;
+use CloudPDF\Types\DocRedactionsApplyResponse;
 use CloudPDF\Exceptions\CloudPDFException;
 use CloudPDF\Exceptions\CloudPDFApiException;
 use CloudPDF\Core\Json\JsonApiRequest;
@@ -71,11 +71,11 @@ class RedactionsClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?DocRedactionsApply200Response
+     * @return ?DocRedactionsApplyResponse
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function apply(string $docId, string $layerName, DocRedactionsApplyRequest $request = new DocRedactionsApplyRequest(), ?array $options = null): ?DocRedactionsApply200Response
+    public function apply(string $docId, string $layerName, DocRedactionsApplyRequest $request = new DocRedactionsApplyRequest(), ?array $options = null): ?DocRedactionsApplyResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $headers = [];
@@ -102,7 +102,7 @@ class RedactionsClient
                 if (empty($json)) {
                     return null;
                 }
-                return DocRedactionsApply200Response::fromJson($json);
+                return DocRedactionsApplyResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);

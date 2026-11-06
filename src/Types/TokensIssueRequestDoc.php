@@ -45,17 +45,17 @@ class TokensIssueRequestDoc extends JsonSerializableType
     public ?array $origins;
 
     /**
-     * @var int $expiresIn
+     * @var int $expiresInSeconds
      */
-    #[JsonProperty('expiresIn')]
-    public int $expiresIn;
+    #[JsonProperty('expiresInSeconds')]
+    public int $expiresInSeconds;
 
     /**
      * @param array{
      *   sub: string,
      *   docId: string,
      *   scope: array<string>,
-     *   expiresIn: int,
+     *   expiresInSeconds: int,
      *   layerName?: ?string,
      *   identity?: ?Identity,
      *   origins?: ?array<string>,
@@ -70,7 +70,7 @@ class TokensIssueRequestDoc extends JsonSerializableType
         $this->scope = $values['scope'];
         $this->identity = $values['identity'] ?? null;
         $this->origins = $values['origins'] ?? null;
-        $this->expiresIn = $values['expiresIn'];
+        $this->expiresInSeconds = $values['expiresInSeconds'];
     }
 
     /**

@@ -39,17 +39,17 @@ class AttachmentMutationMeta extends JsonSerializableType
     public ?array $missingCharacters;
 
     /**
-     * @var array<AttachmentRef> $changed
+     * @var array<AttachmentRef> $changedRefs
      */
-    #[JsonProperty('changed'), ArrayType([AttachmentRef::class])]
-    public array $changed;
+    #[JsonProperty('changedRefs'), ArrayType([AttachmentRef::class])]
+    public array $changedRefs;
 
     /**
      * @param array{
      *   affectedPages: array<PageRef>,
      *   opId: string,
      *   undoable: bool,
-     *   changed: array<AttachmentRef>,
+     *   changedRefs: array<AttachmentRef>,
      *   cacheDelta?: ?CacheDelta,
      *   missingCharacters?: ?array<string>,
      * } $values
@@ -62,7 +62,7 @@ class AttachmentMutationMeta extends JsonSerializableType
         $this->opId = $values['opId'];
         $this->undoable = $values['undoable'];
         $this->missingCharacters = $values['missingCharacters'] ?? null;
-        $this->changed = $values['changed'];
+        $this->changedRefs = $values['changedRefs'];
     }
 
     /**

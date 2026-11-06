@@ -5,7 +5,7 @@ namespace CloudPDF\Documents\Layers;
 use Psr\Http\Client\ClientInterface;
 use CloudPDF\Core\Client\RawClient;
 use CloudPDF\Documents\Layers\Requests\ListLayersRequest;
-use CloudPDF\Types\DocumentsLayersList200Response;
+use CloudPDF\Types\DocumentsLayersListResponse;
 use CloudPDF\Exceptions\CloudPDFException;
 use CloudPDF\Exceptions\CloudPDFApiException;
 use CloudPDF\Core\Json\JsonApiRequest;
@@ -55,13 +55,13 @@ class LayersClient
      * ```php
      * $client->documents->layers->list(
      *     'tenantId',
-     *     'id',
+     *     'docId',
      *     new ListLayersRequest([]),
      * );
      * ```
      *
      * @param string $tenantId
-     * @param string $id
+     * @param string $docId
      * @param ListLayersRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -71,11 +71,11 @@ class LayersClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?DocumentsLayersList200Response
+     * @return ?DocumentsLayersListResponse
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function list(string $tenantId, string $id, ListLayersRequest $request = new ListLayersRequest(), ?array $options = null): ?DocumentsLayersList200Response
+    public function list(string $tenantId, string $docId, ListLayersRequest $request = new ListLayersRequest(), ?array $options = null): ?DocumentsLayersListResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -92,7 +92,7 @@ class LayersClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
-                    path: "v1/tenants/{$tenantId}/documents/{$id}/layers",
+                    path: "v1/tenants/{$tenantId}/documents/{$docId}/layers",
                     method: HttpMethod::GET,
                     query: $query,
                 ),
@@ -104,7 +104,7 @@ class LayersClient
                 if (empty($json)) {
                     return null;
                 }
-                return DocumentsLayersList200Response::fromJson($json);
+                return DocumentsLayersListResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -123,13 +123,13 @@ class LayersClient
      * ```php
      * $client->documents->layers->delete(
      *     'tenantId',
-     *     'id',
+     *     'docId',
      *     'layerName',
      * );
      * ```
      *
      * @param string $tenantId
-     * @param string $id
+     * @param string $docId
      * @param string $layerName
      * @param ?array{
      *   baseUrl?: string,
@@ -142,14 +142,14 @@ class LayersClient
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function delete(string $tenantId, string $id, string $layerName, ?array $options = null): void
+    public function delete(string $tenantId, string $docId, string $layerName, ?array $options = null): void
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
-                    path: "v1/tenants/{$tenantId}/documents/{$id}/layers/{$layerName}",
+                    path: "v1/tenants/{$tenantId}/documents/{$docId}/layers/{$layerName}",
                     method: HttpMethod::DELETE,
                 ),
                 $options,

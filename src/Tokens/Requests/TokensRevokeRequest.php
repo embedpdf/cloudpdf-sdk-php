@@ -4,6 +4,8 @@ namespace CloudPDF\Tokens\Requests;
 
 use CloudPDF\Core\Json\JsonSerializableType;
 use CloudPDF\Core\Json\JsonProperty;
+use DateTime;
+use CloudPDF\Core\Types\Date;
 
 class TokensRevokeRequest extends JsonSerializableType
 {
@@ -14,21 +16,21 @@ class TokensRevokeRequest extends JsonSerializableType
     public ?string $reason;
 
     /**
-     * @var ?int $expiresAtSeconds
+     * @var ?DateTime $expiresAt
      */
-    #[JsonProperty('expiresAtSeconds')]
-    public ?int $expiresAtSeconds;
+    #[JsonProperty('expiresAt'), Date(Date::TYPE_DATETIME)]
+    public ?DateTime $expiresAt;
 
     /**
      * @param array{
      *   reason?: ?string,
-     *   expiresAtSeconds?: ?int,
+     *   expiresAt?: ?DateTime,
      * } $values
      */
     public function __construct(
         array $values = [],
     ) {
         $this->reason = $values['reason'] ?? null;
-        $this->expiresAtSeconds = $values['expiresAtSeconds'] ?? null;
+        $this->expiresAt = $values['expiresAt'] ?? null;
     }
 }

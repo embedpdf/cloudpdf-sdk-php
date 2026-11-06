@@ -59,16 +59,16 @@ class FormFieldCombobox extends JsonSerializableType
     public ?string $mappingName;
 
     /**
-     * @var FormFieldComboboxValueEntry $valueEntry
+     * @var FormValueEntry $valueEntry
      */
     #[JsonProperty('valueEntry')]
-    public FormFieldComboboxValueEntry $valueEntry;
+    public FormValueEntry $valueEntry;
 
     /**
-     * @var FormFieldComboboxDefaultValueEntry $defaultValueEntry
+     * @var FormValueEntry $defaultValueEntry
      */
     #[JsonProperty('defaultValueEntry')]
-    public FormFieldComboboxDefaultValueEntry $defaultValueEntry;
+    public FormValueEntry $defaultValueEntry;
 
     /**
      * @var ?PdfFieldActions $actions
@@ -156,8 +156,8 @@ class FormFieldCombobox extends JsonSerializableType
      *   readOnly: bool,
      *   required: bool,
      *   noExport: bool,
-     *   valueEntry: FormFieldComboboxValueEntry,
-     *   defaultValueEntry: FormFieldComboboxDefaultValueEntry,
+     *   valueEntry: FormValueEntry,
+     *   defaultValueEntry: FormValueEntry,
      *   widgets: array<FormWidget>,
      *   value: string,
      *   defaultValue: string,

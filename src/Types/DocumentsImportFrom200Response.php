@@ -8,10 +8,10 @@ use CloudPDF\Core\Json\JsonProperty;
 class DocumentsImportFrom200Response extends JsonSerializableType
 {
     /**
-     * @var value-of<DocumentsImportFrom200ResponseTag> $tag
+     * @var value-of<DocumentsImportFrom200ResponseStatus> $status
      */
-    #[JsonProperty('tag')]
-    public string $tag;
+    #[JsonProperty('status')]
+    public string $status;
 
     /**
      * @var DocumentsImportFrom200ResponseDocument $document
@@ -21,14 +21,14 @@ class DocumentsImportFrom200Response extends JsonSerializableType
 
     /**
      * @param array{
-     *   tag: value-of<DocumentsImportFrom200ResponseTag>,
+     *   status: value-of<DocumentsImportFrom200ResponseStatus>,
      *   document: DocumentsImportFrom200ResponseDocument,
      * } $values
      */
     public function __construct(
         array $values,
     ) {
-        $this->tag = $values['tag'];
+        $this->status = $values['status'];
         $this->document = $values['document'];
     }
 

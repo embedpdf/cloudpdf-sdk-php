@@ -5,7 +5,7 @@ namespace CloudPDF\Grants\Visitors;
 use Psr\Http\Client\ClientInterface;
 use CloudPDF\Core\Client\RawClient;
 use CloudPDF\Grants\Visitors\Requests\ListVisitorsRequest;
-use CloudPDF\Types\GrantsVisitorsList200Response;
+use CloudPDF\Types\GrantsVisitorsListResponse;
 use CloudPDF\Exceptions\CloudPDFException;
 use CloudPDF\Exceptions\CloudPDFApiException;
 use CloudPDF\Core\Json\JsonApiRequest;
@@ -73,11 +73,11 @@ class VisitorsClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?GrantsVisitorsList200Response
+     * @return ?GrantsVisitorsListResponse
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function list(string $tenantId, string $grantId, ListVisitorsRequest $request = new ListVisitorsRequest(), ?array $options = null): ?GrantsVisitorsList200Response
+    public function list(string $tenantId, string $grantId, ListVisitorsRequest $request = new ListVisitorsRequest(), ?array $options = null): ?GrantsVisitorsListResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -103,7 +103,7 @@ class VisitorsClient
                 if (empty($json)) {
                     return null;
                 }
-                return GrantsVisitorsList200Response::fromJson($json);
+                return GrantsVisitorsListResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);

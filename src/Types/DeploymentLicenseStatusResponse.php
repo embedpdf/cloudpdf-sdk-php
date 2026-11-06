@@ -4,38 +4,39 @@ namespace CloudPDF\Types;
 
 use CloudPDF\Core\Json\JsonSerializableType;
 use CloudPDF\Core\Json\JsonProperty;
+use CloudPDF\Core\Types\ArrayType;
 
 class DeploymentLicenseStatusResponse extends JsonSerializableType
 {
     /**
-     * @var mixed $license
+     * @var array<string, mixed> $license
      */
-    #[JsonProperty('license')]
-    public mixed $license;
+    #[JsonProperty('license'), ArrayType(['string' => 'mixed'])]
+    public array $license;
 
     /**
-     * @var mixed $reporting
+     * @var ?array<string, mixed> $reporting
      */
-    #[JsonProperty('reporting')]
-    public mixed $reporting;
+    #[JsonProperty('reporting'), ArrayType(['string' => 'mixed'])]
+    public ?array $reporting;
 
     /**
-     * @var mixed $usage
+     * @var ?array<string, mixed> $usage
      */
-    #[JsonProperty('usage')]
-    public mixed $usage;
+    #[JsonProperty('usage'), ArrayType(['string' => 'mixed'])]
+    public ?array $usage;
 
     /**
      * @param array{
-     *   license?: mixed,
-     *   reporting?: mixed,
-     *   usage?: mixed,
+     *   license: array<string, mixed>,
+     *   reporting?: ?array<string, mixed>,
+     *   usage?: ?array<string, mixed>,
      * } $values
      */
     public function __construct(
-        array $values = [],
+        array $values,
     ) {
-        $this->license = $values['license'] ?? null;
+        $this->license = $values['license'];
         $this->reporting = $values['reporting'] ?? null;
         $this->usage = $values['usage'] ?? null;
     }

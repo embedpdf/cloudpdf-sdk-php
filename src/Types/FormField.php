@@ -5,6 +5,9 @@ namespace CloudPDF\Types;
 use CloudPDF\Core\Json\JsonSerializableType;
 use Exception;
 
+/**
+ * A form field, by its `family`. A newer server can add families: read one your client doesn't know as `unknown`, keeping the fields every field has, with `rawValue` an empty string when the body has none.
+ */
 class FormField extends JsonSerializableType
 {
     /**
@@ -18,9 +21,9 @@ class FormField extends JsonSerializableType
      *   |'signature'
      *   |'unknown'
      *   |'_unknown'
-     * ) $family
+     * ) $kind
      */
-    public readonly string $family;
+    public readonly string $kind;
 
     /**
      * @var (
@@ -39,7 +42,7 @@ class FormField extends JsonSerializableType
 
     /**
      * @param array{
-     *   family: (
+     *   kind: (
      *    'text'
      *   |'checkbox'
      *   |'radio'
@@ -66,7 +69,7 @@ class FormField extends JsonSerializableType
     private function __construct(
         array $values,
     ) {
-        $this->family = $values['family'];
+        $this->kind = $values['kind'];
         $this->value = $values['value'];
     }
 
@@ -77,7 +80,7 @@ class FormField extends JsonSerializableType
     public static function text(FormFieldText $text): FormField
     {
         return new FormField([
-            'family' => 'text',
+            'kind' => 'text',
             'value' => $text,
         ]);
     }
@@ -89,7 +92,7 @@ class FormField extends JsonSerializableType
     public static function checkbox(FormFieldCheckbox $checkbox): FormField
     {
         return new FormField([
-            'family' => 'checkbox',
+            'kind' => 'checkbox',
             'value' => $checkbox,
         ]);
     }
@@ -101,7 +104,7 @@ class FormField extends JsonSerializableType
     public static function radio(FormFieldRadio $radio): FormField
     {
         return new FormField([
-            'family' => 'radio',
+            'kind' => 'radio',
             'value' => $radio,
         ]);
     }
@@ -113,7 +116,7 @@ class FormField extends JsonSerializableType
     public static function combobox(FormFieldCombobox $combobox): FormField
     {
         return new FormField([
-            'family' => 'combobox',
+            'kind' => 'combobox',
             'value' => $combobox,
         ]);
     }
@@ -125,7 +128,7 @@ class FormField extends JsonSerializableType
     public static function listbox(FormFieldListbox $listbox): FormField
     {
         return new FormField([
-            'family' => 'listbox',
+            'kind' => 'listbox',
             'value' => $listbox,
         ]);
     }
@@ -137,7 +140,7 @@ class FormField extends JsonSerializableType
     public static function pushbutton(FormFieldPushbutton $pushbutton): FormField
     {
         return new FormField([
-            'family' => 'pushbutton',
+            'kind' => 'pushbutton',
             'value' => $pushbutton,
         ]);
     }
@@ -149,7 +152,7 @@ class FormField extends JsonSerializableType
     public static function signature(FormFieldSignature $signature): FormField
     {
         return new FormField([
-            'family' => 'signature',
+            'kind' => 'signature',
             'value' => $signature,
         ]);
     }
@@ -161,7 +164,7 @@ class FormField extends JsonSerializableType
     public static function unknown(FormFieldUnknown $unknown): FormField
     {
         return new FormField([
-            'family' => 'unknown',
+            'kind' => 'unknown',
             'value' => $unknown,
         ]);
     }
@@ -171,7 +174,7 @@ class FormField extends JsonSerializableType
      */
     public function isText(): bool
     {
-        return $this->value instanceof FormFieldText && $this->family === 'text';
+        return $this->value instanceof FormFieldText && $this->kind === 'text';
     }
 
     /**
@@ -179,9 +182,9 @@ class FormField extends JsonSerializableType
      */
     public function asText(): FormFieldText
     {
-        if (!($this->value instanceof FormFieldText && $this->family === 'text')) {
+        if (!($this->value instanceof FormFieldText && $this->kind === 'text')) {
             throw new Exception(
-                "Expected text; got " . $this->family . " with value of type " . get_debug_type($this->value),
+                "Expected text; got " . $this->kind . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -193,7 +196,7 @@ class FormField extends JsonSerializableType
      */
     public function isCheckbox(): bool
     {
-        return $this->value instanceof FormFieldCheckbox && $this->family === 'checkbox';
+        return $this->value instanceof FormFieldCheckbox && $this->kind === 'checkbox';
     }
 
     /**
@@ -201,9 +204,9 @@ class FormField extends JsonSerializableType
      */
     public function asCheckbox(): FormFieldCheckbox
     {
-        if (!($this->value instanceof FormFieldCheckbox && $this->family === 'checkbox')) {
+        if (!($this->value instanceof FormFieldCheckbox && $this->kind === 'checkbox')) {
             throw new Exception(
-                "Expected checkbox; got " . $this->family . " with value of type " . get_debug_type($this->value),
+                "Expected checkbox; got " . $this->kind . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -215,7 +218,7 @@ class FormField extends JsonSerializableType
      */
     public function isRadio(): bool
     {
-        return $this->value instanceof FormFieldRadio && $this->family === 'radio';
+        return $this->value instanceof FormFieldRadio && $this->kind === 'radio';
     }
 
     /**
@@ -223,9 +226,9 @@ class FormField extends JsonSerializableType
      */
     public function asRadio(): FormFieldRadio
     {
-        if (!($this->value instanceof FormFieldRadio && $this->family === 'radio')) {
+        if (!($this->value instanceof FormFieldRadio && $this->kind === 'radio')) {
             throw new Exception(
-                "Expected radio; got " . $this->family . " with value of type " . get_debug_type($this->value),
+                "Expected radio; got " . $this->kind . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -237,7 +240,7 @@ class FormField extends JsonSerializableType
      */
     public function isCombobox(): bool
     {
-        return $this->value instanceof FormFieldCombobox && $this->family === 'combobox';
+        return $this->value instanceof FormFieldCombobox && $this->kind === 'combobox';
     }
 
     /**
@@ -245,9 +248,9 @@ class FormField extends JsonSerializableType
      */
     public function asCombobox(): FormFieldCombobox
     {
-        if (!($this->value instanceof FormFieldCombobox && $this->family === 'combobox')) {
+        if (!($this->value instanceof FormFieldCombobox && $this->kind === 'combobox')) {
             throw new Exception(
-                "Expected combobox; got " . $this->family . " with value of type " . get_debug_type($this->value),
+                "Expected combobox; got " . $this->kind . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -259,7 +262,7 @@ class FormField extends JsonSerializableType
      */
     public function isListbox(): bool
     {
-        return $this->value instanceof FormFieldListbox && $this->family === 'listbox';
+        return $this->value instanceof FormFieldListbox && $this->kind === 'listbox';
     }
 
     /**
@@ -267,9 +270,9 @@ class FormField extends JsonSerializableType
      */
     public function asListbox(): FormFieldListbox
     {
-        if (!($this->value instanceof FormFieldListbox && $this->family === 'listbox')) {
+        if (!($this->value instanceof FormFieldListbox && $this->kind === 'listbox')) {
             throw new Exception(
-                "Expected listbox; got " . $this->family . " with value of type " . get_debug_type($this->value),
+                "Expected listbox; got " . $this->kind . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -281,7 +284,7 @@ class FormField extends JsonSerializableType
      */
     public function isPushbutton(): bool
     {
-        return $this->value instanceof FormFieldPushbutton && $this->family === 'pushbutton';
+        return $this->value instanceof FormFieldPushbutton && $this->kind === 'pushbutton';
     }
 
     /**
@@ -289,9 +292,9 @@ class FormField extends JsonSerializableType
      */
     public function asPushbutton(): FormFieldPushbutton
     {
-        if (!($this->value instanceof FormFieldPushbutton && $this->family === 'pushbutton')) {
+        if (!($this->value instanceof FormFieldPushbutton && $this->kind === 'pushbutton')) {
             throw new Exception(
-                "Expected pushbutton; got " . $this->family . " with value of type " . get_debug_type($this->value),
+                "Expected pushbutton; got " . $this->kind . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -303,7 +306,7 @@ class FormField extends JsonSerializableType
      */
     public function isSignature(): bool
     {
-        return $this->value instanceof FormFieldSignature && $this->family === 'signature';
+        return $this->value instanceof FormFieldSignature && $this->kind === 'signature';
     }
 
     /**
@@ -311,9 +314,9 @@ class FormField extends JsonSerializableType
      */
     public function asSignature(): FormFieldSignature
     {
-        if (!($this->value instanceof FormFieldSignature && $this->family === 'signature')) {
+        if (!($this->value instanceof FormFieldSignature && $this->kind === 'signature')) {
             throw new Exception(
-                "Expected signature; got " . $this->family . " with value of type " . get_debug_type($this->value),
+                "Expected signature; got " . $this->kind . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -325,7 +328,7 @@ class FormField extends JsonSerializableType
      */
     public function isUnknown(): bool
     {
-        return $this->value instanceof FormFieldUnknown && $this->family === 'unknown';
+        return $this->value instanceof FormFieldUnknown && $this->kind === 'unknown';
     }
 
     /**
@@ -333,9 +336,9 @@ class FormField extends JsonSerializableType
      */
     public function asUnknown(): FormFieldUnknown
     {
-        if (!($this->value instanceof FormFieldUnknown && $this->family === 'unknown')) {
+        if (!($this->value instanceof FormFieldUnknown && $this->kind === 'unknown')) {
             throw new Exception(
-                "Expected unknown; got " . $this->family . " with value of type " . get_debug_type($this->value),
+                "Expected unknown; got " . $this->kind . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -356,12 +359,12 @@ class FormField extends JsonSerializableType
     public function jsonSerialize(): array
     {
         $result = [];
-        $result['family'] = $this->family;
+        $result['kind'] = $this->kind;
 
         $base = parent::jsonSerialize();
         $result = array_merge($base, $result);
 
-        switch ($this->family) {
+        switch ($this->kind) {
             case 'text':
                 $value = $this->asText()->jsonSerialize();
                 $result = array_merge($value, $result);
@@ -416,20 +419,20 @@ class FormField extends JsonSerializableType
     public static function jsonDeserialize(array $data): static
     {
         $args = [];
-        if (!array_key_exists('family', $data)) {
+        if (!array_key_exists('kind', $data)) {
             throw new Exception(
-                "JSON data is missing property 'family'",
+                "JSON data is missing property 'kind'",
             );
         }
-        $family = $data['family'];
-        if (!(is_string($family))) {
+        $kind = $data['kind'];
+        if (!(is_string($kind))) {
             throw new Exception(
-                "Expected property 'family' in JSON data to be string, instead received " . get_debug_type($data['family']),
+                "Expected property 'kind' in JSON data to be string, instead received " . get_debug_type($data['kind']),
             );
         }
 
-        $args['family'] = $family;
-        switch ($family) {
+        $args['kind'] = $kind;
+        switch ($kind) {
             case 'text':
                 $args['value'] = FormFieldText::jsonDeserialize($data);
                 break;
@@ -456,7 +459,7 @@ class FormField extends JsonSerializableType
                 break;
             case '_unknown':
             default:
-                $args['family'] = '_unknown';
+                $args['kind'] = '_unknown';
                 $args['value'] = $data;
         }
 

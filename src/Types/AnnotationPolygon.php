@@ -269,10 +269,10 @@ class AnnotationPolygon extends JsonSerializableType
     public ?string $intent;
 
     /**
-     * @var ?AnnotationPolygonMeasure $measure
+     * @var ?PdfMeasurement $measure A measure, by its `subtype`. A newer server can add subtypes: read one your client doesn't know as `unknown`.
      */
     #[JsonProperty('measure')]
-    public ?AnnotationPolygonMeasure $measure;
+    public ?PdfMeasurement $measure;
 
     /**
      * @var ?float $cloudyIntensity
@@ -325,7 +325,7 @@ class AnnotationPolygon extends JsonSerializableType
      *   captionEnabled?: ?bool,
      *   captionCenter?: ?AnnotationPolygonCaptionCenter,
      *   intent?: ?value-of<AnnotationPolygonIntent>,
-     *   measure?: ?AnnotationPolygonMeasure,
+     *   measure?: ?PdfMeasurement,
      *   cloudyIntensity?: ?float,
      * } $values
      */

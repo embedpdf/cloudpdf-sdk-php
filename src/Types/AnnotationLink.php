@@ -197,7 +197,7 @@ class AnnotationLink extends JsonSerializableType
     public ?PdfAnnotationActions $actions;
 
     /**
-     * @var ?PdfLinkTarget $target
+     * @var ?PdfLinkTarget $target Where a link goes, by its `kind`. A newer server can add kinds: read one your client doesn't know as `unsupported`.
      */
     #[JsonProperty('target')]
     public ?PdfLinkTarget $target;

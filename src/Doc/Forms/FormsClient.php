@@ -5,7 +5,7 @@ namespace CloudPDF\Doc\Forms;
 use Psr\Http\Client\ClientInterface;
 use CloudPDF\Core\Client\RawClient;
 use CloudPDF\Doc\Forms\Requests\ListFormsRequest;
-use CloudPDF\Types\DocFormsList200Response;
+use CloudPDF\Types\DocFormsListResponse;
 use CloudPDF\Exceptions\CloudPDFException;
 use CloudPDF\Exceptions\CloudPDFApiException;
 use CloudPDF\Core\Json\JsonApiRequest;
@@ -14,17 +14,17 @@ use CloudPDF\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
 use CloudPDF\Doc\Forms\Requests\DocFormsReorderCalculationsRequest;
-use CloudPDF\Types\DocFormsReorderCalculations200Response;
+use CloudPDF\Types\DocFormsReorderCalculationsResponse;
 use CloudPDF\Doc\Forms\Requests\SetValueFormsRequest;
-use CloudPDF\Types\DocFormsSetValue200Response;
+use CloudPDF\Types\DocFormsSetValueResponse;
 use CloudPDF\Doc\Forms\Requests\DocFormsResetRequest;
-use CloudPDF\Types\DocFormsReset200Response;
+use CloudPDF\Types\DocFormsResetResponse;
 use CloudPDF\Doc\Forms\Requests\DeleteWidgetFormsRequest;
-use CloudPDF\Types\DocFormsDeleteWidget200Response;
+use CloudPDF\Types\DocFormsDeleteWidgetResponse;
 use CloudPDF\Doc\Forms\Requests\DocFormsUpdateWidgetRequest;
-use CloudPDF\Types\DocFormsUpdateWidget200Response;
+use CloudPDF\Types\DocFormsUpdateWidgetResponse;
 use CloudPDF\Doc\Forms\Requests\DocFormsReorderWidgetsRequest;
-use CloudPDF\Types\DocFormsReorderWidgets200Response;
+use CloudPDF\Types\DocFormsReorderWidgetsResponse;
 
 class FormsClient
 {
@@ -83,11 +83,11 @@ class FormsClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?DocFormsList200Response
+     * @return ?DocFormsListResponse
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function list(string $docId, string $layerName, ListFormsRequest $request = new ListFormsRequest(), ?array $options = null): ?DocFormsList200Response
+    public function list(string $docId, string $layerName, ListFormsRequest $request = new ListFormsRequest(), ?array $options = null): ?DocFormsListResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $headers = [];
@@ -110,7 +110,7 @@ class FormsClient
                 if (empty($json)) {
                     return null;
                 }
-                return DocFormsList200Response::fromJson($json);
+                return DocFormsListResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -152,11 +152,11 @@ class FormsClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?DocFormsReorderCalculations200Response
+     * @return ?DocFormsReorderCalculationsResponse
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function reorderCalculations(string $docId, string $layerName, DocFormsReorderCalculationsRequest $request, ?array $options = null): ?DocFormsReorderCalculations200Response
+    public function reorderCalculations(string $docId, string $layerName, DocFormsReorderCalculationsRequest $request, ?array $options = null): ?DocFormsReorderCalculationsResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $headers = [];
@@ -183,7 +183,7 @@ class FormsClient
                 if (empty($json)) {
                     return null;
                 }
-                return DocFormsReorderCalculations200Response::fromJson($json);
+                return DocFormsReorderCalculationsResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -224,11 +224,11 @@ class FormsClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?DocFormsSetValue200Response
+     * @return ?DocFormsSetValueResponse
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function setValue(string $docId, string $layerName, string $fieldKey, SetValueFormsRequest $request, ?array $options = null): ?DocFormsSetValue200Response
+    public function setValue(string $docId, string $layerName, string $fieldKey, SetValueFormsRequest $request, ?array $options = null): ?DocFormsSetValueResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $headers = [];
@@ -255,7 +255,7 @@ class FormsClient
                 if (empty($json)) {
                     return null;
                 }
-                return DocFormsSetValue200Response::fromJson($json);
+                return DocFormsSetValueResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -290,11 +290,11 @@ class FormsClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?DocFormsReset200Response
+     * @return ?DocFormsResetResponse
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function reset(string $docId, string $layerName, DocFormsResetRequest $request = new DocFormsResetRequest(), ?array $options = null): ?DocFormsReset200Response
+    public function reset(string $docId, string $layerName, DocFormsResetRequest $request = new DocFormsResetRequest(), ?array $options = null): ?DocFormsResetResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $headers = [];
@@ -321,7 +321,7 @@ class FormsClient
                 if (empty($json)) {
                     return null;
                 }
-                return DocFormsReset200Response::fromJson($json);
+                return DocFormsResetResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -342,15 +342,15 @@ class FormsClient
      *     'docId',
      *     'layerName',
      *     'pageKey',
-     *     'annotKey',
+     *     'annotationKey',
      *     new DeleteWidgetFormsRequest([]),
      * );
      * ```
      *
      * @param string $docId
      * @param string $layerName
-     * @param string $pageKey The page's address, `obj:N`: the page's indirect object number, the durable identity every `PageLayout.ref` carries. Mirrors `annotKey` and `fieldKey`.
-     * @param string $annotKey The annotation's address on the page: `obj:N`, its indirect object number, or `base:N` for an annotation the uploaded file stored inline (without an object number of its own), the position it was born at in the page's /Annots. The name the annotation's `ref` carries for life.
+     * @param string $pageKey The page's address, `obj:N`: the page's indirect object number, the durable identity every `PageLayout.ref` carries. Mirrors `annotationKey` and `fieldKey`.
+     * @param string $annotationKey The annotation's address on the page: `obj:N`, its indirect object number, or `base:N` for an annotation the uploaded file stored inline (without an object number of its own), the position it was born at in the page's /Annots. The name the annotation's `ref` carries for life.
      * @param DeleteWidgetFormsRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -360,11 +360,11 @@ class FormsClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?DocFormsDeleteWidget200Response
+     * @return ?DocFormsDeleteWidgetResponse
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function deleteWidget(string $docId, string $layerName, string $pageKey, string $annotKey, DeleteWidgetFormsRequest $request = new DeleteWidgetFormsRequest(), ?array $options = null): ?DocFormsDeleteWidget200Response
+    public function deleteWidget(string $docId, string $layerName, string $pageKey, string $annotationKey, DeleteWidgetFormsRequest $request = new DeleteWidgetFormsRequest(), ?array $options = null): ?DocFormsDeleteWidgetResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $headers = [];
@@ -378,7 +378,7 @@ class FormsClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
-                    path: "v1/docs/{$docId}/layers/{$layerName}/form/widgets/{$pageKey}/{$annotKey}",
+                    path: "v1/docs/{$docId}/layers/{$layerName}/form/widgets/{$pageKey}/{$annotationKey}",
                     method: HttpMethod::DELETE,
                     headers: $headers,
                 ),
@@ -390,7 +390,7 @@ class FormsClient
                 if (empty($json)) {
                     return null;
                 }
-                return DocFormsDeleteWidget200Response::fromJson($json);
+                return DocFormsDeleteWidgetResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -411,7 +411,7 @@ class FormsClient
      *     'docId',
      *     'layerName',
      *     'pageKey',
-     *     'annotKey',
+     *     'annotationKey',
      *     new DocFormsUpdateWidgetRequest([
      *         'patch' => new WidgetPatch([]),
      *     ]),
@@ -420,8 +420,8 @@ class FormsClient
      *
      * @param string $docId
      * @param string $layerName
-     * @param string $pageKey The page's address, `obj:N`: the page's indirect object number, the durable identity every `PageLayout.ref` carries. Mirrors `annotKey` and `fieldKey`.
-     * @param string $annotKey The annotation's address on the page: `obj:N`, its indirect object number, or `base:N` for an annotation the uploaded file stored inline (without an object number of its own), the position it was born at in the page's /Annots. The name the annotation's `ref` carries for life.
+     * @param string $pageKey The page's address, `obj:N`: the page's indirect object number, the durable identity every `PageLayout.ref` carries. Mirrors `annotationKey` and `fieldKey`.
+     * @param string $annotationKey The annotation's address on the page: `obj:N`, its indirect object number, or `base:N` for an annotation the uploaded file stored inline (without an object number of its own), the position it was born at in the page's /Annots. The name the annotation's `ref` carries for life.
      * @param DocFormsUpdateWidgetRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -431,11 +431,11 @@ class FormsClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?DocFormsUpdateWidget200Response
+     * @return ?DocFormsUpdateWidgetResponse
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function updateWidget(string $docId, string $layerName, string $pageKey, string $annotKey, DocFormsUpdateWidgetRequest $request, ?array $options = null): ?DocFormsUpdateWidget200Response
+    public function updateWidget(string $docId, string $layerName, string $pageKey, string $annotationKey, DocFormsUpdateWidgetRequest $request, ?array $options = null): ?DocFormsUpdateWidgetResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $headers = [];
@@ -449,7 +449,7 @@ class FormsClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
-                    path: "v1/docs/{$docId}/layers/{$layerName}/form/widgets/{$pageKey}/{$annotKey}",
+                    path: "v1/docs/{$docId}/layers/{$layerName}/form/widgets/{$pageKey}/{$annotationKey}",
                     method: HttpMethod::PATCH,
                     headers: $headers,
                     body: $request,
@@ -462,7 +462,7 @@ class FormsClient
                 if (empty($json)) {
                     return null;
                 }
-                return DocFormsUpdateWidget200Response::fromJson($json);
+                return DocFormsUpdateWidgetResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -500,7 +500,7 @@ class FormsClient
      *
      * @param string $docId
      * @param string $layerName
-     * @param string $pageKey The page's address, `obj:N`: the page's indirect object number, the durable identity every `PageLayout.ref` carries. Mirrors `annotKey` and `fieldKey`.
+     * @param string $pageKey The page's address, `obj:N`: the page's indirect object number, the durable identity every `PageLayout.ref` carries. Mirrors `annotationKey` and `fieldKey`.
      * @param DocFormsReorderWidgetsRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -510,11 +510,11 @@ class FormsClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?DocFormsReorderWidgets200Response
+     * @return ?DocFormsReorderWidgetsResponse
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function reorderWidgets(string $docId, string $layerName, string $pageKey, DocFormsReorderWidgetsRequest $request, ?array $options = null): ?DocFormsReorderWidgets200Response
+    public function reorderWidgets(string $docId, string $layerName, string $pageKey, DocFormsReorderWidgetsRequest $request, ?array $options = null): ?DocFormsReorderWidgetsResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $headers = [];
@@ -541,7 +541,7 @@ class FormsClient
                 if (empty($json)) {
                     return null;
                 }
-                return DocFormsReorderWidgets200Response::fromJson($json);
+                return DocFormsReorderWidgetsResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);

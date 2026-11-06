@@ -5,7 +5,7 @@ namespace CloudPDF\Doc\Signatures;
 use Psr\Http\Client\ClientInterface;
 use CloudPDF\Core\Client\RawClient;
 use CloudPDF\Doc\Signatures\Requests\ListSignaturesRequest;
-use CloudPDF\Types\DocSignaturesList200Response;
+use CloudPDF\Types\DocSignaturesListResponse;
 use CloudPDF\Exceptions\CloudPDFException;
 use CloudPDF\Exceptions\CloudPDFApiException;
 use CloudPDF\Core\Json\JsonApiRequest;
@@ -14,13 +14,13 @@ use CloudPDF\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
 use CloudPDF\Doc\Signatures\Requests\CancelSignaturesRequest;
-use CloudPDF\Types\DocSignaturesCancel200Response;
+use CloudPDF\Types\DocSignaturesCancelResponse;
 use CloudPDF\Doc\Signatures\Requests\DocSignaturesCompleteRequest;
-use CloudPDF\Types\DocSignaturesComplete200Response;
+use CloudPDF\Types\DocSignaturesCompleteResponse;
 use CloudPDF\Doc\Signatures\Requests\AnalysisSignaturesRequest;
-use CloudPDF\Types\DocSignaturesAnalysis200Response;
+use CloudPDF\Types\DocSignaturesAnalysisResponse;
 use CloudPDF\Doc\Signatures\Requests\PrepareSignaturesRequest;
-use CloudPDF\Types\DocSignaturesPrepare200Response;
+use CloudPDF\Types\DocSignaturesPrepareResponse;
 use CloudPDF\Core\Multipart\MultipartFormData;
 use CloudPDF\Core\Multipart\MultipartApiRequest;
 
@@ -83,11 +83,11 @@ class SignaturesClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?DocSignaturesList200Response
+     * @return ?DocSignaturesListResponse
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function list(string $docId, string $layerName, ListSignaturesRequest $request = new ListSignaturesRequest(), ?array $options = null): ?DocSignaturesList200Response
+    public function list(string $docId, string $layerName, ListSignaturesRequest $request = new ListSignaturesRequest(), ?array $options = null): ?DocSignaturesListResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $headers = [];
@@ -110,7 +110,7 @@ class SignaturesClient
                 if (empty($json)) {
                     return null;
                 }
-                return DocSignaturesList200Response::fromJson($json);
+                return DocSignaturesListResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -147,11 +147,11 @@ class SignaturesClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?DocSignaturesCancel200Response
+     * @return ?DocSignaturesCancelResponse
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function cancel(string $docId, string $layerName, string $signingId, CancelSignaturesRequest $request = new CancelSignaturesRequest(), ?array $options = null): ?DocSignaturesCancel200Response
+    public function cancel(string $docId, string $layerName, string $signingId, CancelSignaturesRequest $request = new CancelSignaturesRequest(), ?array $options = null): ?DocSignaturesCancelResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $headers = [];
@@ -174,7 +174,7 @@ class SignaturesClient
                 if (empty($json)) {
                     return null;
                 }
-                return DocSignaturesCancel200Response::fromJson($json);
+                return DocSignaturesCancelResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -219,11 +219,11 @@ class SignaturesClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?DocSignaturesComplete200Response
+     * @return ?DocSignaturesCompleteResponse
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function complete(string $docId, string $layerName, string $signingId, DocSignaturesCompleteRequest $request, ?array $options = null): ?DocSignaturesComplete200Response
+    public function complete(string $docId, string $layerName, string $signingId, DocSignaturesCompleteRequest $request, ?array $options = null): ?DocSignaturesCompleteResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $headers = [];
@@ -247,7 +247,7 @@ class SignaturesClient
                 if (empty($json)) {
                     return null;
                 }
-                return DocSignaturesComplete200Response::fromJson($json);
+                return DocSignaturesCompleteResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -284,11 +284,11 @@ class SignaturesClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?DocSignaturesAnalysis200Response
+     * @return ?DocSignaturesAnalysisResponse
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function analysis(string $docId, string $layerName, AnalysisSignaturesRequest $request = new AnalysisSignaturesRequest(), ?array $options = null): ?DocSignaturesAnalysis200Response
+    public function analysis(string $docId, string $layerName, AnalysisSignaturesRequest $request = new AnalysisSignaturesRequest(), ?array $options = null): ?DocSignaturesAnalysisResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -322,7 +322,7 @@ class SignaturesClient
                 if (empty($json)) {
                     return null;
                 }
-                return DocSignaturesAnalysis200Response::fromJson($json);
+                return DocSignaturesAnalysisResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -360,11 +360,11 @@ class SignaturesClient
      *   headers?: array<string, string>,
      *   queryParameters?: array<string, mixed>,
      * } $options
-     * @return ?DocSignaturesPrepare200Response
+     * @return ?DocSignaturesPrepareResponse
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function prepare(string $docId, string $layerName, PrepareSignaturesRequest $request, ?array $options = null): ?DocSignaturesPrepare200Response
+    public function prepare(string $docId, string $layerName, PrepareSignaturesRequest $request, ?array $options = null): ?DocSignaturesPrepareResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $headers = [];
@@ -390,7 +390,7 @@ class SignaturesClient
                 if (empty($json)) {
                     return null;
                 }
-                return DocSignaturesPrepare200Response::fromJson($json);
+                return DocSignaturesPrepareResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);

@@ -28,16 +28,16 @@ class AttachmentFileInfo extends JsonSerializableType
     public ?string $description;
 
     /**
-     * @var ?int $size
+     * @var ?int $sizeBytes
      */
-    #[JsonProperty('size')]
-    public ?int $size;
+    #[JsonProperty('sizeBytes')]
+    public ?int $sizeBytes;
 
     /**
-     * @var ?string $checksum
+     * @var ?string $md5
      */
-    #[JsonProperty('checksum')]
-    public ?string $checksum;
+    #[JsonProperty('md5')]
+    public ?string $md5;
 
     /**
      * @var ?DateTime $createdAt
@@ -56,8 +56,8 @@ class AttachmentFileInfo extends JsonSerializableType
      *   name: string,
      *   mimeType?: ?string,
      *   description?: ?string,
-     *   size?: ?int,
-     *   checksum?: ?string,
+     *   sizeBytes?: ?int,
+     *   md5?: ?string,
      *   createdAt?: ?DateTime,
      *   modifiedAt?: ?DateTime,
      * } $values
@@ -68,8 +68,8 @@ class AttachmentFileInfo extends JsonSerializableType
         $this->name = $values['name'];
         $this->mimeType = $values['mimeType'] ?? null;
         $this->description = $values['description'] ?? null;
-        $this->size = $values['size'] ?? null;
-        $this->checksum = $values['checksum'] ?? null;
+        $this->sizeBytes = $values['sizeBytes'] ?? null;
+        $this->md5 = $values['md5'] ?? null;
         $this->createdAt = $values['createdAt'] ?? null;
         $this->modifiedAt = $values['modifiedAt'] ?? null;
     }

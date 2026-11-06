@@ -5,7 +5,7 @@ namespace CloudPDF\Tokens;
 use Psr\Http\Client\ClientInterface;
 use CloudPDF\Core\Client\RawClient;
 use CloudPDF\Tokens\Requests\IssueTokensRequest;
-use CloudPDF\Types\TokensIssue200Response;
+use CloudPDF\Types\TokensIssueResponse;
 use CloudPDF\Exceptions\CloudPDFException;
 use CloudPDF\Exceptions\CloudPDFApiException;
 use CloudPDF\Core\Json\JsonApiRequest;
@@ -65,7 +65,7 @@ class TokensClient
      *             'scope' => [
      *                 'scope',
      *             ],
-     *             'expiresIn' => 1,
+     *             'expiresInSeconds' => 1,
      *         ])),
      *     ]),
      * );
@@ -81,11 +81,11 @@ class TokensClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?TokensIssue200Response
+     * @return ?TokensIssueResponse
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function issue(string $tenantId, IssueTokensRequest $request, ?array $options = null): ?TokensIssue200Response
+    public function issue(string $tenantId, IssueTokensRequest $request, ?array $options = null): ?TokensIssueResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -104,7 +104,7 @@ class TokensClient
                 if (empty($json)) {
                     return null;
                 }
-                return TokensIssue200Response::fromJson($json);
+                return TokensIssueResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);

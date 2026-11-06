@@ -39,17 +39,17 @@ class AnnotationMutationMeta extends JsonSerializableType
     public ?array $missingCharacters;
 
     /**
-     * @var array<AnnotationRef> $changed
+     * @var array<AnnotationRef> $changedRefs
      */
-    #[JsonProperty('changed'), ArrayType([AnnotationRef::class])]
-    public array $changed;
+    #[JsonProperty('changedRefs'), ArrayType([AnnotationRef::class])]
+    public array $changedRefs;
 
     /**
      * @param array{
      *   affectedPages: array<PageRef>,
      *   opId: string,
      *   undoable: bool,
-     *   changed: array<AnnotationRef>,
+     *   changedRefs: array<AnnotationRef>,
      *   cacheDelta?: ?CacheDelta,
      *   missingCharacters?: ?array<string>,
      * } $values
@@ -62,7 +62,7 @@ class AnnotationMutationMeta extends JsonSerializableType
         $this->opId = $values['opId'];
         $this->undoable = $values['undoable'];
         $this->missingCharacters = $values['missingCharacters'] ?? null;
-        $this->changed = $values['changed'];
+        $this->changedRefs = $values['changedRefs'];
     }
 
     /**

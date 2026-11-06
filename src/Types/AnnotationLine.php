@@ -263,16 +263,16 @@ class AnnotationLine extends JsonSerializableType
     public ?string $intent;
 
     /**
-     * @var ?AnnotationLineMeasure $measure
+     * @var ?PdfMeasurement $measure A measure, by its `subtype`. A newer server can add subtypes: read one your client doesn't know as `unknown`.
      */
     #[JsonProperty('measure')]
-    public ?AnnotationLineMeasure $measure;
+    public ?PdfMeasurement $measure;
 
     /**
-     * @var ?bool $captionEnabled
+     * @var bool $captionEnabled
      */
     #[JsonProperty('captionEnabled')]
-    public ?bool $captionEnabled;
+    public bool $captionEnabled;
 
     /**
      * @var value-of<AnnotationLineCaptionPosition> $captionPosition
@@ -314,6 +314,7 @@ class AnnotationLine extends JsonSerializableType
      *   borderStyle: value-of<AnnotationLineBorderStyle>,
      *   linePoints: AnnotationLineLinePoints,
      *   lineEndings: AnnotationLineLineEndings,
+     *   captionEnabled: bool,
      *   captionPosition: value-of<AnnotationLineCaptionPosition>,
      *   appearanceState?: ?string,
      *   structurePosition?: ?array<int>,
@@ -337,8 +338,7 @@ class AnnotationLine extends JsonSerializableType
      *   interiorColor?: ?string,
      *   rotation?: ?float,
      *   intent?: ?value-of<AnnotationLineIntent>,
-     *   measure?: ?AnnotationLineMeasure,
-     *   captionEnabled?: ?bool,
+     *   measure?: ?PdfMeasurement,
      *   captionOffset?: ?AnnotationLineCaptionOffset,
      *   leader?: ?AnnotationLineLeader,
      * } $values
@@ -389,7 +389,7 @@ class AnnotationLine extends JsonSerializableType
         $this->rotation = $values['rotation'] ?? null;
         $this->intent = $values['intent'] ?? null;
         $this->measure = $values['measure'] ?? null;
-        $this->captionEnabled = $values['captionEnabled'] ?? null;
+        $this->captionEnabled = $values['captionEnabled'];
         $this->captionPosition = $values['captionPosition'];
         $this->captionOffset = $values['captionOffset'] ?? null;
         $this->leader = $values['leader'] ?? null;

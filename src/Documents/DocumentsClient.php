@@ -6,7 +6,7 @@ use CloudPDF\Documents\Layers\LayersClient;
 use Psr\Http\Client\ClientInterface;
 use CloudPDF\Core\Client\RawClient;
 use CloudPDF\Documents\Requests\ListDocumentsRequest;
-use CloudPDF\Types\DocumentsList200Response;
+use CloudPDF\Types\DocumentsListResponse;
 use CloudPDF\Exceptions\CloudPDFException;
 use CloudPDF\Exceptions\CloudPDFApiException;
 use CloudPDF\Core\Json\JsonApiRequest;
@@ -14,19 +14,19 @@ use CloudPDF\Environments;
 use CloudPDF\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
-use CloudPDF\Types\DocumentsGet200Response;
+use CloudPDF\Types\DocumentsGetResponse;
 use CloudPDF\Documents\Requests\DocumentsUpdateRequest;
-use CloudPDF\Types\DocumentsUpdate200Response;
+use CloudPDF\Types\DocumentsUpdateResponse;
 use CloudPDF\Documents\Requests\DocumentsCommitRequest;
-use CloudPDF\Types\DocumentsCommit200Response;
+use CloudPDF\Types\DocumentsCommitResponse;
 use CloudPDF\Documents\Requests\UploadProxyDocumentsRequest;
-use CloudPDF\Types\DocumentsUploadProxy200Response;
+use CloudPDF\Types\DocumentsUploadProxyResponse;
 use CloudPDF\Core\Multipart\MultipartFormData;
 use CloudPDF\Core\Multipart\MultipartApiRequest;
 use CloudPDF\Documents\Requests\DocumentsImportFromRequest;
 use CloudPDF\Types\DocumentsImportFrom200Response;
 use CloudPDF\Documents\Requests\DocumentsInitRequest;
-use CloudPDF\Types\DocumentsInit200Response;
+use CloudPDF\Types\DocumentsInitResponse;
 
 class DocumentsClient
 {
@@ -89,11 +89,11 @@ class DocumentsClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?DocumentsList200Response
+     * @return ?DocumentsListResponse
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function list(string $tenantId, ListDocumentsRequest $request = new ListDocumentsRequest(), ?array $options = null): ?DocumentsList200Response
+    public function list(string $tenantId, ListDocumentsRequest $request = new ListDocumentsRequest(), ?array $options = null): ?DocumentsListResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -134,7 +134,7 @@ class DocumentsClient
                 if (empty($json)) {
                     return null;
                 }
-                return DocumentsList200Response::fromJson($json);
+                return DocumentsListResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -153,12 +153,12 @@ class DocumentsClient
      * ```php
      * $client->documents->get(
      *     'tenantId',
-     *     'id',
+     *     'docId',
      * );
      * ```
      *
      * @param string $tenantId
-     * @param string $id
+     * @param string $docId
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -167,18 +167,18 @@ class DocumentsClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?DocumentsGet200Response
+     * @return ?DocumentsGetResponse
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function get(string $tenantId, string $id, ?array $options = null): ?DocumentsGet200Response
+    public function get(string $tenantId, string $docId, ?array $options = null): ?DocumentsGetResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
-                    path: "v1/tenants/{$tenantId}/documents/{$id}",
+                    path: "v1/tenants/{$tenantId}/documents/{$docId}",
                     method: HttpMethod::GET,
                 ),
                 $options,
@@ -189,7 +189,7 @@ class DocumentsClient
                 if (empty($json)) {
                     return null;
                 }
-                return DocumentsGet200Response::fromJson($json);
+                return DocumentsGetResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -208,12 +208,12 @@ class DocumentsClient
      * ```php
      * $client->documents->delete(
      *     'tenantId',
-     *     'id',
+     *     'docId',
      * );
      * ```
      *
      * @param string $tenantId
-     * @param string $id
+     * @param string $docId
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -225,14 +225,14 @@ class DocumentsClient
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function delete(string $tenantId, string $id, ?array $options = null): void
+    public function delete(string $tenantId, string $docId, ?array $options = null): void
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
-                    path: "v1/tenants/{$tenantId}/documents/{$id}",
+                    path: "v1/tenants/{$tenantId}/documents/{$docId}",
                     method: HttpMethod::DELETE,
                 ),
                 $options,
@@ -258,7 +258,7 @@ class DocumentsClient
      * ```php
      * $client->documents->update(
      *     'tenantId',
-     *     'id',
+     *     'docId',
      *     new DocumentsUpdateRequest([
      *         'name' => 'name',
      *     ]),
@@ -266,7 +266,7 @@ class DocumentsClient
      * ```
      *
      * @param string $tenantId
-     * @param string $id
+     * @param string $docId
      * @param DocumentsUpdateRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -276,18 +276,18 @@ class DocumentsClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?DocumentsUpdate200Response
+     * @return ?DocumentsUpdateResponse
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function update(string $tenantId, string $id, DocumentsUpdateRequest $request, ?array $options = null): ?DocumentsUpdate200Response
+    public function update(string $tenantId, string $docId, DocumentsUpdateRequest $request, ?array $options = null): ?DocumentsUpdateResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
-                    path: "v1/tenants/{$tenantId}/documents/{$id}",
+                    path: "v1/tenants/{$tenantId}/documents/{$docId}",
                     method: HttpMethod::PATCH,
                     body: $request,
                 ),
@@ -299,7 +299,7 @@ class DocumentsClient
                 if (empty($json)) {
                     return null;
                 }
-                return DocumentsUpdate200Response::fromJson($json);
+                return DocumentsUpdateResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -320,7 +320,7 @@ class DocumentsClient
      * ```php
      * $client->documents->commit(
      *     'tenantId',
-     *     'id',
+     *     'docId',
      *     new DocumentsCommitRequest([
      *         'sha256' => 'sha256',
      *     ]),
@@ -328,7 +328,7 @@ class DocumentsClient
      * ```
      *
      * @param string $tenantId
-     * @param string $id
+     * @param string $docId
      * @param DocumentsCommitRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -338,18 +338,18 @@ class DocumentsClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?DocumentsCommit200Response
+     * @return ?DocumentsCommitResponse
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function commit(string $tenantId, string $id, DocumentsCommitRequest $request, ?array $options = null): ?DocumentsCommit200Response
+    public function commit(string $tenantId, string $docId, DocumentsCommitRequest $request, ?array $options = null): ?DocumentsCommitResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
-                    path: "v1/tenants/{$tenantId}/documents/{$id}/commit",
+                    path: "v1/tenants/{$tenantId}/documents/{$docId}/commit",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -361,7 +361,7 @@ class DocumentsClient
                 if (empty($json)) {
                     return null;
                 }
-                return DocumentsCommit200Response::fromJson($json);
+                return DocumentsCommitResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -380,12 +380,12 @@ class DocumentsClient
      * ```php
      * $client->documents->download(
      *     'tenantId',
-     *     'id',
+     *     'docId',
      * );
      * ```
      *
      * @param string $tenantId
-     * @param string $id
+     * @param string $docId
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -398,14 +398,14 @@ class DocumentsClient
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function download(string $tenantId, string $id, ?array $options = null): string
+    public function download(string $tenantId, string $docId, ?array $options = null): string
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
-                    path: "v1/tenants/{$tenantId}/documents/{$id}/download",
+                    path: "v1/tenants/{$tenantId}/documents/{$docId}/download",
                     method: HttpMethod::GET,
                 ),
                 $options,
@@ -429,12 +429,12 @@ class DocumentsClient
      * ```php
      * $client->documents->thumbnail(
      *     'tenantId',
-     *     'id',
+     *     'docId',
      * );
      * ```
      *
      * @param string $tenantId
-     * @param string $id
+     * @param string $docId
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -447,14 +447,14 @@ class DocumentsClient
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function thumbnail(string $tenantId, string $id, ?array $options = null): string
+    public function thumbnail(string $tenantId, string $docId, ?array $options = null): string
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
-                    path: "v1/tenants/{$tenantId}/documents/{$id}/thumbnail",
+                    path: "v1/tenants/{$tenantId}/documents/{$docId}/thumbnail",
                     method: HttpMethod::GET,
                 ),
                 $options,
@@ -480,7 +480,7 @@ class DocumentsClient
      * ```php
      * $client->documents->uploadProxy(
      *     'tenantId',
-     *     'id',
+     *     'docId',
      *     new UploadProxyDocumentsRequest([
      *         'file' => File::createFromString("example_file", "example_file"),
      *     ]),
@@ -488,7 +488,7 @@ class DocumentsClient
      * ```
      *
      * @param string $tenantId
-     * @param string $id
+     * @param string $docId
      * @param UploadProxyDocumentsRequest $request
      * @param ?array{
      *   baseUrl?: string,
@@ -497,11 +497,11 @@ class DocumentsClient
      *   headers?: array<string, string>,
      *   queryParameters?: array<string, mixed>,
      * } $options
-     * @return ?DocumentsUploadProxy200Response
+     * @return ?DocumentsUploadProxyResponse
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function uploadProxy(string $tenantId, string $id, UploadProxyDocumentsRequest $request, ?array $options = null): ?DocumentsUploadProxy200Response
+    public function uploadProxy(string $tenantId, string $docId, UploadProxyDocumentsRequest $request, ?array $options = null): ?DocumentsUploadProxyResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $body = new MultipartFormData();
@@ -510,7 +510,7 @@ class DocumentsClient
             $response = $this->client->sendRequest(
                 new MultipartApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Saas->value,
-                    path: "v1/tenants/{$tenantId}/documents/{$id}/upload-proxy",
+                    path: "v1/tenants/{$tenantId}/documents/{$docId}/upload-proxy",
                     method: HttpMethod::POST,
                     body: $body,
                 ),
@@ -522,7 +522,7 @@ class DocumentsClient
                 if (empty($json)) {
                     return null;
                 }
-                return DocumentsUploadProxy200Response::fromJson($json);
+                return DocumentsUploadProxyResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -599,14 +599,14 @@ class DocumentsClient
     }
 
     /**
-     * With an upload token, the document goes into the token's folder with the token's metadata, whatever the request says; contentLength must be within the token's maxBytes, and the token makes at most maxFiles documents (403 after). docId, idempotencyKey and dedupMode reuse-existing are refused (400): each could reach a document the token didn't make.
+     * With an upload token, the document goes into the token's folder with the token's metadata, whatever the request says; sizeBytes must be within the token's maxBytes, and the token makes at most maxFiles documents (403 after). docId, idempotencyKey and dedupMode reuse-existing are refused (400): each could reach a document the token didn't make.
      *
      * Example:
      * ```php
      * $client->documents->init(
      *     'tenantId',
      *     new DocumentsInitRequest([
-     *         'contentLength' => 1.1,
+     *         'sizeBytes' => 1,
      *         'contentSha256' => 'contentSha256',
      *     ]),
      * );
@@ -622,11 +622,11 @@ class DocumentsClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?DocumentsInit200Response
+     * @return ?DocumentsInitResponse
      * @throws CloudPDFException
      * @throws CloudPDFApiException
      */
-    public function init(string $tenantId, DocumentsInitRequest $request, ?array $options = null): ?DocumentsInit200Response
+    public function init(string $tenantId, DocumentsInitRequest $request, ?array $options = null): ?DocumentsInitResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -645,7 +645,7 @@ class DocumentsClient
                 if (empty($json)) {
                     return null;
                 }
-                return DocumentsInit200Response::fromJson($json);
+                return DocumentsInitResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new CloudPDFException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);

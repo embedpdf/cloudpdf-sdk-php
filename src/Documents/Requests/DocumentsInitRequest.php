@@ -11,10 +11,10 @@ use CloudPDF\Documents\Types\DocumentsInitRequestUploadPreference;
 class DocumentsInitRequest extends JsonSerializableType
 {
     /**
-     * @var float $contentLength
+     * @var int $sizeBytes
      */
-    #[JsonProperty('contentLength')]
-    public float $contentLength;
+    #[JsonProperty('sizeBytes')]
+    public int $sizeBytes;
 
     /**
      * @var string $contentSha256
@@ -59,10 +59,10 @@ class DocumentsInitRequest extends JsonSerializableType
     public ?string $docId;
 
     /**
-     * @var ?float $uploadTtlSec
+     * @var ?int $uploadTtlSeconds
      */
-    #[JsonProperty('uploadTtlSec')]
-    public ?float $uploadTtlSec;
+    #[JsonProperty('uploadTtlSeconds')]
+    public ?int $uploadTtlSeconds;
 
     /**
      * @var ?value-of<DocumentsInitRequestUploadPreference> $uploadPreference
@@ -72,7 +72,7 @@ class DocumentsInitRequest extends JsonSerializableType
 
     /**
      * @param array{
-     *   contentLength: float,
+     *   sizeBytes: int,
      *   contentSha256: string,
      *   name?: ?string,
      *   folderId?: ?string,
@@ -80,14 +80,14 @@ class DocumentsInitRequest extends JsonSerializableType
      *   idempotencyKey?: ?string,
      *   dedupMode?: ?value-of<DocumentsInitRequestDedupMode>,
      *   docId?: ?string,
-     *   uploadTtlSec?: ?float,
+     *   uploadTtlSeconds?: ?int,
      *   uploadPreference?: ?value-of<DocumentsInitRequestUploadPreference>,
      * } $values
      */
     public function __construct(
         array $values,
     ) {
-        $this->contentLength = $values['contentLength'];
+        $this->sizeBytes = $values['sizeBytes'];
         $this->contentSha256 = $values['contentSha256'];
         $this->name = $values['name'] ?? null;
         $this->folderId = $values['folderId'] ?? null;
@@ -95,7 +95,7 @@ class DocumentsInitRequest extends JsonSerializableType
         $this->idempotencyKey = $values['idempotencyKey'] ?? null;
         $this->dedupMode = $values['dedupMode'] ?? null;
         $this->docId = $values['docId'] ?? null;
-        $this->uploadTtlSec = $values['uploadTtlSec'] ?? null;
+        $this->uploadTtlSeconds = $values['uploadTtlSeconds'] ?? null;
         $this->uploadPreference = $values['uploadPreference'] ?? null;
     }
 }

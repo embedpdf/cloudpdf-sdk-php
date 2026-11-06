@@ -59,16 +59,16 @@ class FormFieldPushbutton extends JsonSerializableType
     public ?string $mappingName;
 
     /**
-     * @var FormFieldPushbuttonValueEntry $valueEntry
+     * @var FormValueEntry $valueEntry
      */
     #[JsonProperty('valueEntry')]
-    public FormFieldPushbuttonValueEntry $valueEntry;
+    public FormValueEntry $valueEntry;
 
     /**
-     * @var FormFieldPushbuttonDefaultValueEntry $defaultValueEntry
+     * @var FormValueEntry $defaultValueEntry
      */
     #[JsonProperty('defaultValueEntry')]
-    public FormFieldPushbuttonDefaultValueEntry $defaultValueEntry;
+    public FormValueEntry $defaultValueEntry;
 
     /**
      * @var ?PdfFieldActions $actions
@@ -132,8 +132,8 @@ class FormFieldPushbutton extends JsonSerializableType
      *   readOnly: bool,
      *   required: bool,
      *   noExport: bool,
-     *   valueEntry: FormFieldPushbuttonValueEntry,
-     *   defaultValueEntry: FormFieldPushbuttonDefaultValueEntry,
+     *   valueEntry: FormValueEntry,
+     *   defaultValueEntry: FormValueEntry,
      *   widgets: array<FormWidget>,
      *   alternateName?: ?string,
      *   mappingName?: ?string,

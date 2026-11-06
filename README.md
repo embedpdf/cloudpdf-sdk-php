@@ -42,6 +42,7 @@ use CloudPDF\Doc\Requests\DocChangesRequest;
 use CloudPDF\Doc\Types\DocChangesRequestChangesItem;
 
 $client = new CloudPDFClient(
+    embedPdfVersion: '3.0',
     token: '<token>',
 );
 $client->doc->changes(

@@ -5,6 +5,9 @@ namespace CloudPDF\Types;
 use CloudPDF\Core\Json\JsonSerializableType;
 use Exception;
 
+/**
+ * Where a link goes, by its `kind`. A newer server can add kinds: read one your client doesn't know as `unsupported`.
+ */
 class PdfLinkTarget extends JsonSerializableType
 {
     /**

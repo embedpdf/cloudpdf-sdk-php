@@ -32,10 +32,10 @@ class ChangeItemPagesInsertBlankLayoutPagesItem extends JsonSerializableType
     public ChangeItemPagesInsertBlankLayoutPagesItemSize $size;
 
     /**
-     * @var float $rotation
+     * @var int $rotation
      */
     #[JsonProperty('rotation')]
-    public float $rotation;
+    public int $rotation;
 
     /**
      * @var float $userUnit
@@ -72,7 +72,7 @@ class ChangeItemPagesInsertBlankLayoutPagesItem extends JsonSerializableType
      *   index: int,
      *   ref: PageRef,
      *   size: ChangeItemPagesInsertBlankLayoutPagesItemSize,
-     *   rotation: float,
+     *   rotation: int,
      *   userUnit: float,
      *   boxes: ChangeItemPagesInsertBlankLayoutPagesItemBoxes,
      *   pdfCropBox: ChangeItemPagesInsertBlankLayoutPagesItemPdfCropBox,

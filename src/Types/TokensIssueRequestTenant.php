@@ -21,16 +21,16 @@ class TokensIssueRequestTenant extends JsonSerializableType
     public array $scope;
 
     /**
-     * @var int $expiresIn
+     * @var int $expiresInSeconds
      */
-    #[JsonProperty('expiresIn')]
-    public int $expiresIn;
+    #[JsonProperty('expiresInSeconds')]
+    public int $expiresInSeconds;
 
     /**
      * @param array{
      *   sub: string,
      *   scope: array<string>,
-     *   expiresIn: int,
+     *   expiresInSeconds: int,
      * } $values
      */
     public function __construct(
@@ -38,7 +38,7 @@ class TokensIssueRequestTenant extends JsonSerializableType
     ) {
         $this->sub = $values['sub'];
         $this->scope = $values['scope'];
-        $this->expiresIn = $values['expiresIn'];
+        $this->expiresInSeconds = $values['expiresInSeconds'];
     }
 
     /**

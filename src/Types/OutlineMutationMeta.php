@@ -39,17 +39,17 @@ class OutlineMutationMeta extends JsonSerializableType
     public ?array $missingCharacters;
 
     /**
-     * @var array<OutlineItemRef> $changed
+     * @var array<OutlineItemRef> $changedRefs
      */
-    #[JsonProperty('changed'), ArrayType([OutlineItemRef::class])]
-    public array $changed;
+    #[JsonProperty('changedRefs'), ArrayType([OutlineItemRef::class])]
+    public array $changedRefs;
 
     /**
      * @param array{
      *   affectedPages: array<PageRef>,
      *   opId: string,
      *   undoable: bool,
-     *   changed: array<OutlineItemRef>,
+     *   changedRefs: array<OutlineItemRef>,
      *   cacheDelta?: ?CacheDelta,
      *   missingCharacters?: ?array<string>,
      * } $values
@@ -62,7 +62,7 @@ class OutlineMutationMeta extends JsonSerializableType
         $this->opId = $values['opId'];
         $this->undoable = $values['undoable'];
         $this->missingCharacters = $values['missingCharacters'] ?? null;
-        $this->changed = $values['changed'];
+        $this->changedRefs = $values['changedRefs'];
     }
 
     /**
