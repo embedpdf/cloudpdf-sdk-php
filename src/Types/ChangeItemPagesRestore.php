@@ -15,10 +15,10 @@ class ChangeItemPagesRestore extends JsonSerializableType
     public array $pages;
 
     /**
-     * @var ChangeItemPagesRestoreLayout $layout
+     * @var PageListSnapshot $layout
      */
     #[JsonProperty('layout')]
-    public ChangeItemPagesRestoreLayout $layout;
+    public PageListSnapshot $layout;
 
     /**
      * @var MutationMeta $meta
@@ -29,7 +29,7 @@ class ChangeItemPagesRestore extends JsonSerializableType
     /**
      * @param array{
      *   pages: array<PageRef>,
-     *   layout: ChangeItemPagesRestoreLayout,
+     *   layout: PageListSnapshot,
      *   meta: MutationMeta,
      * } $values
      */

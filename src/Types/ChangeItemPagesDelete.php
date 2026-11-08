@@ -15,10 +15,10 @@ class ChangeItemPagesDelete extends JsonSerializableType
     public array $pages;
 
     /**
-     * @var ChangeItemPagesDeleteLayout $layout
+     * @var PageListSnapshot $layout
      */
     #[JsonProperty('layout')]
-    public ChangeItemPagesDeleteLayout $layout;
+    public PageListSnapshot $layout;
 
     /**
      * @var MutationMeta $meta
@@ -29,7 +29,7 @@ class ChangeItemPagesDelete extends JsonSerializableType
     /**
      * @param array{
      *   pages: array<PageRef>,
-     *   layout: ChangeItemPagesDeleteLayout,
+     *   layout: PageListSnapshot,
      *   meta: MutationMeta,
      * } $values
      */

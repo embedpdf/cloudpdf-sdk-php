@@ -39,6 +39,7 @@ class ChangeItem extends JsonSerializableType
      *   |'outline.delete'
      *   |'outline.restore'
      *   |'pages.rotate'
+     *   |'pages.setScale'
      *   |'pages.reorder'
      *   |'pages.delete'
      *   |'pages.insertBlank'
@@ -85,6 +86,7 @@ class ChangeItem extends JsonSerializableType
      *   |ChangeItemOutlineDelete
      *   |ChangeItemOutlineRestore
      *   |ChangeItemPagesRotate
+     *   |ChangeItemPagesSetScale
      *   |ChangeItemPagesReorder
      *   |ChangeItemPagesDelete
      *   |ChangeItemPagesInsertBlank
@@ -132,6 +134,7 @@ class ChangeItem extends JsonSerializableType
      *   |'outline.delete'
      *   |'outline.restore'
      *   |'pages.rotate'
+     *   |'pages.setScale'
      *   |'pages.reorder'
      *   |'pages.delete'
      *   |'pages.insertBlank'
@@ -174,6 +177,7 @@ class ChangeItem extends JsonSerializableType
      *   |ChangeItemOutlineDelete
      *   |ChangeItemOutlineRestore
      *   |ChangeItemPagesRotate
+     *   |ChangeItemPagesSetScale
      *   |ChangeItemPagesReorder
      *   |ChangeItemPagesDelete
      *   |ChangeItemPagesInsertBlank
@@ -551,6 +555,18 @@ class ChangeItem extends JsonSerializableType
         return new ChangeItem([
             'type' => 'pages.rotate',
             'value' => $pagesRotate,
+        ]);
+    }
+
+    /**
+     * @param ChangeItemPagesSetScale $pagesSetScale
+     * @return ChangeItem
+     */
+    public static function pagesSetScale(ChangeItemPagesSetScale $pagesSetScale): ChangeItem
+    {
+        return new ChangeItem([
+            'type' => 'pages.setScale',
+            'value' => $pagesSetScale,
         ]);
     }
 
@@ -1325,6 +1341,28 @@ class ChangeItem extends JsonSerializableType
     /**
      * @return bool
      */
+    public function isPagesSetScale(): bool
+    {
+        return $this->value instanceof ChangeItemPagesSetScale && $this->type === 'pages.setScale';
+    }
+
+    /**
+     * @return ChangeItemPagesSetScale
+     */
+    public function asPagesSetScale(): ChangeItemPagesSetScale
+    {
+        if (!($this->value instanceof ChangeItemPagesSetScale && $this->type === 'pages.setScale')) {
+            throw new Exception(
+                "Expected pages.setScale; got " . $this->type . " with value of type " . get_debug_type($this->value),
+            );
+        }
+
+        return $this->value;
+    }
+
+    /**
+     * @return bool
+     */
     public function isPagesReorder(): bool
     {
         return $this->value instanceof ChangeItemPagesReorder && $this->type === 'pages.reorder';
@@ -1660,6 +1698,10 @@ class ChangeItem extends JsonSerializableType
                 $value = $this->asPagesRotate()->jsonSerialize();
                 $result = array_merge($value, $result);
                 break;
+            case 'pages.setScale':
+                $value = $this->asPagesSetScale()->jsonSerialize();
+                $result = array_merge($value, $result);
+                break;
             case 'pages.reorder':
                 $value = $this->asPagesReorder()->jsonSerialize();
                 $result = array_merge($value, $result);
@@ -1821,6 +1863,9 @@ class ChangeItem extends JsonSerializableType
                 break;
             case 'pages.rotate':
                 $args['value'] = ChangeItemPagesRotate::jsonDeserialize($data);
+                break;
+            case 'pages.setScale':
+                $args['value'] = ChangeItemPagesSetScale::jsonDeserialize($data);
                 break;
             case 'pages.reorder':
                 $args['value'] = ChangeItemPagesReorder::jsonDeserialize($data);
