@@ -15,10 +15,10 @@ class ChangeItemPagesCopy extends JsonSerializableType
     public array $insertedPages;
 
     /**
-     * @var ChangeItemPagesCopyLayout $layout
+     * @var PageListSnapshot $layout
      */
     #[JsonProperty('layout')]
-    public ChangeItemPagesCopyLayout $layout;
+    public PageListSnapshot $layout;
 
     /**
      * @var MutationMeta $meta
@@ -29,7 +29,7 @@ class ChangeItemPagesCopy extends JsonSerializableType
     /**
      * @param array{
      *   insertedPages: array<PageRef>,
-     *   layout: ChangeItemPagesCopyLayout,
+     *   layout: PageListSnapshot,
      *   meta: MutationMeta,
      * } $values
      */

@@ -21,10 +21,10 @@ class ChangeItemPagesRotate extends JsonSerializableType
     public int $rotation;
 
     /**
-     * @var ChangeItemPagesRotateLayout $layout
+     * @var PageListSnapshot $layout
      */
     #[JsonProperty('layout')]
-    public ChangeItemPagesRotateLayout $layout;
+    public PageListSnapshot $layout;
 
     /**
      * @var MutationMeta $meta
@@ -36,7 +36,7 @@ class ChangeItemPagesRotate extends JsonSerializableType
      * @param array{
      *   pages: array<PageRef>,
      *   rotation: int,
-     *   layout: ChangeItemPagesRotateLayout,
+     *   layout: PageListSnapshot,
      *   meta: MutationMeta,
      * } $values
      */

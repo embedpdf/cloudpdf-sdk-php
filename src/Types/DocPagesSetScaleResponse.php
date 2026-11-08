@@ -14,6 +14,12 @@ class DocPagesSetScaleResponse extends JsonSerializableType
     public PageRef $page;
 
     /**
+     * @var PageListSnapshot $layout
+     */
+    #[JsonProperty('layout')]
+    public PageListSnapshot $layout;
+
+    /**
      * @var MutationMeta $meta
      */
     #[JsonProperty('meta')]
@@ -22,6 +28,7 @@ class DocPagesSetScaleResponse extends JsonSerializableType
     /**
      * @param array{
      *   page: PageRef,
+     *   layout: PageListSnapshot,
      *   meta: MutationMeta,
      * } $values
      */
@@ -29,6 +36,7 @@ class DocPagesSetScaleResponse extends JsonSerializableType
         array $values,
     ) {
         $this->page = $values['page'];
+        $this->layout = $values['layout'];
         $this->meta = $values['meta'];
     }
 

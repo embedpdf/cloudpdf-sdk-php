@@ -8,10 +8,10 @@ use CloudPDF\Core\Json\JsonProperty;
 class DocPagesSetNameResponse extends JsonSerializableType
 {
     /**
-     * @var DocPagesSetNameResponseLayout $layout
+     * @var PageListSnapshot $layout
      */
     #[JsonProperty('layout')]
-    public DocPagesSetNameResponseLayout $layout;
+    public PageListSnapshot $layout;
 
     /**
      * @var MutationMeta $meta
@@ -21,7 +21,7 @@ class DocPagesSetNameResponse extends JsonSerializableType
 
     /**
      * @param array{
-     *   layout: DocPagesSetNameResponseLayout,
+     *   layout: PageListSnapshot,
      *   meta: MutationMeta,
      * } $values
      */

@@ -9,14 +9,14 @@ use CloudPDF\Core\Types\ArrayType;
 class DocPagesViewportsResponse extends JsonSerializableType
 {
     /**
-     * @var array<DocPagesViewportsResponseViewportsItem> $viewports
+     * @var array<PageMeasurementViewport> $viewports
      */
-    #[JsonProperty('viewports'), ArrayType([DocPagesViewportsResponseViewportsItem::class])]
+    #[JsonProperty('viewports'), ArrayType([PageMeasurementViewport::class])]
     public array $viewports;
 
     /**
      * @param array{
-     *   viewports: array<DocPagesViewportsResponseViewportsItem>,
+     *   viewports: array<PageMeasurementViewport>,
      * } $values
      */
     public function __construct(

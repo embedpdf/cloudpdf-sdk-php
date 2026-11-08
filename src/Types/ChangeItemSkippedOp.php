@@ -29,6 +29,7 @@ enum ChangeItemSkippedOp: string
     case OutlineMove = "outline.move";
     case OutlineDelete = "outline.delete";
     case PagesRotate = "pages.rotate";
+    case PagesSetScale = "pages.setScale";
     case PagesReorder = "pages.reorder";
     case PagesDelete = "pages.delete";
     case PagesInsertBlank = "pages.insertBlank";

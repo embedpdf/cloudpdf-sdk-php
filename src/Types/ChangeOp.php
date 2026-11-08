@@ -34,6 +34,7 @@ class ChangeOp extends JsonSerializableType
      *   |'outline.move'
      *   |'outline.delete'
      *   |'pages.rotate'
+     *   |'pages.setScale'
      *   |'pages.reorder'
      *   |'pages.delete'
      *   |'pages.insertBlank'
@@ -73,6 +74,7 @@ class ChangeOp extends JsonSerializableType
      *   |ChangeOpOutlineMove
      *   |ChangeOpOutlineDelete
      *   |ChangeOpPagesRotate
+     *   |ChangeOpPagesSetScale
      *   |ChangeOpPagesReorder
      *   |ChangeOpPagesDelete
      *   |ChangeOpPagesInsertBlank
@@ -113,6 +115,7 @@ class ChangeOp extends JsonSerializableType
      *   |'outline.move'
      *   |'outline.delete'
      *   |'pages.rotate'
+     *   |'pages.setScale'
      *   |'pages.reorder'
      *   |'pages.delete'
      *   |'pages.insertBlank'
@@ -148,6 +151,7 @@ class ChangeOp extends JsonSerializableType
      *   |ChangeOpOutlineMove
      *   |ChangeOpOutlineDelete
      *   |ChangeOpPagesRotate
+     *   |ChangeOpPagesSetScale
      *   |ChangeOpPagesReorder
      *   |ChangeOpPagesDelete
      *   |ChangeOpPagesInsertBlank
@@ -463,6 +467,18 @@ class ChangeOp extends JsonSerializableType
         return new ChangeOp([
             'type' => 'pages.rotate',
             'value' => $pagesRotate,
+        ]);
+    }
+
+    /**
+     * @param ChangeOpPagesSetScale $pagesSetScale
+     * @return ChangeOp
+     */
+    public static function pagesSetScale(ChangeOpPagesSetScale $pagesSetScale): ChangeOp
+    {
+        return new ChangeOp([
+            'type' => 'pages.setScale',
+            'value' => $pagesSetScale,
         ]);
     }
 
@@ -1103,6 +1119,28 @@ class ChangeOp extends JsonSerializableType
     /**
      * @return bool
      */
+    public function isPagesSetScale(): bool
+    {
+        return $this->value instanceof ChangeOpPagesSetScale && $this->type === 'pages.setScale';
+    }
+
+    /**
+     * @return ChangeOpPagesSetScale
+     */
+    public function asPagesSetScale(): ChangeOpPagesSetScale
+    {
+        if (!($this->value instanceof ChangeOpPagesSetScale && $this->type === 'pages.setScale')) {
+            throw new Exception(
+                "Expected pages.setScale; got " . $this->type . " with value of type " . get_debug_type($this->value),
+            );
+        }
+
+        return $this->value;
+    }
+
+    /**
+     * @return bool
+     */
     public function isPagesReorder(): bool
     {
         return $this->value instanceof ChangeOpPagesReorder && $this->type === 'pages.reorder';
@@ -1374,6 +1412,10 @@ class ChangeOp extends JsonSerializableType
                 $value = $this->asPagesRotate()->jsonSerialize();
                 $result = array_merge($value, $result);
                 break;
+            case 'pages.setScale':
+                $value = $this->asPagesSetScale()->jsonSerialize();
+                $result = array_merge($value, $result);
+                break;
             case 'pages.reorder':
                 $value = $this->asPagesReorder()->jsonSerialize();
                 $result = array_merge($value, $result);
@@ -1512,6 +1554,9 @@ class ChangeOp extends JsonSerializableType
                 break;
             case 'pages.rotate':
                 $args['value'] = ChangeOpPagesRotate::jsonDeserialize($data);
+                break;
+            case 'pages.setScale':
+                $args['value'] = ChangeOpPagesSetScale::jsonDeserialize($data);
                 break;
             case 'pages.reorder':
                 $args['value'] = ChangeOpPagesReorder::jsonDeserialize($data);

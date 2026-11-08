@@ -15,10 +15,10 @@ class ChangeItemPagesInsertBlank extends JsonSerializableType
     public array $insertedPages;
 
     /**
-     * @var ChangeItemPagesInsertBlankLayout $layout
+     * @var PageListSnapshot $layout
      */
     #[JsonProperty('layout')]
-    public ChangeItemPagesInsertBlankLayout $layout;
+    public PageListSnapshot $layout;
 
     /**
      * @var MutationMeta $meta
@@ -29,7 +29,7 @@ class ChangeItemPagesInsertBlank extends JsonSerializableType
     /**
      * @param array{
      *   insertedPages: array<PageRef>,
-     *   layout: ChangeItemPagesInsertBlankLayout,
+     *   layout: PageListSnapshot,
      *   meta: MutationMeta,
      * } $values
      */

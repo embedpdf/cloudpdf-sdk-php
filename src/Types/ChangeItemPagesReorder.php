@@ -15,10 +15,10 @@ class ChangeItemPagesReorder extends JsonSerializableType
     public array $pages;
 
     /**
-     * @var ChangeItemPagesReorderLayout $layout
+     * @var PageListSnapshot $layout
      */
     #[JsonProperty('layout')]
-    public ChangeItemPagesReorderLayout $layout;
+    public PageListSnapshot $layout;
 
     /**
      * @var MutationMeta $meta
@@ -29,7 +29,7 @@ class ChangeItemPagesReorder extends JsonSerializableType
     /**
      * @param array{
      *   pages: array<PageRef>,
-     *   layout: ChangeItemPagesReorderLayout,
+     *   layout: PageListSnapshot,
      *   meta: MutationMeta,
      * } $values
      */
