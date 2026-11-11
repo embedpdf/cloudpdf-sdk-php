@@ -14,12 +14,14 @@ class ChangeItem extends JsonSerializableType
      *   |'annotations.update'
      *   |'annotations.delete'
      *   |'annotations.reorder'
+     *   |'annotations.copy'
      *   |'annotations.restore'
      *   |'forms.setValue'
      *   |'forms.setDisplay'
      *   |'forms.setAppearanceText'
      *   |'forms.reset'
      *   |'forms.create'
+     *   |'forms.copy'
      *   |'forms.update'
      *   |'forms.delete'
      *   |'forms.restore'
@@ -61,12 +63,14 @@ class ChangeItem extends JsonSerializableType
      *   |ChangeItemAnnotationsUpdate
      *   |ChangeItemAnnotationsDelete
      *   |ChangeItemAnnotationsReorder
+     *   |ChangeItemAnnotationsCopy
      *   |ChangeItemAnnotationsRestore
      *   |ChangeItemFormsSetValue
      *   |ChangeItemFormsSetDisplay
      *   |ChangeItemFormsSetAppearanceText
      *   |ChangeItemFormsReset
      *   |ChangeItemFormsCreate
+     *   |ChangeItemFormsCopy
      *   |ChangeItemFormsUpdate
      *   |ChangeItemFormsDelete
      *   |ChangeItemFormsRestore
@@ -109,12 +113,14 @@ class ChangeItem extends JsonSerializableType
      *   |'annotations.update'
      *   |'annotations.delete'
      *   |'annotations.reorder'
+     *   |'annotations.copy'
      *   |'annotations.restore'
      *   |'forms.setValue'
      *   |'forms.setDisplay'
      *   |'forms.setAppearanceText'
      *   |'forms.reset'
      *   |'forms.create'
+     *   |'forms.copy'
      *   |'forms.update'
      *   |'forms.delete'
      *   |'forms.restore'
@@ -152,12 +158,14 @@ class ChangeItem extends JsonSerializableType
      *   |ChangeItemAnnotationsUpdate
      *   |ChangeItemAnnotationsDelete
      *   |ChangeItemAnnotationsReorder
+     *   |ChangeItemAnnotationsCopy
      *   |ChangeItemAnnotationsRestore
      *   |ChangeItemFormsSetValue
      *   |ChangeItemFormsSetDisplay
      *   |ChangeItemFormsSetAppearanceText
      *   |ChangeItemFormsReset
      *   |ChangeItemFormsCreate
+     *   |ChangeItemFormsCopy
      *   |ChangeItemFormsUpdate
      *   |ChangeItemFormsDelete
      *   |ChangeItemFormsRestore
@@ -259,6 +267,18 @@ class ChangeItem extends JsonSerializableType
     }
 
     /**
+     * @param ChangeItemAnnotationsCopy $annotationsCopy
+     * @return ChangeItem
+     */
+    public static function annotationsCopy(ChangeItemAnnotationsCopy $annotationsCopy): ChangeItem
+    {
+        return new ChangeItem([
+            'type' => 'annotations.copy',
+            'value' => $annotationsCopy,
+        ]);
+    }
+
+    /**
      * @param ChangeItemAnnotationsRestore $annotationsRestore
      * @return ChangeItem
      */
@@ -327,6 +347,18 @@ class ChangeItem extends JsonSerializableType
         return new ChangeItem([
             'type' => 'forms.create',
             'value' => $formsCreate,
+        ]);
+    }
+
+    /**
+     * @param ChangeItemFormsCopy $formsCopy
+     * @return ChangeItem
+     */
+    public static function formsCopy(ChangeItemFormsCopy $formsCopy): ChangeItem
+    {
+        return new ChangeItem([
+            'type' => 'forms.copy',
+            'value' => $formsCopy,
         ]);
     }
 
@@ -791,6 +823,28 @@ class ChangeItem extends JsonSerializableType
     /**
      * @return bool
      */
+    public function isAnnotationsCopy(): bool
+    {
+        return $this->value instanceof ChangeItemAnnotationsCopy && $this->type === 'annotations.copy';
+    }
+
+    /**
+     * @return ChangeItemAnnotationsCopy
+     */
+    public function asAnnotationsCopy(): ChangeItemAnnotationsCopy
+    {
+        if (!($this->value instanceof ChangeItemAnnotationsCopy && $this->type === 'annotations.copy')) {
+            throw new Exception(
+                "Expected annotations.copy; got " . $this->type . " with value of type " . get_debug_type($this->value),
+            );
+        }
+
+        return $this->value;
+    }
+
+    /**
+     * @return bool
+     */
     public function isAnnotationsRestore(): bool
     {
         return $this->value instanceof ChangeItemAnnotationsRestore && $this->type === 'annotations.restore';
@@ -914,6 +968,28 @@ class ChangeItem extends JsonSerializableType
         if (!($this->value instanceof ChangeItemFormsCreate && $this->type === 'forms.create')) {
             throw new Exception(
                 "Expected forms.create; got " . $this->type . " with value of type " . get_debug_type($this->value),
+            );
+        }
+
+        return $this->value;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isFormsCopy(): bool
+    {
+        return $this->value instanceof ChangeItemFormsCopy && $this->type === 'forms.copy';
+    }
+
+    /**
+     * @return ChangeItemFormsCopy
+     */
+    public function asFormsCopy(): ChangeItemFormsCopy
+    {
+        if (!($this->value instanceof ChangeItemFormsCopy && $this->type === 'forms.copy')) {
+            throw new Exception(
+                "Expected forms.copy; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -1598,6 +1674,10 @@ class ChangeItem extends JsonSerializableType
                 $value = $this->asAnnotationsReorder()->jsonSerialize();
                 $result = array_merge($value, $result);
                 break;
+            case 'annotations.copy':
+                $value = $this->asAnnotationsCopy()->jsonSerialize();
+                $result = array_merge($value, $result);
+                break;
             case 'annotations.restore':
                 $value = $this->asAnnotationsRestore()->jsonSerialize();
                 $result = array_merge($value, $result);
@@ -1620,6 +1700,10 @@ class ChangeItem extends JsonSerializableType
                 break;
             case 'forms.create':
                 $value = $this->asFormsCreate()->jsonSerialize();
+                $result = array_merge($value, $result);
+                break;
+            case 'forms.copy':
+                $value = $this->asFormsCopy()->jsonSerialize();
                 $result = array_merge($value, $result);
                 break;
             case 'forms.update':
@@ -1789,6 +1873,9 @@ class ChangeItem extends JsonSerializableType
             case 'annotations.reorder':
                 $args['value'] = ChangeItemAnnotationsReorder::jsonDeserialize($data);
                 break;
+            case 'annotations.copy':
+                $args['value'] = ChangeItemAnnotationsCopy::jsonDeserialize($data);
+                break;
             case 'annotations.restore':
                 $args['value'] = ChangeItemAnnotationsRestore::jsonDeserialize($data);
                 break;
@@ -1806,6 +1893,9 @@ class ChangeItem extends JsonSerializableType
                 break;
             case 'forms.create':
                 $args['value'] = ChangeItemFormsCreate::jsonDeserialize($data);
+                break;
+            case 'forms.copy':
+                $args['value'] = ChangeItemFormsCopy::jsonDeserialize($data);
                 break;
             case 'forms.update':
                 $args['value'] = ChangeItemFormsUpdate::jsonDeserialize($data);
