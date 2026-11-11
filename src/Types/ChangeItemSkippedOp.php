@@ -8,11 +8,13 @@ enum ChangeItemSkippedOp: string
     case AnnotationsUpdate = "annotations.update";
     case AnnotationsDelete = "annotations.delete";
     case AnnotationsReorder = "annotations.reorder";
+    case AnnotationsCopy = "annotations.copy";
     case FormsSetValue = "forms.setValue";
     case FormsSetDisplay = "forms.setDisplay";
     case FormsSetAppearanceText = "forms.setAppearanceText";
     case FormsReset = "forms.reset";
     case FormsCreate = "forms.create";
+    case FormsCopy = "forms.copy";
     case FormsUpdate = "forms.update";
     case FormsDelete = "forms.delete";
     case FormsAddWidget = "forms.addWidget";

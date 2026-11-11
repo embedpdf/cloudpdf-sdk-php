@@ -13,11 +13,13 @@ class ChangeOp extends JsonSerializableType
      *   |'annotations.update'
      *   |'annotations.delete'
      *   |'annotations.reorder'
+     *   |'annotations.copy'
      *   |'forms.setValue'
      *   |'forms.setDisplay'
      *   |'forms.setAppearanceText'
      *   |'forms.reset'
      *   |'forms.create'
+     *   |'forms.copy'
      *   |'forms.update'
      *   |'forms.delete'
      *   |'forms.addWidget'
@@ -53,11 +55,13 @@ class ChangeOp extends JsonSerializableType
      *   |ChangeOpAnnotationsUpdate
      *   |ChangeOpAnnotationsDelete
      *   |ChangeOpAnnotationsReorder
+     *   |ChangeOpAnnotationsCopy
      *   |ChangeOpFormsSetValue
      *   |ChangeOpFormsSetDisplay
      *   |ChangeOpFormsSetAppearanceText
      *   |ChangeOpFormsReset
      *   |ChangeOpFormsCreate
+     *   |ChangeOpFormsCopy
      *   |ChangeOpFormsUpdate
      *   |ChangeOpFormsDelete
      *   |ChangeOpFormsAddWidget
@@ -94,11 +98,13 @@ class ChangeOp extends JsonSerializableType
      *   |'annotations.update'
      *   |'annotations.delete'
      *   |'annotations.reorder'
+     *   |'annotations.copy'
      *   |'forms.setValue'
      *   |'forms.setDisplay'
      *   |'forms.setAppearanceText'
      *   |'forms.reset'
      *   |'forms.create'
+     *   |'forms.copy'
      *   |'forms.update'
      *   |'forms.delete'
      *   |'forms.addWidget'
@@ -130,11 +136,13 @@ class ChangeOp extends JsonSerializableType
      *   |ChangeOpAnnotationsUpdate
      *   |ChangeOpAnnotationsDelete
      *   |ChangeOpAnnotationsReorder
+     *   |ChangeOpAnnotationsCopy
      *   |ChangeOpFormsSetValue
      *   |ChangeOpFormsSetDisplay
      *   |ChangeOpFormsSetAppearanceText
      *   |ChangeOpFormsReset
      *   |ChangeOpFormsCreate
+     *   |ChangeOpFormsCopy
      *   |ChangeOpFormsUpdate
      *   |ChangeOpFormsDelete
      *   |ChangeOpFormsAddWidget
@@ -219,6 +227,18 @@ class ChangeOp extends JsonSerializableType
     }
 
     /**
+     * @param ChangeOpAnnotationsCopy $annotationsCopy
+     * @return ChangeOp
+     */
+    public static function annotationsCopy(ChangeOpAnnotationsCopy $annotationsCopy): ChangeOp
+    {
+        return new ChangeOp([
+            'type' => 'annotations.copy',
+            'value' => $annotationsCopy,
+        ]);
+    }
+
+    /**
      * @param ChangeOpFormsSetValue $formsSetValue
      * @return ChangeOp
      */
@@ -275,6 +295,18 @@ class ChangeOp extends JsonSerializableType
         return new ChangeOp([
             'type' => 'forms.create',
             'value' => $formsCreate,
+        ]);
+    }
+
+    /**
+     * @param ChangeOpFormsCopy $formsCopy
+     * @return ChangeOp
+     */
+    public static function formsCopy(ChangeOpFormsCopy $formsCopy): ChangeOp
+    {
+        return new ChangeOp([
+            'type' => 'forms.copy',
+            'value' => $formsCopy,
         ]);
     }
 
@@ -657,6 +689,28 @@ class ChangeOp extends JsonSerializableType
     /**
      * @return bool
      */
+    public function isAnnotationsCopy(): bool
+    {
+        return $this->value instanceof ChangeOpAnnotationsCopy && $this->type === 'annotations.copy';
+    }
+
+    /**
+     * @return ChangeOpAnnotationsCopy
+     */
+    public function asAnnotationsCopy(): ChangeOpAnnotationsCopy
+    {
+        if (!($this->value instanceof ChangeOpAnnotationsCopy && $this->type === 'annotations.copy')) {
+            throw new Exception(
+                "Expected annotations.copy; got " . $this->type . " with value of type " . get_debug_type($this->value),
+            );
+        }
+
+        return $this->value;
+    }
+
+    /**
+     * @return bool
+     */
     public function isFormsSetValue(): bool
     {
         return $this->value instanceof ChangeOpFormsSetValue && $this->type === 'forms.setValue';
@@ -758,6 +812,28 @@ class ChangeOp extends JsonSerializableType
         if (!($this->value instanceof ChangeOpFormsCreate && $this->type === 'forms.create')) {
             throw new Exception(
                 "Expected forms.create; got " . $this->type . " with value of type " . get_debug_type($this->value),
+            );
+        }
+
+        return $this->value;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isFormsCopy(): bool
+    {
+        return $this->value instanceof ChangeOpFormsCopy && $this->type === 'forms.copy';
+    }
+
+    /**
+     * @return ChangeOpFormsCopy
+     */
+    public function asFormsCopy(): ChangeOpFormsCopy
+    {
+        if (!($this->value instanceof ChangeOpFormsCopy && $this->type === 'forms.copy')) {
+            throw new Exception(
+                "Expected forms.copy; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
 
@@ -1328,6 +1404,10 @@ class ChangeOp extends JsonSerializableType
                 $value = $this->asAnnotationsReorder()->jsonSerialize();
                 $result = array_merge($value, $result);
                 break;
+            case 'annotations.copy':
+                $value = $this->asAnnotationsCopy()->jsonSerialize();
+                $result = array_merge($value, $result);
+                break;
             case 'forms.setValue':
                 $value = $this->asFormsSetValue()->jsonSerialize();
                 $result = array_merge($value, $result);
@@ -1346,6 +1426,10 @@ class ChangeOp extends JsonSerializableType
                 break;
             case 'forms.create':
                 $value = $this->asFormsCreate()->jsonSerialize();
+                $result = array_merge($value, $result);
+                break;
+            case 'forms.copy':
+                $value = $this->asFormsCopy()->jsonSerialize();
                 $result = array_merge($value, $result);
                 break;
             case 'forms.update':
@@ -1492,6 +1576,9 @@ class ChangeOp extends JsonSerializableType
             case 'annotations.reorder':
                 $args['value'] = ChangeOpAnnotationsReorder::jsonDeserialize($data);
                 break;
+            case 'annotations.copy':
+                $args['value'] = ChangeOpAnnotationsCopy::jsonDeserialize($data);
+                break;
             case 'forms.setValue':
                 $args['value'] = ChangeOpFormsSetValue::jsonDeserialize($data);
                 break;
@@ -1506,6 +1593,9 @@ class ChangeOp extends JsonSerializableType
                 break;
             case 'forms.create':
                 $args['value'] = ChangeOpFormsCreate::jsonDeserialize($data);
+                break;
+            case 'forms.copy':
+                $args['value'] = ChangeOpFormsCopy::jsonDeserialize($data);
                 break;
             case 'forms.update':
                 $args['value'] = ChangeOpFormsUpdate::jsonDeserialize($data);
