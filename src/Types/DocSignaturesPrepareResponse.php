@@ -59,6 +59,12 @@ class DocSignaturesPrepareResponse extends JsonSerializableType
     public ?DateTime $expiresAt;
 
     /**
+     * @var ?FormFieldRef $field
+     */
+    #[JsonProperty('field')]
+    public ?FormFieldRef $field;
+
+    /**
      * @param array{
      *   signingId: string,
      *   digest: string,
@@ -68,6 +74,7 @@ class DocSignaturesPrepareResponse extends JsonSerializableType
      *   subFilter: string,
      *   expectedVersion: DocSignaturesPrepareResponseExpectedVersion,
      *   expiresAt?: ?DateTime,
+     *   field?: ?FormFieldRef,
      * } $values
      */
     public function __construct(
@@ -81,6 +88,7 @@ class DocSignaturesPrepareResponse extends JsonSerializableType
         $this->subFilter = $values['subFilter'];
         $this->expectedVersion = $values['expectedVersion'];
         $this->expiresAt = $values['expiresAt'] ?? null;
+        $this->field = $values['field'] ?? null;
     }
 
     /**

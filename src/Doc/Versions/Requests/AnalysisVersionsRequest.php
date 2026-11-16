@@ -28,9 +28,9 @@ class AnalysisVersionsRequest extends JsonSerializableType
     public ?int $until;
 
     /**
-     * @var ?int $policy
+     * @var ?string $engine The `analysis` engine value from the layer's head (`engine.analysis`): the rules the answer is judged with. With it, a settled answer is cached.
      */
-    public ?int $policy;
+    public ?string $engine;
 
     /**
      * @var ?string $documentPassword Base64-encoded password for an encrypted document. Valid only with the API token (403 anywhere else). An encrypted document answers 422 DocPasswordRequired when the header is absent. Viewer doc JWTs use the SDK password-session flow instead.
@@ -43,7 +43,7 @@ class AnalysisVersionsRequest extends JsonSerializableType
      *   sinceRevision?: ?int,
      *   level?: ?value-of<AnalysisVersionsRequestLevel>,
      *   until?: ?int,
-     *   policy?: ?int,
+     *   engine?: ?string,
      *   documentPassword?: ?string,
      * } $values
      */
@@ -54,7 +54,7 @@ class AnalysisVersionsRequest extends JsonSerializableType
         $this->sinceRevision = $values['sinceRevision'] ?? null;
         $this->level = $values['level'] ?? null;
         $this->until = $values['until'] ?? null;
-        $this->policy = $values['policy'] ?? null;
+        $this->engine = $values['engine'] ?? null;
         $this->documentPassword = $values['documentPassword'] ?? null;
     }
 }
