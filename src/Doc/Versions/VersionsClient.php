@@ -124,7 +124,7 @@ class VersionsClient
     }
 
     /**
-     * Exactly one of `since.signature` / `since.revision`; `until=<revision>` defaults to the last. The same answer for every caller.
+     * Exactly one of `since.signature` / `since.revision`; `until=<revision>` defaults to the last. The same answer for every caller. A version never changes, but the rules that judge it can: with `engine`, the `analysis` value of the layer's head, a settled answer is `immutable`. Without it, or with another value, the answer is this server's own, with `no-store` and the current value in `EmbedPDF-Engine`.
      *
      * Example:
      * ```php
@@ -168,8 +168,8 @@ class VersionsClient
         if ($request->until != null) {
             $query['until'] = $request->until;
         }
-        if ($request->policy != null) {
-            $query['policy'] = $request->policy;
+        if ($request->engine != null) {
+            $query['engine'] = $request->engine;
         }
         $headers = [];
         if ($request->documentPassword != null) {
@@ -325,6 +325,8 @@ class VersionsClient
     }
 
     /**
+     * A version never changes, but what the server reads from it can: with `engine`, the `signatures` value of the layer's head, the answer is `immutable`. Without it, or with another value, the answer is this server's own, with `no-store` and the current value in `EmbedPDF-Engine`.
+     *
      * Example:
      * ```php
      * $client->doc->versions->signatures(
@@ -354,6 +356,10 @@ class VersionsClient
     public function signatures(string $docId, string $layerName, string $sha256, SignaturesVersionsRequest $request = new SignaturesVersionsRequest(), ?array $options = null): ?DocVersionsSignaturesResponse
     {
         $options = array_merge($this->options, $options ?? []);
+        $query = [];
+        if ($request->engine != null) {
+            $query['engine'] = $request->engine;
+        }
         $headers = [];
         if ($request->documentPassword != null) {
             $headers['X-Document-Password'] = $request->documentPassword;
@@ -365,6 +371,7 @@ class VersionsClient
                     path: "v1/docs/{$docId}/layers/{$layerName}/versions/signatures/{$sha256}",
                     method: HttpMethod::GET,
                     headers: $headers,
+                    query: $query,
                 ),
                 $options,
             );
