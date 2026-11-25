@@ -83,6 +83,12 @@ class FormFieldSignature extends JsonSerializableType
     public ?string $groupId;
 
     /**
+     * @var ?string $purpose
+     */
+    #[JsonProperty('purpose')]
+    public ?string $purpose;
+
+    /**
      * @var ?string $createdBy
      */
     #[JsonProperty('createdBy')]
@@ -139,6 +145,7 @@ class FormFieldSignature extends JsonSerializableType
      *   mappingName?: ?string,
      *   actions?: ?PdfFieldActions,
      *   groupId?: ?string,
+     *   purpose?: ?string,
      *   createdBy?: ?string,
      *   createdAt?: ?DateTime,
      *   filledBy?: ?string,
@@ -162,6 +169,7 @@ class FormFieldSignature extends JsonSerializableType
         $this->defaultValueEntry = $values['defaultValueEntry'];
         $this->actions = $values['actions'] ?? null;
         $this->groupId = $values['groupId'] ?? null;
+        $this->purpose = $values['purpose'] ?? null;
         $this->createdBy = $values['createdBy'] ?? null;
         $this->createdAt = $values['createdAt'] ?? null;
         $this->filledBy = $values['filledBy'] ?? null;

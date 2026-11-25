@@ -8,20 +8,20 @@ use CloudPDF\Core\Json\JsonProperty;
 class ChangeOpFormsSetSignatureAppearanceResources extends JsonSerializableType
 {
     /**
-     * @var string $appearance
+     * @var ?string $appearance
      */
     #[JsonProperty('appearance')]
-    public string $appearance;
+    public ?string $appearance;
 
     /**
      * @param array{
-     *   appearance: string,
+     *   appearance?: ?string,
      * } $values
      */
     public function __construct(
-        array $values,
+        array $values = [],
     ) {
-        $this->appearance = $values['appearance'];
+        $this->appearance = $values['appearance'] ?? null;
     }
 
     /**

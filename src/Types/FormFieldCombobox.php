@@ -83,6 +83,12 @@ class FormFieldCombobox extends JsonSerializableType
     public ?string $groupId;
 
     /**
+     * @var ?string $purpose
+     */
+    #[JsonProperty('purpose')]
+    public ?string $purpose;
+
+    /**
      * @var ?string $createdBy
      */
     #[JsonProperty('createdBy')]
@@ -149,6 +155,12 @@ class FormFieldCombobox extends JsonSerializableType
     public array $options;
 
     /**
+     * @var ?FormFieldFormat $format The shape a text field's or a dropdown's value has, by its `kind`: a date or a time with the pattern it is shown in, or `other` for a format script the engine does not recognise. A newer server can add kinds: read one your client doesn't know as `other`.
+     */
+    #[JsonProperty('format')]
+    public ?FormFieldFormat $format;
+
+    /**
      * @param array{
      *   ref: FormFieldRef,
      *   name: string,
@@ -167,12 +179,14 @@ class FormFieldCombobox extends JsonSerializableType
      *   mappingName?: ?string,
      *   actions?: ?PdfFieldActions,
      *   groupId?: ?string,
+     *   purpose?: ?string,
      *   createdBy?: ?string,
      *   createdAt?: ?DateTime,
      *   filledBy?: ?string,
      *   filledByName?: ?string,
      *   filledAt?: ?DateTime,
      *   importedBy?: ?string,
+     *   format?: ?FormFieldFormat,
      * } $values
      */
     public function __construct(
@@ -190,6 +204,7 @@ class FormFieldCombobox extends JsonSerializableType
         $this->defaultValueEntry = $values['defaultValueEntry'];
         $this->actions = $values['actions'] ?? null;
         $this->groupId = $values['groupId'] ?? null;
+        $this->purpose = $values['purpose'] ?? null;
         $this->createdBy = $values['createdBy'] ?? null;
         $this->createdAt = $values['createdAt'] ?? null;
         $this->filledBy = $values['filledBy'] ?? null;
@@ -201,6 +216,7 @@ class FormFieldCombobox extends JsonSerializableType
         $this->defaultValue = $values['defaultValue'];
         $this->edit = $values['edit'];
         $this->options = $values['options'];
+        $this->format = $values['format'] ?? null;
     }
 
     /**
