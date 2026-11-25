@@ -51,6 +51,12 @@ class FormFieldDraftText extends JsonSerializableType
     public ?string $groupId;
 
     /**
+     * @var ?string $purpose
+     */
+    #[JsonProperty('purpose')]
+    public ?string $purpose;
+
+    /**
      * @var ?FieldActionsPatch $actions
      */
     #[JsonProperty('actions')]
@@ -93,6 +99,12 @@ class FormFieldDraftText extends JsonSerializableType
     public ?bool $comb;
 
     /**
+     * @var ?FormFieldFormatWritable $format
+     */
+    #[JsonProperty('format')]
+    public ?FormFieldFormatWritable $format;
+
+    /**
      * @param array{
      *   name: string,
      *   readOnly?: ?bool,
@@ -101,6 +113,7 @@ class FormFieldDraftText extends JsonSerializableType
      *   alternateName?: ?string,
      *   mappingName?: ?string,
      *   groupId?: ?string,
+     *   purpose?: ?string,
      *   actions?: ?FieldActionsPatch,
      *   widgets?: ?array<WidgetPlacement>,
      *   defaultValue?: ?string,
@@ -108,6 +121,7 @@ class FormFieldDraftText extends JsonSerializableType
      *   multiline?: ?bool,
      *   password?: ?bool,
      *   comb?: ?bool,
+     *   format?: ?FormFieldFormatWritable,
      * } $values
      */
     public function __construct(
@@ -120,6 +134,7 @@ class FormFieldDraftText extends JsonSerializableType
         $this->alternateName = $values['alternateName'] ?? null;
         $this->mappingName = $values['mappingName'] ?? null;
         $this->groupId = $values['groupId'] ?? null;
+        $this->purpose = $values['purpose'] ?? null;
         $this->actions = $values['actions'] ?? null;
         $this->widgets = $values['widgets'] ?? null;
         $this->defaultValue = $values['defaultValue'] ?? null;
@@ -127,6 +142,7 @@ class FormFieldDraftText extends JsonSerializableType
         $this->multiline = $values['multiline'] ?? null;
         $this->password = $values['password'] ?? null;
         $this->comb = $values['comb'] ?? null;
+        $this->format = $values['format'] ?? null;
     }
 
     /**

@@ -51,6 +51,12 @@ class FormFieldDraftRadio extends JsonSerializableType
     public ?string $groupId;
 
     /**
+     * @var ?string $purpose
+     */
+    #[JsonProperty('purpose')]
+    public ?string $purpose;
+
+    /**
      * @var ?FieldActionsPatch $actions
      */
     #[JsonProperty('actions')]
@@ -83,6 +89,7 @@ class FormFieldDraftRadio extends JsonSerializableType
      *   alternateName?: ?string,
      *   mappingName?: ?string,
      *   groupId?: ?string,
+     *   purpose?: ?string,
      *   actions?: ?FieldActionsPatch,
      *   widgets?: ?array<WidgetPlacement>,
      *   radiosInUnison?: ?bool,
@@ -99,6 +106,7 @@ class FormFieldDraftRadio extends JsonSerializableType
         $this->alternateName = $values['alternateName'] ?? null;
         $this->mappingName = $values['mappingName'] ?? null;
         $this->groupId = $values['groupId'] ?? null;
+        $this->purpose = $values['purpose'] ?? null;
         $this->actions = $values['actions'] ?? null;
         $this->widgets = $values['widgets'] ?? null;
         $this->radiosInUnison = $values['radiosInUnison'] ?? null;

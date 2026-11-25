@@ -51,6 +51,12 @@ class FormFieldDraftCombobox extends JsonSerializableType
     public ?string $groupId;
 
     /**
+     * @var ?string $purpose
+     */
+    #[JsonProperty('purpose')]
+    public ?string $purpose;
+
+    /**
      * @var ?FieldActionsPatch $actions
      */
     #[JsonProperty('actions')]
@@ -81,6 +87,12 @@ class FormFieldDraftCombobox extends JsonSerializableType
     public ?string $defaultValue;
 
     /**
+     * @var ?FormFieldFormatWritable $format
+     */
+    #[JsonProperty('format')]
+    public ?FormFieldFormatWritable $format;
+
+    /**
      * @param array{
      *   name: string,
      *   readOnly?: ?bool,
@@ -89,11 +101,13 @@ class FormFieldDraftCombobox extends JsonSerializableType
      *   alternateName?: ?string,
      *   mappingName?: ?string,
      *   groupId?: ?string,
+     *   purpose?: ?string,
      *   actions?: ?FieldActionsPatch,
      *   widgets?: ?array<WidgetPlacement>,
      *   edit?: ?bool,
      *   options?: ?array<FormFieldDraftComboboxOptionsItem>,
      *   defaultValue?: ?string,
+     *   format?: ?FormFieldFormatWritable,
      * } $values
      */
     public function __construct(
@@ -106,11 +120,13 @@ class FormFieldDraftCombobox extends JsonSerializableType
         $this->alternateName = $values['alternateName'] ?? null;
         $this->mappingName = $values['mappingName'] ?? null;
         $this->groupId = $values['groupId'] ?? null;
+        $this->purpose = $values['purpose'] ?? null;
         $this->actions = $values['actions'] ?? null;
         $this->widgets = $values['widgets'] ?? null;
         $this->edit = $values['edit'] ?? null;
         $this->options = $values['options'] ?? null;
         $this->defaultValue = $values['defaultValue'] ?? null;
+        $this->format = $values['format'] ?? null;
     }
 
     /**

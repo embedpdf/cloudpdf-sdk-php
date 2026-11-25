@@ -83,6 +83,12 @@ class FormFieldText extends JsonSerializableType
     public ?string $groupId;
 
     /**
+     * @var ?string $purpose
+     */
+    #[JsonProperty('purpose')]
+    public ?string $purpose;
+
+    /**
      * @var ?string $createdBy
      */
     #[JsonProperty('createdBy')]
@@ -161,6 +167,12 @@ class FormFieldText extends JsonSerializableType
     public bool $comb;
 
     /**
+     * @var ?FormFieldFormat $format The shape a text field's or a dropdown's value has, by its `kind`: a date or a time with the pattern it is shown in, or `other` for a format script the engine does not recognise. A newer server can add kinds: read one your client doesn't know as `other`.
+     */
+    #[JsonProperty('format')]
+    public ?FormFieldFormat $format;
+
+    /**
      * @param array{
      *   ref: FormFieldRef,
      *   name: string,
@@ -180,6 +192,7 @@ class FormFieldText extends JsonSerializableType
      *   mappingName?: ?string,
      *   actions?: ?PdfFieldActions,
      *   groupId?: ?string,
+     *   purpose?: ?string,
      *   createdBy?: ?string,
      *   createdAt?: ?DateTime,
      *   filledBy?: ?string,
@@ -187,6 +200,7 @@ class FormFieldText extends JsonSerializableType
      *   filledAt?: ?DateTime,
      *   importedBy?: ?string,
      *   maxLength?: ?int,
+     *   format?: ?FormFieldFormat,
      * } $values
      */
     public function __construct(
@@ -204,6 +218,7 @@ class FormFieldText extends JsonSerializableType
         $this->defaultValueEntry = $values['defaultValueEntry'];
         $this->actions = $values['actions'] ?? null;
         $this->groupId = $values['groupId'] ?? null;
+        $this->purpose = $values['purpose'] ?? null;
         $this->createdBy = $values['createdBy'] ?? null;
         $this->createdAt = $values['createdAt'] ?? null;
         $this->filledBy = $values['filledBy'] ?? null;
@@ -217,6 +232,7 @@ class FormFieldText extends JsonSerializableType
         $this->multiline = $values['multiline'];
         $this->password = $values['password'];
         $this->comb = $values['comb'];
+        $this->format = $values['format'] ?? null;
     }
 
     /**
